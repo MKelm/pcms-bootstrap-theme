@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<papaya-theme>
+  <name>Bootstrap Theme</name>
+  <version number="1.0" date="2013-05-23" />
+  <author>Martin Kelm</author>
+  <description>This is the bootstrap theme.</description>
+  <thumbs>
+    <thumb size="medium" src="bootstrap48.jpg" />
+    <thumb size="large" src="bootstrap100.jpg" />
+  </thumbs>
+  <templates directory="bootstrap" />
+  <dynamic-values>
+  </dynamic-values>
+</papaya-theme>
