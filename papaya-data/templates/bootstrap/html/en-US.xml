@@ -2,9 +2,4 @@
 <texts>
   <text ident="PROJECT_NAME">shrt.ws</text>
   <text ident="POWERED_BY">powered by</text>
-
-  <text ident="LOGIN_FORM_LOGIN">Login</text>
-  <text ident="LOGIN_FORM_PASSWORD_FORGOTTEN">Forgot your password?</text>
-  <text ident="LOGIN_FORM_REQUEST_PASSWORD">Request password</text>
-  <text ident="LOGIN_FORM_SAVE">Save</text>
 </texts>

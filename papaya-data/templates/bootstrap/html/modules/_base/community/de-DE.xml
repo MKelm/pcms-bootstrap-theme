@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<texts>
+  <text ident="LOGIN_FORM_LOGIN">Login</text>
+  <text ident="LOGIN_FORM_PASSWORD_FORGOTTEN">Forgot your password?</text>
+  <text ident="LOGIN_FORM_REQUEST_PASSWORD">Request password</text>
+  <text ident="LOGIN_FORM_SAVE">Save</text>
+
+  <text ident="LOGIN_ERROR_UNKNOWN_ERROR">Unbekannter Fehler</text>
+  <text ident="LOGIN_ERROR_INVALID_PASSWORD">Falsches Passwort</text>
+  <text ident="LOGIN_ERROR_INVALID_USERNAME">Ungültiger Benutzername</text>
+  <text ident="LOGIN_ERROR_ACCOUNT_BLOCKED">Zugang gesperrt</text>
+  <text ident="LOGIN_ERROR_INVALID_PERMISSIONS">Ungültige Berechtigungen</text>
+</texts>
