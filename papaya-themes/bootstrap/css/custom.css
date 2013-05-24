@@ -2,7 +2,6 @@ body {
   padding-top: 75px;
   padding-bottom: 40px;
 }
-
 img.heroImage.pull-left {
   margin-right: 20px;
   margin-top: 10px;
@@ -10,4 +9,10 @@ img.heroImage.pull-left {
 img.heroImage.pull-right {
   margin-left: 20px;
   margin-top: 10px;
+}
+/* surfer-status-image needs a cropped thumbail of 20x20 pixels */
+img.surfer-status-image {
+  margin-right: 5px;
+  position: relative;
+  top: -1px;
 }
