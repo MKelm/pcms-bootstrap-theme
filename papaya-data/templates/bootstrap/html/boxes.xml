@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<boxes>
+  <styles>
+    <!--
+      css files included in page head
+
+      Syntax: <file module="foo" file="foo.css"/>
+    -->
+  </styles>
+  <scripts>
+    <!--
+      javascript files included in page head
+
+      Syntax: <file module="foo" file="foo.js"/>
+    -->
+  </scripts>
+  <scripts-lazy>
+    <!--
+      javascript files included just before page boday end
+
+      Syntax: <file module="bar" file="bar.js"/>
+    -->
+  </scripts-lazy>
+</boxes>

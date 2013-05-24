@@ -13,9 +13,6 @@
 
 <xsl:output method="xml" encoding="UTF-8" standalone="no" indent="yes" omit-xml-declaration="yes" />
 
-<!-- adds numbers to the navigation list items -->
-<xsl:param name="ACCESSIBILITY_BULLET_NUMBERS" select="true()" />
-
 <xsl:param name="LANGUAGE_TEXTS_CURRENT" select="document(concat('../', $PAGE_LANGUAGE, '.xml'))" />
 <xsl:param name="LANGUAGE_TEXTS_FALLBACK" select="document('../en-US.xml')"/>
 
@@ -72,14 +69,7 @@
       <xsl:copy-of select="@*[starts-with(name(), 'data-')]"/>
       <!-- copy target and onclick attributes -->
       <xsl:copy-of select="@target|@onclick"/>
-      <!-- bullet numbers for screenreaders -->
-      <xsl:call-template name="accessibility-bullet-number">
-        <xsl:with-param name="number">
-          <xsl:number level="multiple" count="mapitem" format="1" />
-        </xsl:with-param>
-      </xsl:call-template>
       <span><xsl:value-of select="@title" /></span>
-      <xsl:call-template name="language-accessiblity-separator" />
     </a>
     <xsl:if test="count(mapitem) &gt; 0">
       <ul>
@@ -89,16 +79,6 @@
       </ul>
     </xsl:if>
   </li>
-</xsl:template>
-
-<xsl:template name="accessibility-bullet-number">
-  <xsl:param name="number" />
-  <xsl:if test="$ACCESSIBILITY_BULLET_NUMBERS and $number and $number != ''">
-    <dfn class="accessibilityElement">
-      <xsl:value-of select="$number" />
-      <xsl:text> </xsl:text>
-    </dfn>
-  </xsl:if>
 </xsl:template>
 
 <!-- a little div to fix floating problems (height of elements) -->

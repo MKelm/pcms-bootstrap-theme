@@ -19,11 +19,15 @@
   template definitions
 -->
 
-<xsl:template name="header">
+<xsl:template name="header-navigation">
+  <xsl:param name="boxes" />
+
   <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" href="#">shrt.ws</a>
+        <a class="brand" href="/"><xsl:call-template name="language-text">
+          <xsl:with-param name="text" select="'PROJECT_NAME'"/>
+        </xsl:call-template></a>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li class="active"><a href="/">Home</a></li>
@@ -42,7 +46,10 @@
               </ul>
             </li>
           </ul>
-          <p class="navbar-text pull-right"><a href="#" class="navbar-link">Login</a> / <a href="#" class="navbar-link">Register</a></p>
+          <xsl:for-each select="boxes/box[@group = 'header-navigation']">
+            <xsl:value-of select="." disable-output-escaping="yes" />
+          </xsl:for-each>
+          <!-- <p class="navbar-text pull-right"><a href="#" class="navbar-link">Login</a> / <a href="#" class="navbar-link">Register</a></p>
           <ul class="nav pull-right">
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username <b class="caret"></b></a>
@@ -57,8 +64,8 @@
                 <li><a href="#">Logout</a></li>
               </ul>
             </li>
-          </ul>
-        </div><!--/.nav-collapse -->
+          </ul> -->
+        </div>
       </div>
     </div>
   </div>
@@ -71,9 +78,13 @@
       <xsl:call-template name="html-head" />
     </head>
     <body>
-      <xsl:call-template name="header" />
+      <xsl:call-template name="header-navigation">
+        <xsl:with-param name="boxes" select="boxes" />
+      </xsl:call-template>
       <div class="container">
-        <xsl:call-template name="content-area" />
+        <xsl:call-template name="content-area">
+          <xsl:with-param name="pageContent" select="content/topic" />
+        </xsl:call-template>
         <xsl:call-template name="footer" />
       </div>
       <xsl:call-template name="page-scripts-lazy" />
@@ -94,7 +105,9 @@
     </xsl:for-each>
     <xsl:text>, </xsl:text>
   </xsl:if>
-  powered by <a href="http://www.papaya-cms.com/">papaya CMS</a>
+  <xsl:call-template name="language-text">
+    <xsl:with-param name="text" select="'POWERED_BY'"/>
+  </xsl:call-template><xsl:text> </xsl:text><a href="http://www.papaya-cms.com/">papaya CMS</a>
 </xsl:template>
 
 <xsl:template name="page-views">
