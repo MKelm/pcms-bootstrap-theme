@@ -41,32 +41,38 @@
     </div>
   </xsl:if>
   <xsl:call-template name="papaya-login-error" />
+  <xsl:call-template name="content-message">
+    <xsl:with-param name="pageContent" select="$pageContent" />
+  </xsl:call-template>
   <xsl:choose>
     <xsl:when test="$pageContent/login">
       <xsl:call-template name="dialog">
         <xsl:with-param name="dialog" select="$pageContent/login" />
-        <xsl:with-param name="captions" select="$pageContent/captions" />
+        <xsl:with-param name="horizontal" select="true()" />
         <xsl:with-param name="submitButton">
           <xsl:call-template name="language-text">
-            <xsl:with-param name="text">LOGIN</xsl:with-param>
+            <xsl:with-param name="text">LOGIN_FORM_LOGIN</xsl:with-param>
             <xsl:with-param name="userText" select="$pageContent/captions/login-button/text()"/>
           </xsl:call-template>
         </xsl:with-param>
       </xsl:call-template>
-      <a href="{$pageContent/login/@chglink}">
-        <xsl:call-template name="language-text">
-          <xsl:with-param name="text">PASSWORD_FORGOTTEN</xsl:with-param>
-          <xsl:with-param name="userText" select="$pageContent/captions/passwd-link/text()"/>
-        </xsl:call-template>
-      </a>
+      <div class="login-form-additional-hint">
+        <a href="{$pageContent/login/@chglink}">
+          <xsl:call-template name="language-text">
+            <xsl:with-param name="text">LOGIN_FORM_PASSWORD_FORGOTTEN</xsl:with-param>
+            <xsl:with-param name="userText" select="$pageContent/captions/passwd-link/text()"/>
+          </xsl:call-template>
+        </a>
+      </div>
     </xsl:when>
     <xsl:when test="$pageContent/passwordrequest">
       <xsl:call-template name="dialog">
         <xsl:with-param name="dialog" select="$pageContent/passwordrequest" />
+        <xsl:with-param name="horizontal" select="true()" />
         <xsl:with-param name="captions" select="$pageContent/captions" />
         <xsl:with-param name="submitButton">
           <xsl:call-template name="language-text">
-            <xsl:with-param name="text">REQUEST_PASSWORD</xsl:with-param>
+            <xsl:with-param name="text">LOGIN_FORM_REQUEST_PASSWORD</xsl:with-param>
             <xsl:with-param name="userText" select="$pageContent/captions/request-button/text()"/>
           </xsl:call-template>
         </xsl:with-param>
@@ -75,10 +81,11 @@
     <xsl:when test="$pageContent/passwordchange">
       <xsl:call-template name="dialog">
         <xsl:with-param name="dialog" select="$pageContent/passwordchange" />
+        <xsl:with-param name="horizontal" select="true()" />
         <xsl:with-param name="captions" select="$pageContent/captions" />
         <xsl:with-param name="submitButton">
           <xsl:call-template name="language-text">
-            <xsl:with-param name="text">SAVE</xsl:with-param>
+            <xsl:with-param name="text">LOGIN_FORM_SAVE</xsl:with-param>
             <xsl:with-param name="userText" select="$pageContent/captions/save-button/text()"/>
           </xsl:call-template>
         </xsl:with-param>
@@ -92,25 +99,23 @@
   <xsl:call-template name="module-content-topic">
     <xsl:with-param name="pageContent" select="$pageContent" />
   </xsl:call-template>
+  <xsl:call-template name="content-message">
+    <xsl:with-param name="pageContent" select="$pageContent" />
+  </xsl:call-template>
   <xsl:if test="$pageContent/userdata/dialog">
-    <div class="userProfile">
-      <!-- TODO these are extra help texts that were intended to be placed before specific field elements
-      <div><xsl:apply-templates select="$pageContent/descr-change-email/node()" /></div>
-      <div><xsl:apply-templates select="$pageContent/descr-change-password/node()" /></div>
-       -->
-      <xsl:call-template name="dialog">
-        <xsl:with-param name="dialog" select="$pageContent/userdata/dialog" />
-      </xsl:call-template>
-    </div>
+    <xsl:call-template name="dialog">
+      <xsl:with-param name="dialog" select="$pageContent/userdata/dialog" />
+      <xsl:with-param name="horizontal" select="true()" />
+      <xsl:with-param name="inputSize" select="'xxlarge'" />
+    </xsl:call-template>
   </xsl:if>
   <xsl:if test="$pageContent/delete-account">
-    <div class="deleteAccount">
-      <h2><xsl:value-of select="$pageContent/delete-account/headline/text()"/></h2>
-      <div><xsl:apply-templates select="$pageContent/delete-account/description/node()"/></div>
-      <xsl:call-template name="dialog">
-        <xsl:with-param name="dialog" select="$pageContent/delete-account/dialog" />
-      </xsl:call-template>
-    </div>
+    <xsl:call-template name="dialog">
+      <xsl:with-param name="dialog" select="$pageContent/delete-account/dialog" />
+      <xsl:with-param name="horizontal" select="false()" />
+      <xsl:with-param name="legend" select="$pageContent/delete-account/headline" />
+    </xsl:call-template>
+    <span class="help-block"><xsl:value-of select="$pageContent/delete-account/description" /></span>
   </xsl:if>
 </xsl:template>
 
@@ -143,7 +148,7 @@
     <xsl:with-param name="pageContent" select="$pageContent" />
   </xsl:call-template>
 
-  <xsl:call-template name="papaya-error">
+  <xsl:call-template name="content-message">
     <xsl:with-param name="pageContent" select="$pageContent/registerpage" />
   </xsl:call-template>
 
@@ -192,19 +197,27 @@
   </xsl:choose>
 </xsl:template>
 
-<xsl:template name="papaya-error">
+<xsl:template name="content-message">
   <xsl:param name="pageContent" select="/page/content/topic" />
-
-  <xsl:if test="$pageContent/error|$pageContent/message[@type = 'error']">
-    <div class="error">
-      <xsl:apply-templates select="$pageContent/error/node()|$pageContent/message[@type = 'error']/node()" />
-    </div>
-  </xsl:if>
-  <xsl:if test="$pageContent/message[@type != 'error' and @type != 'success']">
-    <div class="message">
-      <xsl:apply-templates select="$pageContent/message/node()" />
-    </div>
-  </xsl:if>
+  <xsl:choose>
+    <xsl:when test="$pageContent/error|$pageContent/message[@type = 'error']">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="$pageContent/error|$pageContent/message[@type = 'error']" />
+        <xsl:with-param name="type" select="'error'" />
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="$pageContent/message[@type = 'success']">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="$pageContent/message" />
+        <xsl:with-param name="type" select="success" />
+      </xsl:call-template>
+    </xsl:when>
+    <xsl:when test="$pageContent/message">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="$pageContent/message" />
+      </xsl:call-template>
+    </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="papaya-login-error">
@@ -250,170 +263,6 @@
         </xsl:otherwise>
       </xsl:choose>
     </div>
-  </xsl:if>
-</xsl:template>
-
-<!-- The dialog and dialog-content templates have been copied from base/dialogs.xsl
-     to allow for special treatment of the terms dialog element using HTML caption -->
-
-<xsl:template name="dialog">
-  <xsl:param name="dialog" />
-  <xsl:param name="title" select="''" />
-  <xsl:param name="id" select="''" />
-  <xsl:param name="showMandatory" select="true()" />
-  <xsl:param name="submitButton" select="''" />
-  <xsl:param name="captions" select="false()" />
-  <xsl:param name="terms" />
-  <xsl:param name="userDataDescriptions" select="false()" />
-  <xsl:if test="$dialog">
-    <xsl:variable name="idVal">
-      <xsl:choose>
-        <xsl:when test="$id and $id != ''"><xsl:value-of select="$id"/></xsl:when>
-        <xsl:when test="$dialog/@id and $dialog/@id != ''"><xsl:value-of select="$dialog/@id"/></xsl:when>
-        <xsl:otherwise><xsl:value-of select="generate-id($dialog)" /></xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    <form id="{$idVal}" action="{$dialog/@action}">
-      <xsl:copy-of select="$dialog/@*[name() = 'onclick']" />
-      <xsl:attribute name="method">
-        <xsl:choose>
-          <xsl:when test="$dialog/@method"><xsl:value-of select="$dialog/@method"/></xsl:when>
-          <xsl:otherwise>post</xsl:otherwise>
-        </xsl:choose>
-      </xsl:attribute>
-      <xsl:choose>
-        <xsl:when test="count($dialog//input[@type = 'file']) &gt; 0">
-          <xsl:attribute name="enctype">multipart/form-data</xsl:attribute>
-        </xsl:when>
-        <xsl:when test="$dialog/@encoding">
-          <xsl:attribute name="enctype"><xsl:value-of select="$dialog/@encoding" /></xsl:attribute>
-        </xsl:when>
-      </xsl:choose>
-      <xsl:copy-of select="$dialog/input[@type='hidden']"/>
-      <xsl:call-template name="dialog-content">
-        <xsl:with-param name="dialog" select="$dialog" />
-        <xsl:with-param name="title" select="$title" />
-        <xsl:with-param name="id" select="$idVal" />
-        <xsl:with-param name="showMandatory" select="$showMandatory" />
-        <xsl:with-param name="submitButton" select="$submitButton" />
-        <xsl:with-param name="captions" select="$captions" />
-        <xsl:with-param name="terms" select="$terms" />
-        <xsl:with-param name="userDataDescriptions" select="$userDataDescriptions" />
-      </xsl:call-template>
-    </form>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template name="dialog-content">
-  <xsl:param name="dialog" />
-  <xsl:param name="title" />
-  <xsl:param name="id" />
-  <xsl:param name="showMandatory" select="true()" />
-  <xsl:param name="submitButton"/>
-  <xsl:param name="captions"/>
-  <xsl:param name="terms" />
-  <xsl:param name="userDataDescriptions" select="false()" />
-  <xsl:if test="$title and $title != ''">
-    <h2><xsl:value-of select="$title" /></h2>
-  </xsl:if>
-  <fieldset>
-    <xsl:choose>
-      <xsl:when test="$dialog/lines">
-        <xsl:choose>
-          <xsl:when test="$dialog/lines/linegroup">
-            <xsl:for-each select="$dialog/lines/linegroup">
-              <xsl:if test="@caption and @caption != ''">
-                <h2><xsl:value-of select="@caption" /></h2>
-              </xsl:if>
-              <xsl:call-template name="dialog-content-lines">
-                <xsl:with-param name="dialog" select="$dialog" />
-                <xsl:with-param name="lines" select="line"/>
-                <xsl:with-param name="showMandatory" select="$showMandatory" />
-                <xsl:with-param name="userDataDescriptions" select="$userDataDescriptions" />
-                <xsl:with-param name="terms" select="$terms" />
-              </xsl:call-template>
-            </xsl:for-each>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:call-template name="dialog-content-lines">
-              <xsl:with-param name="dialog" select="$dialog" />
-              <xsl:with-param name="lines" select="$dialog/lines//line"/>
-              <xsl:with-param name="showMandatory" select="$showMandatory" />
-              <xsl:with-param name="userDataDescriptions" select="$userDataDescriptions" />
-              <xsl:with-param name="terms" select="$terms" />
-            </xsl:call-template>
-          </xsl:otherwise>
-        </xsl:choose>
-      </xsl:when>
-      <xsl:when test="$dialog/element/*">
-        <xsl:for-each select="$dialog/element">
-          <xsl:call-template name="dialog-field">
-            <xsl:with-param name="dialog" select="$dialog" />
-            <xsl:with-param name="field" select="." />
-            <xsl:with-param name="showMandatory" select="$showMandatory" />
-          </xsl:call-template>
-        </xsl:for-each>
-        <xsl:copy-of select="//terms/*|//terms/text()" />
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:for-each select="$dialog/*">
-          <xsl:call-template name="dialog-direct-element">
-            <xsl:with-param name="dialog" select="$dialog" />
-            <xsl:with-param name="element" select="." />
-            <xsl:with-param name="showMandatory" select="$showMandatory" />
-            <xsl:with-param name="captions" select="$captions" />
-          </xsl:call-template>
-        </xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-    <xsl:call-template name="dialog-buttons">
-      <xsl:with-param name="dialog" select="$dialog" />
-      <xsl:with-param name="id" select="$id" />
-      <xsl:with-param name="submitButton" select="$submitButton" />
-    </xsl:call-template>
-  </fieldset>
-</xsl:template>
-
-<xsl:template name="dialog-content-lines">
-  <xsl:param name="dialog" />
-  <xsl:param name="lines" />
-  <xsl:param name="showMandatory" select="true()" />
-  <xsl:param name="userDataDescriptions" select="false()" />
-  <xsl:param name="terms" />
-
-  <xsl:for-each select="$lines[@fid != 'terms']">
-    <xsl:if test="$userDataDescriptions != false()">
-      <xsl:choose>
-        <xsl:when test="@fid = 'surfer_password_1'">
-          <p class="description">
-            <xsl:value-of select="$userDataDescriptions/description-change-password/@content" />
-          </p>
-        </xsl:when>
-        <xsl:when test="@fid = 'surfer_new_email'">
-          <p class="description">
-            <xsl:value-of select="$userDataDescriptions/description-change-email/@content" />
-          </p>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:if>
-    <xsl:call-template name="dialog-field">
-      <xsl:with-param name="dialog" select="$dialog" />
-      <xsl:with-param name="field" select="." />
-      <xsl:with-param name="showMandatory" select="$showMandatory" />
-    </xsl:call-template>
-    <xsl:if test="$userDataDescriptions != false() and @fid = 'surfer_old_password'">
-      <p class="description">
-        <xsl:value-of select="$userDataDescriptions/description-enter-password/@content" />
-      </p>
-    </xsl:if>
-  </xsl:for-each>
-  <xsl:if test="$lines[@fid = 'terms']">
-    <xsl:call-template name="dialog-field">
-      <xsl:with-param name="dialog" select="$dialog" />
-      <xsl:with-param name="field" select="$dialog/lines//line[@fid = 'terms']" />
-      <xsl:with-param name="showMandatory" select="$showMandatory" />
-    </xsl:call-template>
-    <p><xsl:copy-of select="$terms" /></p>
   </xsl:if>
 </xsl:template>
 

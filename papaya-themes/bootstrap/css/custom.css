@@ -10,9 +10,27 @@ img.heroImage.pull-right {
   margin-left: 20px;
   margin-top: 10px;
 }
+div.login-form-additional-hint {
+  margin-left: 180px;
+}
+form img.uploaded-image-file {
+  margin-top: 10px;
+}
+form .controls button:first-child + button {
+  margin-left: 10px;
+}
 /* surfer-status-image needs a cropped thumbail of 20x20 pixels */
 img.surfer-status-image {
   margin-right: 5px;
   position: relative;
   top: -1px;
+}
+/* styles for required control groups */
+form .control-group.required {
+  font-weight: bold;
+}
+form .control-group.required label.control-label:after {
+  color: #e32;
+  content: '*';
+  display:inline;
 }

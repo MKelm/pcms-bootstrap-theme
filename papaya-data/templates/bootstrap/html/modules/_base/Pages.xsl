@@ -46,9 +46,6 @@
       </xsl:if>
     </div>
 
-    <xsl:call-template name="papaya-error" />
-    <xsl:call-template name="papaya-redirect" />
-
   </xsl:template>
 
 </xsl:stylesheet>
