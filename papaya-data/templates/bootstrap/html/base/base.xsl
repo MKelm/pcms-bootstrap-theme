@@ -372,7 +372,7 @@
 
 <!-- a little div to fix floating problems (height of elements) -->
 <xsl:template name="float-fix">
-  <div class="floatFix"><xsl:text> </xsl:text></div>
+  <div class="clearfix"><xsl:text> </xsl:text></div>
 </xsl:template>
 
 <xsl:template name="alert">
