@@ -25,12 +25,9 @@ img.surfer-status-image {
   position: relative;
   top: -1px;
 }
-/* styles for required control groups */
-form .control-group.required {
-  font-weight: bold;
-}
+/* style for required fields */
 form .control-group.required label.control-label:after {
   color: #e32;
-  content: '*';
+  content: ' *';
   display:inline;
 }
