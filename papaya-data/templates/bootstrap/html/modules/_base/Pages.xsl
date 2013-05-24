@@ -37,7 +37,7 @@
         <xsl:value-of select="$pageContent/title/text()"/>
         <xsl:if test="$pageContent/subtitle/text() != ''">
           <xsl:text> </xsl:text>
-          <span class="subTitle"><xsl:value-of select="$pageContent/subtitle"/></span>
+          <small><xsl:value-of select="$pageContent/subtitle"/></small>
         </xsl:if>
       </h1>
 
