@@ -173,24 +173,6 @@
 
 </xsl:template>
 
-<xsl:template name="papaya-error">
-  <xsl:param name="error" select="/page/content/topic/papaya-error" />
-  <xsl:if test="$error and $error/@status != 0">
-    <div class="messageError">
-      <xsl:value-of select="$error/@status" />
-      <xsl:text> - </xsl:text>
-      <xsl:apply-templates select="$error/node()" />
-    </div>
-  </xsl:if>
-</xsl:template>
-
-<xsl:template name="papaya-redirect">
-  <xsl:param name="redirect" select="/page/content/topic/papaya-redirect" />
-  <xsl:if test="$redirect">
-    <a href="{$redirect}" class="externalLink"><xsl:value-of select="$redirect" /></a>
-  </xsl:if>
-</xsl:template>
-
 <xsl:template name="papaya-styles-boxes">
   <xsl:call-template name="link-style">
     <xsl:with-param name="files" select="func:getModuleThemeFiles($BOX_MODULE_FILES/boxes/styles/*[name() = 'file' or name() = 'css'])"/>
@@ -391,6 +373,24 @@
 <!-- a little div to fix floating problems (height of elements) -->
 <xsl:template name="float-fix">
   <div class="floatFix"><xsl:text> </xsl:text></div>
+</xsl:template>
+
+<xsl:template name="alert">
+  <xsl:param name="type" />
+  <xsl:param name="message" />
+  <xsl:param name="title" select="false()"/>
+
+  <div class="alert">
+    <xsl:attribute name="class">
+      <xsl:choose>
+        <xsl:when test="$type = 'error'">alert alert-error</xsl:when>
+        <xsl:when test="$type = 'success'">alert alert-success</xsl:when>
+        <xsl:otherwise>alert alert-info</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <button type="button" class="close" data-dismiss="alert">&#215;</button>
+    <xsl:value-of select="$message" />
+  </div>
 </xsl:template>
 
 </xsl:stylesheet>
