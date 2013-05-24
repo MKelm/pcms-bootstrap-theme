@@ -18,7 +18,7 @@
 
 <xsl:template name="navigation">
   <xsl:if test="count(mapitem) &gt; 0">
-    <ul class="navigation">
+    <ul class="nav">
       <xsl:for-each select="mapitem">
         <xsl:call-template name="navigation-item" />
       </xsl:for-each>
@@ -27,54 +27,47 @@
 </xsl:template>
 
 <xsl:template name="navigation-item">
-	<xsl:param name="level"/>
-  <!-- generate a css class depending on position and status -->
-  <xsl:variable name="position-class">
-    <xsl:choose>
-      <xsl:when test="@focus and (position() = 1)">active first</xsl:when>
-      <xsl:when test=".//@focus and (position() = 1)">selected first</xsl:when>
-      <xsl:when test="@focus and (position() = last())">active last</xsl:when>
-      <xsl:when test=".//@focus and (position() = last())">selected last</xsl:when>
-      <xsl:when test="position() = 1">first</xsl:when>
-      <xsl:when test="position() = last()">last</xsl:when>
-      <xsl:when test="@focus">active</xsl:when>
-      <xsl:when test=".//@focus">selected</xsl:when>
-      <xsl:otherwise></xsl:otherwise>
-    </xsl:choose>
-  </xsl:variable>
+	<xsl:param name="level" select="'1'"/>
   <li>
-    <xsl:if test="$position-class != ''">
-      <xsl:attribute name="class"><xsl:value-of select="$position-class" /></xsl:attribute>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$level &gt; 1 and count(mapitem) &gt; 0 and (@focus or .//@focus)">
+        <xsl:attribute name="class">dropdown-submenu active</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$level &gt; 1 and count(mapitem) &gt; 0">
+        <xsl:attribute name="class">dropdown-submenu</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$level &gt; 1 and @focus">
+        <xsl:attribute name="class">active</xsl:attribute>
+      </xsl:when>
+      <xsl:when test="$level = 1 and count(mapitem) &gt; 0 and (@focus or .//@focus)">
+        <xsl:attribute name="class">dropdown active</xsl:attribute>
+      </xsl:when>
+    </xsl:choose>
 	  <a href="{@href}">
-      <!-- add position and link class to link tag -->
-      <xsl:if test="$position-class != '' or @class != ''">
-        <xsl:attribute name="class">
-          <xsl:choose>
-            <xsl:when test="$position-class != '' and @class != ''">
-              <xsl:value-of select="@class" />
-              <xsl:text> </xsl:text>
-              <xsl:value-of select="$position-class" />
-            </xsl:when>
-            <xsl:when test="@class != ''">
-              <xsl:value-of select="@class" />
-            </xsl:when>
-            <xsl:when test="$position-class != ''">
-              <xsl:value-of select="$position-class" />
-            </xsl:when>
-          </xsl:choose>
-        </xsl:attribute>
-      </xsl:if>
       <!-- copy data attributes -->
       <xsl:copy-of select="@*[starts-with(name(), 'data-')]"/>
       <!-- copy target and onclick attributes -->
       <xsl:copy-of select="@target|@onclick"/>
-      <span><xsl:value-of select="@title" /></span>
+      <xsl:choose>
+        <xsl:when test="$level = 1 and count(mapitem) &gt; 0">
+          <xsl:attribute name="class">dropdown-toggle</xsl:attribute>
+          <xsl:attribute name="data-toggle">dropdown</xsl:attribute>
+        </xsl:when>
+        <xsl:when test="$level &gt; 1 and count(mapitem) &gt; 0">
+          <xsl:attribute name="tabindex">-1</xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
+      <xsl:value-of select="@title" />
+      <xsl:if test="$level = 1 and count(mapitem) &gt; 0">
+        <xsl:text> </xsl:text><b class="caret"><xsl:text> </xsl:text></b>
+      </xsl:if>
     </a>
     <xsl:if test="count(mapitem) &gt; 0">
-      <ul>
+      <ul class="dropdown-menu">
         <xsl:for-each select="mapitem">
-          <xsl:call-template name="navigation-item" />
+          <xsl:call-template name="navigation-item">
+            <xsl:with-param name="level" select="$level + 1" />
+          </xsl:call-template>
         </xsl:for-each>
       </ul>
     </xsl:if>
@@ -83,7 +76,7 @@
 
 <!-- a little div to fix floating problems (height of elements) -->
 <xsl:template name="float-fix">
-  <div class="floatFix"><xsl:text> </xsl:text></div>
+  <div class="clearfix"><xsl:text> </xsl:text></div>
 </xsl:template>
 
 </xsl:stylesheet>
