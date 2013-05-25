@@ -1,9 +1,12 @@
 body {
-  padding-top: 75px;
+  padding-top: 65px;
   padding-bottom: 40px;
 }
 div.sidebar-nav {
-  padding: 9px 0;
+  padding: 9px 0px;
+}
+div.additional-box:not(:last-child) {
+  margin-bottom: 30px;
 }
 img.heroImage.pull-left {
   margin-right: 20px;

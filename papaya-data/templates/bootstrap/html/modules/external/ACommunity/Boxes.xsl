@@ -63,4 +63,18 @@
     </xsl:call-template>
   </xsl:template>
 
+  <xsl:template match="acommunity-commenters-ranking">
+    <xsl:if test="count(commenter) &gt; 0">
+      <xsl:for-each select="commenter">
+        <div class="media commenter">
+          <a class="pull-left" href="{surfer/@page-link}"><img class="media-object" alt="" src="{surfer/@avatar}" /></a>
+          <div class="media-body">
+            <h4 class="media-heading"><a href="{surfer/@page-link}"><xsl:value-of select="surfer/@name" /></a></h4>
+            <p><xsl:value-of select="comments/@amount" /><xsl:text> </xsl:text><xsl:value-of select="comments/@caption" /></p>
+          </div>
+        </div>
+      </xsl:for-each>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>
