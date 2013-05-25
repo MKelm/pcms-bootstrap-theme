@@ -72,16 +72,33 @@
   </xsl:for-each>
 </xsl:template>
 
+<xsl:template name="before-content-hook-before">
+  <xsl:param name="pageContent" />
+  <!-- overwrite this template to hook contents before before-content -->
+</xsl:template>
+
+<xsl:template name="before-content-hook-after">
+  <xsl:param name="pageContent" />
+  <!-- overwrite this template to hook contents after before-content -->
+</xsl:template>
+
 <xsl:template name="before-content">
   <xsl:param name="boxes" />
+  <xsl:param name="pageContent" />
 
   <xsl:choose>
     <xsl:when test="count($boxes/box[@group = 'additional-before-content']) &gt; 0">
       <div class="row-fluid">
         <div class="span9">
+          <xsl:call-template name="before-content-hook-before">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
           <xsl:call-template name="fluid-box-groups">
             <xsl:with-param name="boxes" select="$boxes" />
             <xsl:with-param name="boxGroupPrefix" select="'before-content'" />
+          </xsl:call-template>
+          <xsl:call-template name="before-content-hook-after">
+            <xsl:with-param name="pageContent" select="$pageContent" />
           </xsl:call-template>
         </div>
         <div class="span3">
@@ -93,24 +110,47 @@
       </div>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:call-template name="before-content-hook-before">
+        <xsl:with-param name="pageContent" select="$pageContent" />
+      </xsl:call-template>
       <xsl:call-template name="fluid-box-groups">
         <xsl:with-param name="boxes" select="$boxes" />
         <xsl:with-param name="boxGroupPrefix" select="'before-content'" />
+      </xsl:call-template>
+      <xsl:call-template name="before-content-hook-after">
+        <xsl:with-param name="pageContent" select="$pageContent" />
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
 
+<xsl:template name="after-content-hook-before">
+  <xsl:param name="pageContent" />
+  <!-- overwrite this template to hook contents before after-content -->
+</xsl:template>
+
+<xsl:template name="after-content-hook-after">
+  <xsl:param name="pageContent" />
+  <!-- overwrite this template to hook contents after after-content -->
+</xsl:template>
+
 <xsl:template name="after-content">
   <xsl:param name="boxes" />
+  <xsl:param name="pageContent" />
 
   <xsl:choose>
     <xsl:when test="count($boxes/box[@group = 'additional-after-content']) &gt; 0">
       <div class="row-fluid">
         <div class="span9">
+          <xsl:call-template name="after-content-hook-before">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
           <xsl:call-template name="fluid-box-groups">
             <xsl:with-param name="boxes" select="$boxes" />
             <xsl:with-param name="boxGroupPrefix" select="'after-content'" />
+          </xsl:call-template>
+          <xsl:call-template name="after-content-hook-after">
+            <xsl:with-param name="pageContent" select="$pageContent" />
           </xsl:call-template>
         </div>
         <div class="span3">
@@ -122,9 +162,15 @@
       </div>
     </xsl:when>
     <xsl:otherwise>
+      <xsl:call-template name="after-content-hook-before">
+        <xsl:with-param name="pageContent" select="$pageContent" />
+      </xsl:call-template>
       <xsl:call-template name="fluid-box-groups">
         <xsl:with-param name="boxes" select="$boxes" />
         <xsl:with-param name="boxGroupPrefix" select="'after-content'" />
+      </xsl:call-template>
+      <xsl:call-template name="after-content-hook-after">
+        <xsl:with-param name="pageContent" select="$pageContent" />
       </xsl:call-template>
     </xsl:otherwise>
   </xsl:choose>
@@ -265,12 +311,14 @@
 <xsl:template name="content">
   <xsl:call-template name="before-content">
     <xsl:with-param name="boxes" select="boxes" />
+    <xsl:with-param name="pageContent" select="content/topic" />
   </xsl:call-template>
   <xsl:call-template name="content-area">
     <xsl:with-param name="pageContent" select="content/topic" />
   </xsl:call-template>
   <xsl:call-template name="after-content">
     <xsl:with-param name="boxes" select="boxes" />
+    <xsl:with-param name="pageContent" select="content/topic" />
   </xsl:call-template>
 </xsl:template>
 
