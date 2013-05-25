@@ -90,14 +90,16 @@
     <xsl:param name="pageContent" />
 
     <xsl:if test="count($pageContent/details/group[@id != 0]) &gt; 0">
-      <xsl:variable name="rows" select="ceiling(count($pageContent/details/group[@id != 0]) div 2)" />
-      <xsl:variable name="fieldsPerRow" select="'2'" />
+      <div class="surfer-details-dynamic">
+        <xsl:variable name="rows" select="ceiling(count($pageContent/details/group[@id != 0]) div 2)" />
+        <xsl:variable name="fieldsPerRow" select="'2'" />
 
-      <xsl:call-template name="module-content-acommunity-surfer-page-detail-groups">
-        <xsl:with-param name="groups" select="$pageContent/details/group[@id != 0]" />
-        <xsl:with-param name="rows" select="$rows" />
-        <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
-      </xsl:call-template>
+        <xsl:call-template name="module-content-acommunity-surfer-page-detail-groups">
+          <xsl:with-param name="groups" select="$pageContent/details/group[@id != 0]" />
+          <xsl:with-param name="rows" select="$rows" />
+          <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+        </xsl:call-template>
+      </div>
     </xsl:if>
   </xsl:template>
 
