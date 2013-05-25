@@ -53,9 +53,30 @@
   </div>
 </xsl:template>
 
+<xsl:template name="sidebar">
+  <xsl:param name="boxes" />
+  <xsl:param name="boxGroupPostfix" select="''" />
+
+  <xsl:variable name="boxGroupName">
+    <xsl:choose>
+      <xsl:when test="$boxGroupPostfix != ''">sidebar-<xsl:value-of select="$boxGroupPostfix" /></xsl:when>
+      <xsl:otherwise>sidebar</xsl:otherwise>
+    </xsl:choose>
+  </xsl:variable>
+  <xsl:for-each select="$boxes/box[@group = $boxGroupName]">
+    <div class="sidebar-box">
+      <xsl:if test="@title and @title != ''">
+        <h4><xsl:value-of select="@title" /></h4>
+      </xsl:if>
+      <xsl:value-of select="." disable-output-escaping="yes" />
+    </div>
+  </xsl:for-each>
+</xsl:template>
+
 <xsl:template name="additional">
   <xsl:param name="boxes" />
   <xsl:param name="boxGroupPostfix" select="''" />
+
   <xsl:variable name="boxGroupName">
     <xsl:choose>
       <xsl:when test="$boxGroupPostfix != ''">additional-<xsl:value-of select="$boxGroupPostfix" /></xsl:when>
@@ -87,6 +108,60 @@
   <xsl:param name="pageContent" />
 
   <xsl:choose>
+    <!-- three column layout: sidebar-before-content, before-content and additional-before-content -->
+    <xsl:when test="count($boxes/box[@group = 'sidebar-before-content']) &gt; 0 and
+    count($boxes/box[@group = 'additional-before-content']) &gt; 0">
+      <div class="row-fluid">
+        <div class="span4">
+          <xsl:call-template name="sidebar">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPostfix" select="'before-content'" />
+          </xsl:call-template>
+        </div>
+        <div class="span4">
+          <xsl:call-template name="before-content-hook-before">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+          <xsl:call-template name="fluid-box-groups">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPrefix" select="'before-content'" />
+          </xsl:call-template>
+          <xsl:call-template name="before-content-hook-after">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+        </div>
+        <div class="span4">
+          <xsl:call-template name="additional">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPostfix" select="'before-content'" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two column layout: sidebar-before-content and before-content -->
+    <xsl:when test="count($boxes/box[@group = 'sidebar-before-content']) &gt; 0">
+      <div class="row-fluid">
+        <div class="span3">
+          <xsl:call-template name="sidebar">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPostfix" select="'before-content'" />
+          </xsl:call-template>
+        </div>
+        <div class="span9">
+          <xsl:call-template name="before-content-hook-before">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+          <xsl:call-template name="fluid-box-groups">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPrefix" select="'before-content'" />
+          </xsl:call-template>
+          <xsl:call-template name="before-content-hook-after">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two column layout: before-content and additional-before-content -->
     <xsl:when test="count($boxes/box[@group = 'additional-before-content']) &gt; 0">
       <div class="row-fluid">
         <div class="span9">
@@ -109,6 +184,7 @@
         </div>
       </div>
     </xsl:when>
+    <!-- one column layout: before-content -->
     <xsl:otherwise>
       <xsl:call-template name="before-content-hook-before">
         <xsl:with-param name="pageContent" select="$pageContent" />
@@ -139,6 +215,60 @@
   <xsl:param name="pageContent" />
 
   <xsl:choose>
+    <!-- three columns layout: sidebar-after-content, after-content and additional-after-content -->
+    <xsl:when test="count($boxes/box[@group = 'sidebar-after-content']) &gt; 0 and
+    count($boxes/box[@group = 'additional-after-content']) &gt; 0">
+      <div class="row-fluid">
+        <div class="span3">
+          <xsl:call-template name="sidebar">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPostfix" select="'after-content'" />
+          </xsl:call-template>
+        </div>
+        <div class="span6">
+          <xsl:call-template name="after-content-hook-before">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+          <xsl:call-template name="fluid-box-groups">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPrefix" select="'after-content'" />
+          </xsl:call-template>
+          <xsl:call-template name="after-content-hook-after">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+        </div>
+        <div class="span3">
+          <xsl:call-template name="additional">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPostfix" select="'after-content'" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two columns layout: sidebar-after-content and after-content -->
+    <xsl:when test="count($boxes/box[@group = 'sidebar-after-content']) &gt; 0">
+      <div class="row-fluid">
+        <div class="span3">
+          <xsl:call-template name="sidebar">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPostfix" select="'after-content'" />
+          </xsl:call-template>
+        </div>
+        <div class="span9">
+          <xsl:call-template name="after-content-hook-before">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+          <xsl:call-template name="fluid-box-groups">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="boxGroupPrefix" select="'after-content'" />
+          </xsl:call-template>
+          <xsl:call-template name="after-content-hook-after">
+            <xsl:with-param name="pageContent" select="$pageContent" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two columns layout: after-content and additional-after-content -->
     <xsl:when test="count($boxes/box[@group = 'additional-after-content']) &gt; 0">
       <div class="row-fluid">
         <div class="span9">
@@ -161,6 +291,7 @@
         </div>
       </div>
     </xsl:when>
+    <!-- one column layout: after-content -->
     <xsl:otherwise>
       <xsl:call-template name="after-content-hook-before">
         <xsl:with-param name="pageContent" select="$pageContent" />
@@ -334,30 +465,38 @@
       </xsl:call-template>
       <div class="container">
         <xsl:choose>
-          <!-- three column layout : sidebar-navigation, content, additional -->
-          <xsl:when test="count(boxes/box[@group = 'sidebar-navigation']) &gt; 0 and
+          <!-- three column layout : sidebar(-navigation), content, additional -->
+          <xsl:when test="(count(boxes/box[@group = 'sidebar-navigation']) &gt; 0 or
+            count(boxes/box[@group = 'sidebar']) &gt; 0) and
           count(boxes/box[@group = 'additional']) &gt; 0">
             <div class="row-fluid">
-              <div class="span4">
+              <div class="span3">
                 <xsl:call-template name="sidebar-navigation">
                   <xsl:with-param name="boxes" select="boxes" />
                 </xsl:call-template>
+                <xsl:call-template name="sidebar">
+                  <xsl:with-param name="boxes" select="boxes" />
+                </xsl:call-template>
               </div>
-              <div class="span4">
+              <div class="span6">
                 <xsl:call-template name="content" />
               </div>
-              <div class="span4">
+              <div class="span3">
                 <xsl:call-template name="additional">
                   <xsl:with-param name="boxes" select="boxes" />
                 </xsl:call-template>
               </div>
             </div>
           </xsl:when>
-          <!-- two column layout : sidebar-navigation, content -->
-          <xsl:when test="count(boxes/box[@group = 'sidebar-navigation']) &gt; 0">
+          <!-- two column layout : sidebar(-navigation), content -->
+          <xsl:when test="count(boxes/box[@group = 'sidebar-navigation']) &gt; 0 or
+          count(boxes/box[@group = 'sidebar']) &gt; 0">
             <div class="row-fluid">
               <div class="span3">
                 <xsl:call-template name="sidebar-navigation">
+                  <xsl:with-param name="boxes" select="boxes" />
+                </xsl:call-template>
+                <xsl:call-template name="sidebar">
                   <xsl:with-param name="boxes" select="boxes" />
                 </xsl:call-template>
               </div>
