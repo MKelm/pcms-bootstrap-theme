@@ -17,17 +17,29 @@
 <xsl:param name="LANGUAGE_TEXTS_FALLBACK" select="document('../en-US.xml')"/>
 
 <xsl:template name="navigation">
+  <xsl:param name="sidebar" select="false()" />
+
   <xsl:if test="count(mapitem) &gt; 0">
-    <ul class="nav">
-      <xsl:for-each select="mapitem">
-        <xsl:call-template name="navigation-item" />
-      </xsl:for-each>
-    </ul>
+    <xsl:choose>
+      <xsl:when test="$sidebar = false()">
+        <ul class="nav">
+          <xsl:for-each select="mapitem">
+            <xsl:call-template name="navigation-item" />
+          </xsl:for-each>
+        </ul>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:for-each select="mapitem">
+          <xsl:call-template name="navigation-item" />
+        </xsl:for-each>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:if>
 </xsl:template>
 
 <xsl:template name="navigation-item">
 	<xsl:param name="level" select="'1'"/>
+
   <li>
     <xsl:choose>
       <xsl:when test="$level &gt; 1 and count(mapitem) &gt; 0 and (@focus or .//@focus)">
