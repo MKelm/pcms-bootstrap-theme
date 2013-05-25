@@ -6,7 +6,7 @@
 
     <xsl:choose>
       <xsl:when test="count($pageContent/details/group) &gt; 0">
-        <div class="hero-unit">
+        <div class="hero-unit surfer">
           <xsl:call-template name="module-content-acommunity-surfer-page-base-details">
             <xsl:with-param name="baseDetails" select="$pageContent/details/group[@id = 0]" />
             <xsl:with-param name="pageContent" select="$pageContent" />

@@ -8,6 +8,9 @@ div.sidebar-nav {
 div.additional-box:not(:last-child) {
   margin-bottom: 30px;
 }
+.hero-unit {
+  padding: 30px;
+}
 img.hero-image.pull-left {
   margin-right: 20px;
   margin-top: 10px;
@@ -52,7 +55,9 @@ form .control-group.required label.control-label:after {
   content: ' *';
   display:inline;
 }
-/* styles for surfer details */
+/* styles for surfer details
+ * note use a surfer avatar thumbnail with 180x180 pixels
+ * */
 div.surfer-details {
   font-size: 0.8em;
 }
@@ -64,4 +69,7 @@ div.surfer-details ul.unstyled li {
 }
 div.surfer-details-dynamic {
   margin-bottom: 30px;
+}
+div.hero-unit.surfer {
+  margin-bottom: 10px;
 }
