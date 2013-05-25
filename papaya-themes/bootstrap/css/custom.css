@@ -8,11 +8,11 @@ div.sidebar-nav {
 div.additional-box:not(:last-child) {
   margin-bottom: 30px;
 }
-img.heroImage.pull-left {
+img.hero-image.pull-left {
   margin-right: 20px;
   margin-top: 10px;
 }
-img.heroImage.pull-right {
+img.hero-image.pull-right {
   margin-left: 20px;
   margin-top: 10px;
 }
@@ -36,4 +36,14 @@ form .control-group.required label.control-label:after {
   color: #e32;
   content: ' *';
   display:inline;
+}
+/* styles for surfer details */
+div.surfer-details {
+  font-size: 0.8em;
+}
+div.surfer-details ul.inline li {
+  padding-left: 0px;
+}
+div.surfer-details ul.unstyled li {
+  line-height: 1.2em;
 }

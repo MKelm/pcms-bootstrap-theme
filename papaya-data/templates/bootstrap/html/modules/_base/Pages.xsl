@@ -19,15 +19,14 @@
     <xsl:param name="withText" select="true()"/>
 
     <div class="hero-unit">
-
       <xsl:choose>
         <xsl:when test="$pageContent/image[@align='left']//img">
-          <img class="heroImage thumbnail pull-left">
+          <img class="hero-image thumbnail pull-left">
             <xsl:copy-of select="$pageContent/image//img/@*[local-name() != 'class']" />
           </img>
         </xsl:when>
         <xsl:when test="$pageContent/image[@align='right']//img">
-          <img class="heroImage thumbnail pull-right">
+          <img class="hero-image thumbnail pull-right">
             <xsl:copy-of select="$pageContent/image//img/@*[local-name() != 'class']" />
           </img>
         </xsl:when>
@@ -45,7 +44,6 @@
         <xsl:apply-templates select="$pageContent/text/*|$pageContent/text/text()" />
       </xsl:if>
     </div>
-
   </xsl:template>
 
 </xsl:stylesheet>
