@@ -62,14 +62,14 @@
       <xsl:otherwise>additional</xsl:otherwise>
     </xsl:choose>
   </xsl:variable>
-  <div class="additional-box">
-    <xsl:for-each select="$boxes/box[@group = $boxGroupName]">
+  <xsl:for-each select="$boxes/box[@group = $boxGroupName]">
+    <div class="additional-box">
       <xsl:if test="@title and @title != ''">
         <h4><xsl:value-of select="@title" /></h4>
       </xsl:if>
       <xsl:value-of select="." disable-output-escaping="yes" />
-    </xsl:for-each>
-  </div>
+    </div>
+  </xsl:for-each>
 </xsl:template>
 
 <xsl:template name="before-content">
