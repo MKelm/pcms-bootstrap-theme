@@ -29,13 +29,178 @@
           <xsl:with-param name="text" select="'PROJECT_NAME'"/>
         </xsl:call-template></a>
         <div class="nav-collapse collapse">
-          <xsl:for-each select="boxes/box[@group = 'header-navigation']">
+          <xsl:for-each select="$boxes/box[@group = 'header-navigation']">
             <xsl:value-of select="." disable-output-escaping="yes" />
           </xsl:for-each>
         </div>
       </div>
     </div>
   </div>
+</xsl:template>
+
+<xsl:template name="sidebar-navigation">
+  <xsl:param name="boxes" />
+
+  <div class="sidebar-nav well">
+    <ul class="nav nav-list">
+      <xsl:for-each select="$boxes/box[@group = 'sidebar-navigation']">
+        <xsl:if test="@title and @title != ''">
+          <li class="nav-header"><xsl:value-of select="@title" /></li>
+        </xsl:if>
+        <xsl:value-of select="." disable-output-escaping="yes" />
+      </xsl:for-each>
+    </ul>
+  </div>
+</xsl:template>
+
+<xsl:template name="before-content">
+  <xsl:param name="boxes" />
+
+  <xsl:call-template name="fluid-box-groups">
+    <xsl:with-param name="boxes" select="$boxes" />
+    <xsl:with-param name="boxGroupPrefix" select="'before-content'" />
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template name="after-content">
+  <xsl:param name="boxes" />
+
+  <xsl:call-template name="fluid-box-groups">
+    <xsl:with-param name="boxes" select="$boxes" />
+    <xsl:with-param name="boxGroupPrefix" select="'after-content'" />
+  </xsl:call-template>
+</xsl:template>
+
+<xsl:template name="fluid-box-group-with-titles">
+  <xsl:param name="boxes" />
+  <xsl:param name="groupName" />
+
+  <xsl:for-each select="$boxes/box[@group = $groupName]">
+    <xsl:if test="@title and @title != ''">
+      <h2><xsl:value-of select="@title" /></h2>
+    </xsl:if>
+    <xsl:value-of select="." disable-output-escaping="yes" />
+  </xsl:for-each>
+</xsl:template>
+
+<xsl:template name="fluid-box-groups">
+  <xsl:param name="boxes" />
+  <xsl:param name="boxGroupPrefix" />
+
+  <xsl:choose>
+    <!-- three column layout : left, middle, right -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-left')]) &gt; 0 and
+    count($boxes/box[@group = concat($boxGroupPrefix, '-middle')]) &gt; 0 and
+    count($boxes/box[@group = concat($boxGroupPrefix, '-right')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span4">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-left')" />
+          </xsl:call-template>
+        </div>
+        <div class="span4">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-middle')" />
+          </xsl:call-template>
+        </div>
+        <div class="span4">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-right')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two column layout : left, right -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-left')]) &gt; 0 and
+    count($boxes/box[@group = concat($boxGroupPrefix, '-right')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span6">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-left')" />
+          </xsl:call-template>
+        </div>
+        <div class="span6">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-right')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two column layout : left, middle -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-left')]) &gt; 0 and
+    count($boxes/box[@group = concat($boxGroupPrefix, '-middle')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span6">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-left')" />
+          </xsl:call-template>
+        </div>
+        <div class="span6">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-middle')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- two column layout : middle, right -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-middle')]) &gt; 0 and
+    count($boxes/box[@group = concat($boxGroupPrefix, '-right')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span6">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-middle')" />
+          </xsl:call-template>
+        </div>
+        <div class="span6">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-right')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- one column layout : middle -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-middle')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span12">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-middle')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- one column layout : left -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-left')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span12">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-left')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+    <!-- one column layout : right -->
+    <xsl:when test="count($boxes/box[@group = concat($boxGroupPrefix, '-right')]) &gt; 0">
+      <div class="row-fluid">
+        <div class="span12">
+          <xsl:call-template name="fluid-box-group-with-titles">
+            <xsl:with-param name="boxes" select="$boxes" />
+            <xsl:with-param name="groupName" select="concat($boxGroupPrefix, '-right')" />
+          </xsl:call-template>
+        </div>
+      </div>
+    </xsl:when>
+  </xsl:choose>
 </xsl:template>
 
 <xsl:template name="page">
@@ -49,9 +214,39 @@
         <xsl:with-param name="boxes" select="boxes" />
       </xsl:call-template>
       <div class="container">
-        <xsl:call-template name="content-area">
-          <xsl:with-param name="pageContent" select="content/topic" />
-        </xsl:call-template>
+        <xsl:choose>
+          <xsl:when test="count(boxes/box[@group = 'sidebar-navigation']) &gt; 0">
+            <div class="row-fluid">
+              <div class="span3">
+                <xsl:call-template name="sidebar-navigation">
+                  <xsl:with-param name="boxes" select="boxes" />
+                </xsl:call-template>
+              </div>
+              <div class="span9">
+                <xsl:call-template name="before-content">
+                  <xsl:with-param name="boxes" select="boxes" />
+                </xsl:call-template>
+                <xsl:call-template name="content-area">
+                  <xsl:with-param name="pageContent" select="content/topic" />
+                </xsl:call-template>
+                <xsl:call-template name="after-content">
+                  <xsl:with-param name="boxes" select="boxes" />
+                </xsl:call-template>
+              </div>
+            </div>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="before-content">
+              <xsl:with-param name="boxes" select="boxes" />
+            </xsl:call-template>
+            <xsl:call-template name="content-area">
+              <xsl:with-param name="pageContent" select="content/topic" />
+            </xsl:call-template>
+            <xsl:call-template name="after-content">
+              <xsl:with-param name="boxes" select="boxes" />
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
         <xsl:call-template name="footer" />
       </div>
       <xsl:call-template name="page-scripts-lazy" />
