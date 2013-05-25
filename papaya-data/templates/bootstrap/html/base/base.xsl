@@ -231,8 +231,7 @@
 <xsl:template name="papaya-styles">
   <xsl:call-template name="link-style">
     <xsl:with-param name="files">
-      <file>css/bootstrap.css</file>
-      <file>css/bootstrap-responsive.css</file>
+      <file>css/bootstrap.min.css</file>
       <file>css/custom.css</file>
     </xsl:with-param>
   </xsl:call-template>
@@ -246,19 +245,8 @@
 <xsl:template name="papaya-scripts-lazy">
   <xsl:call-template name="link-script">
     <xsl:with-param name="files">
-      <file>js/jquery.js</file>
-      <file>js/bootstrap-transition.js</file>
-      <file>js/bootstrap-alert.js</file>
-      <file>js/bootstrap-modal.js</file>
-      <file>js/bootstrap-dropdown.js</file>
-      <file>js/bootstrap-scrollspy.js</file>
-      <file>js/bootstrap-tab.js</file>
-      <file>js/bootstrap-tooltip.js</file>
-      <file>js/bootstrap-popover.js</file>
-      <file>js/bootstrap-button.js</file>
-      <file>js/bootstrap-collapse.js</file>
-      <file>js/bootstrap-carousel.js</file>
-      <file>js/bootstrap-typeahead.js</file>
+      <file>js/jquery-2.0.1.min.js</file>
+      <file>js/bootstrap.min.js</file>
     </xsl:with-param>
   </xsl:call-template>
   <xsl:call-template name="papaya-scripts-boxes-lazy" />
