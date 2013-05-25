@@ -25,6 +25,11 @@ form img.uploaded-image-file {
 form .controls button:first-child + button {
   margin-left: 10px;
 }
+div.comment .voting {
+  position: relative;
+  top: -4px;
+  left: -4px;
+}
 div.comment small.votes-score {
   position: relative;
   top: 4px;

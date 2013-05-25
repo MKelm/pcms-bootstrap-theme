@@ -7,6 +7,24 @@
   <xsl:param name="LANGUAGE_MODULE_CURRENT" select="document(concat('../../', $PAGE_LANGUAGE, '.xml'))" />
   <xsl:param name="LANGUAGE_MODULE_FALLBACK" select="document('../../en-US.xml')"/>
 
+  <xsl:template name="acommunity-comments-dialog">
+    <xsl:param name="dialog" />
+    <xsl:param name="dialogMessage" />
+    <xsl:param name="parentAnchor" />
+
+    <xsl:call-template name="dialog">
+      <xsl:with-param name="dialog" select="$dialog" />
+      <xsl:with-param name="inputSize" select="'xxlarge'" />
+      <xsl:with-param name="parentAnchor" select="$parentAnchor" />
+    </xsl:call-template>
+    <xsl:if test="$dialogMessage and $dialogMessage != ''">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="type" select="'error'" />
+        <xsl:with-param name="message" select="$dialogMessage" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template name="acommunity-comments">
     <xsl:param name="commandName" select="'reply'" />
     <xsl:param name="commandCommentId" select="0" />
@@ -17,28 +35,21 @@
     <xsl:param name="indent" select="false()" />
     <xsl:param name="parentAnchor" select="''" />
 
-    <xsl:if test="$dialogMessage and $dialogMessage != ''">
-      <xsl:call-template name="alert">
-        <xsl:with-param name="type" select="'error'" />
-        <xsl:with-param name="message" select="$dialogMessage" />
-      </xsl:call-template>
-    </xsl:if>
-
     <xsl:choose>
       <xsl:when test="$commentId = 0 and $commandName = 'reply' and $commandCommentId = $commentId">
-        <xsl:call-template name="dialog">
+        <xsl:call-template name="acommunity-comments-dialog">
           <xsl:with-param name="dialog" select="$dialog" />
-          <xsl:with-param name="inputSize" select="'xxlarge'" />
+          <xsl:with-param name="dialogMessage" select="$dialogMessage" />
           <xsl:with-param name="parentAnchor" select="$parentAnchor" />
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="count($comments/comment) = 0 and $commentId &gt; 0 and $commandCommentId = $commentId">
         <div class="media comment">
-          <xsl:call-template name="dialog">
-            <xsl:with-param name="dialog" select="$dialog" />
-            <xsl:with-param name="inputSize" select="'xxlarge'" />
-            <xsl:with-param name="parentAnchor" select="$parentAnchor" />
-          </xsl:call-template>
+          <xsl:call-template name="acommunity-comments-dialog">
+          <xsl:with-param name="dialog" select="$dialog" />
+          <xsl:with-param name="dialogMessage" select="$dialogMessage" />
+          <xsl:with-param name="parentAnchor" select="$parentAnchor" />
+        </xsl:call-template>
         </div>
       </xsl:when>
     </xsl:choose>
@@ -47,9 +58,9 @@
       <xsl:for-each select="$comments/comment">
         <div class="media comment">
           <xsl:if test="position() = 1 and $commentId &gt; 0 and $commandName = 'reply' and $commandCommentId = $commentId">
-            <xsl:call-template name="dialog">
+            <xsl:call-template name="acommunity-comments-dialog">
               <xsl:with-param name="dialog" select="$dialog" />
-              <xsl:with-param name="inputSize" select="'xxlarge'" />
+              <xsl:with-param name="dialogMessage" select="$dialogMessage" />
               <xsl:with-param name="parentAnchor" select="$parentAnchor" />
             </xsl:call-template>
           </xsl:if>
@@ -119,7 +130,7 @@
     <xsl:param name="anchor" />
     <xsl:param name="previousAnchor" />
 
-    <ul class="inline pull-left">
+    <ul class="voting inline pull-left">
       <li>
         <div class="btn-toolbar">
           <div class="btn-group">
