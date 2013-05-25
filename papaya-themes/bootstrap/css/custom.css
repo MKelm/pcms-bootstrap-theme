@@ -2,6 +2,9 @@ body {
   padding-top: 75px;
   padding-bottom: 40px;
 }
+div.sidebar-nav {
+  padding: 9px 0;
+}
 img.heroImage.pull-left {
   margin-right: 20px;
   margin-top: 10px;
