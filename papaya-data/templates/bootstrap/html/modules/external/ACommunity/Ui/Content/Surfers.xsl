@@ -27,11 +27,9 @@
         <xsl:call-template name="acommunity-surfers-filter-navigation">
           <xsl:with-param name="content" select="$content/filter-navigation" />
         </xsl:call-template>
-        <!-- todo use base/dialogs.xsl
-        <xsl:call-template name="acommunity-content-dialog">
+        <xsl:call-template name="dialog">
           <xsl:with-param name="dialog" select="$content/search/dialog-box" />
-          <xsl:with-param name="className" select="'dialogSurfersSearch'" />
-        </xsl:call-template> -->
+        </xsl:call-template>
         <xsl:call-template name="acommunity-surfers-surfer">
           <xsl:with-param name="content" select="$content" />
           <xsl:with-param name="surferSingleLine" select="$surferSingleLine" />
