@@ -25,6 +25,16 @@ form img.uploaded-image-file {
 form .controls button:first-child + button {
   margin-left: 10px;
 }
+div.comment small.votes-score {
+  position: relative;
+  top: 4px;
+}
+div.comment .btn-toolbar {
+  margin: 0px;
+}
+div.comment .thumbnails .thumbnail {
+  margin-right: 8px;
+}
 /* surfer-status-image needs a cropped thumbail of 20x20 pixels */
 img.surfer-status-image {
   margin-right: 5px;
@@ -46,4 +56,7 @@ div.surfer-details ul.inline li {
 }
 div.surfer-details ul.unstyled li {
   line-height: 1.2em;
+}
+div.surfer-details-dynamic {
+  margin-bottom: 30px;
 }

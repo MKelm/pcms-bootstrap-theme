@@ -3,4 +3,7 @@
   <text ident="SURFER_NAV_PROFILE_LINK">Profile</text>
   <text ident="SURFER_NAV_CONTACTS_HEADER">Contacts</text>
   <text ident="SURFER_NAV_NOTIFICATIONS_HEADER">Notifications</text>
+
+  <text ident="VOTES_SCORE_POINT">Point</text>
+  <text ident="VOTES_SCORE_POINTS">Points</text>
 </texts>

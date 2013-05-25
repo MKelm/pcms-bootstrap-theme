@@ -1,11 +1,23 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <xsl:import href="./Ui/Content/Comments.xsl"/>
   <xsl:import href="./Ui/Content/Surfers.xsl"/>
+  <xsl:import href="../../../base/dialogs.xsl"/>
 
   <xsl:param name="PAGE_LANGUAGE"></xsl:param>
   <xsl:param name="LANGUAGE_MODULE_CURRENT" select="document(concat($PAGE_LANGUAGE, '.xml'))" />
   <xsl:param name="LANGUAGE_MODULE_FALLBACK" select="document('en-US.xml')"/>
+
+  <xsl:template match="acommunity-comments">
+    <xsl:call-template name="acommunity-comments">
+      <xsl:with-param name="commandName" select="command/@name" />
+      <xsl:with-param name="commandCommentId" select="command/@comment_id" />
+      <xsl:with-param name="comments" select="comments" />
+      <xsl:with-param name="dialog" select="dialog-box" />
+      <xsl:with-param name="dialogMessage" select="dialog-message" />
+    </xsl:call-template>
+  </xsl:template>
 
   <xsl:template match="acommunity-surfer-status">
     <xsl:choose>

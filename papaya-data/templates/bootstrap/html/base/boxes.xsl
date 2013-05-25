@@ -94,4 +94,22 @@
   <div class="clearfix"><xsl:text> </xsl:text></div>
 </xsl:template>
 
+<xsl:template name="alert">
+  <xsl:param name="type" />
+  <xsl:param name="message" />
+  <xsl:param name="title" select="false()"/>
+
+  <div class="alert">
+    <xsl:attribute name="class">
+      <xsl:choose>
+        <xsl:when test="$type = 'error'">alert alert-error</xsl:when>
+        <xsl:when test="$type = 'success'">alert alert-success</xsl:when>
+        <xsl:otherwise>alert alert-info</xsl:otherwise>
+      </xsl:choose>
+    </xsl:attribute>
+    <button type="button" class="close" data-dismiss="alert">&#215;</button>
+    <xsl:value-of select="$message" />
+  </div>
+</xsl:template>
+
 </xsl:stylesheet>
