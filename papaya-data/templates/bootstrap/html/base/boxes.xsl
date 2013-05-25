@@ -54,6 +54,9 @@
       <xsl:when test="$level = 1 and count(mapitem) &gt; 0 and (@focus or .//@focus)">
         <xsl:attribute name="class">dropdown active</xsl:attribute>
       </xsl:when>
+      <xsl:when test="$level = 1 and count(mapitem) &gt; 0">
+        <xsl:attribute name="class">dropdown</xsl:attribute>
+      </xsl:when>
     </xsl:choose>
 	  <a href="{@href}">
       <!-- copy data attributes -->
