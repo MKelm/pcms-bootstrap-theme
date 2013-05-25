@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
+  <xsl:import href="./Ui/Content/Surfers.xsl"/>
+
   <xsl:param name="PAGE_LANGUAGE"></xsl:param>
   <xsl:param name="LANGUAGE_MODULE_CURRENT" select="document(concat($PAGE_LANGUAGE, '.xml'))" />
   <xsl:param name="LANGUAGE_MODULE_FALLBACK" select="document('en-US.xml')"/>
@@ -50,8 +52,15 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- replace a tags in header navigation surfer status box -->
   <xsl:template match="message[@type = 'no-login']/a">
     <a class="navbar-link" href="{@href}"><xsl:value-of select="." /></a>
+  </xsl:template>
+
+  <xsl:template match="acommunity-surfers">
+    <xsl:call-template name="acommunity-surfers">
+      <xsl:with-param name="content" select="." />
+    </xsl:call-template>
   </xsl:template>
 
 </xsl:stylesheet>
