@@ -30,7 +30,7 @@
 
     <h1><xsl:value-of select="$baseDetails/detail[@name = 'name']" /></h1>
 
-    <div class="surfer-details">
+    <div class="surfer-details pull-left">
       <ul class="inline">
         <li><xsl:value-of select="$baseDetails/detail[@name = 'gender']/@caption" />: <xsl:value-of select="$baseDetails/detail[@name = 'gender']" /></li>
         <li><xsl:value-of select="$baseDetails/detail[@name = 'group']/@caption" />: <xsl:value-of select="$baseDetails/detail[@name = 'group']" /></li>
@@ -64,6 +64,10 @@
         <li><a href="mailto:{$baseDetails/detail[@name = 'email']}"><xsl:value-of select="$baseDetails/detail[@name = 'email']/@caption" /></a></li>
       </ul>
     </div>
+    <xsl:call-template name="inner-content-hook">
+      <xsl:with-param name="additionalCssClass" select="'pull-right'" />
+    </xsl:call-template>
+    <xsl:call-template name="float-fix" />
   </xsl:template>
 
   <xsl:template name="module-content-acommunity-surfer-page-contact">
