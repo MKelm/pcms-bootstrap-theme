@@ -22,7 +22,7 @@
                 </xsl:attribute>
                 <xsl:choose>
                   <xsl:when test="@type and @type = 'first'">
-                    <xsl:text>&#171; &#171;</xsl:text>
+                    <xsl:text>&#171;&#171;</xsl:text>
                   </xsl:when>
                   <xsl:when test="@type and @type = 'previous'">
                     <xsl:text>&#171;</xsl:text>
@@ -31,7 +31,7 @@
                     <xsl:text>&#187;</xsl:text>
                   </xsl:when>
                   <xsl:when test="@type and @type = 'last'">
-                    <xsl:text>&#187; &#187;</xsl:text>
+                    <xsl:text>&#187;&#187;</xsl:text>
                   </xsl:when>
                   <xsl:otherwise>
                     <xsl:value-of select="@number" />
