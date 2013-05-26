@@ -73,6 +73,11 @@ div.surfer-details-dynamic {
 div.hero-unit.surfer {
   margin-bottom: 10px;
 }
+/**
+ * gallery teaser in different areas
+ * use 240x240 thums in sidebar
+ * use 100x100 thumbs in content and inner-content
+ */
 .sidebar-box .gallery-teaser img.thumbnail,
 .additional-box .gallery-teaser img.thumbnail {
   margin-bottom: 10px;
@@ -81,4 +86,14 @@ div.hero-unit.surfer {
   text-align: center;
   width: 100%;
   margin-bottom: 10px;
+}
+.inner-content .gallery-teaser {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  width: auto;
+}
+.inner-content .gallery-teaser li.more-link {
+  /* display: none; */
+  position: relative;
+  top: -50px;
 }

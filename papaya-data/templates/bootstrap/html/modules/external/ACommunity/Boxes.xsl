@@ -97,12 +97,16 @@
           <li><a href="{$moreImagesLink}"><img class="thumbnail" src="{@src}" alt="" /></a></li>
         </xsl:for-each>
         <xsl:if test="more-images-link/@href">
-          <li class="text-center"><a class="more-link" href="{more-images-link/@href}"><xsl:value-of select="more-images-link" /></a></li>
+          <li class="more-link"><a href="{more-images-link/@href}"><xsl:value-of select="more-images-link" disable-output-escaping="yes" /></a></li>
         </xsl:if>
       </ul>
     </xsl:if>
     <xsl:if test="add-new-images-link/@href">
-      <a class="new-images-link" href="{add-new-images-link/@href}"><xsl:value-of select="add-new-images-link" /></a>
+      <ul class="unstyled gallery-teaser">
+        <li class="new-images-linK">
+          <a href="{add-new-images-link/@href}"><xsl:value-of select="add-new-images-link" /></a>
+        </li>
+      </ul>
     </xsl:if>
   </xsl:template>
 
