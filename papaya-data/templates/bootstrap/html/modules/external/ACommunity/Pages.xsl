@@ -3,6 +3,7 @@
 
   <xsl:import href="./Ui/Content/Surfer.xsl"/>
   <xsl:import href="./Ui/Content/Surfer/Editor.xsl"/>
+  <xsl:import href="./Ui/Content/Surfer/Gallery.xsl"/>
 
   <xsl:template name="page-styles">
   </xsl:template>
@@ -30,6 +31,11 @@
       </xsl:when>
       <xsl:when test="$pageContent/@module = 'ACommunitySurferEditorPage'">
         <xsl:call-template name="module-content-community-profile">
+          <xsl:with-param name="pageContent" select="$pageContent"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunitySurferGalleryPage'">
+        <xsl:call-template name="module-content-image-gallery">
           <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
       </xsl:when>

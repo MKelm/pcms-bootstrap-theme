@@ -97,3 +97,15 @@ div.hero-unit.surfer {
   position: relative;
   top: -50px;
 }
+/* gallery */
+.content .gallery {
+  text-align: center;
+}
+.content .gallery .row-fluid .thumbnail,
+.content .gallery .single-image .thumbnail {
+  margin: 0 auto;
+}
+.content .gallery .image-download,
+.content .gallery .original-image {
+  margin-top: 10px;
+}

@@ -6,4 +6,9 @@
 
   <text ident="VOTES_SCORE_POINT">Point</text>
   <text ident="VOTES_SCORE_POINTS">Points</text>
+
+  <text ident="GALLERY_NO_IMAGES">This gallery contains no images yet</text>
+  <text ident="GALLERY_INDEX">Index</text>
+  <text ident="GALLERY_ORIGINAL_IMAGE">Show original image</text>
+  <text ident="GALLERY_IMAGE_DOWNLOAD">Download original image</text>
 </texts>

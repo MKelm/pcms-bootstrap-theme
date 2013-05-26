@@ -6,4 +6,9 @@
 
   <text ident="VOTES_SCORE_POINT">Punkt</text>
   <text ident="VOTES_SCORE_POINTS">Punkte</text>
+
+  <text ident="GALLERY_NO_IMAGES">Bisher hat die Gallerie keine Bilder</text>
+  <text ident="GALLERY_INDEX">Index</text>
+  <text ident="GALLERY_ORIGINAL_IMAGE">Originalbild anzeigen</text>
+  <text ident="GALLERY_IMAGE_DOWNLOAD">Originalbild herunterladen</text>
 </texts>
