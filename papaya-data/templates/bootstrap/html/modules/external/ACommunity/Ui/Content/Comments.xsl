@@ -146,6 +146,9 @@
             </xsl:variable>
             <a class="{$buttonClass}">
               <xsl:if test="$commandLinks[@name = 'vote_up']">
+                <xsl:attribute name="title">
+                  <xsl:value-of select="$commandLinks[@name = 'vote_up']/@caption" />
+                </xsl:attribute>
                 <xsl:attribute name="href">
                   <xsl:value-of select="$commandLinks[@name = 'vote_up']" /><xsl:text>#</xsl:text>
                   <xsl:value-of select="$anchor" />
@@ -153,6 +156,9 @@
               </xsl:if><i class="icon-plus"><xsl:text> </xsl:text></i></a>
             <a class="{$buttonClass}">
               <xsl:if test="$commandLinks[@name = 'vote_down']">
+                <xsl:attribute name="title">
+                  <xsl:value-of select="$commandLinks[@name = 'vote_down']/@caption" />
+                </xsl:attribute>
                 <xsl:attribute name="href">
                   <xsl:value-of select="$commandLinks[@name = 'vote_down']" /><xsl:text>#</xsl:text>
                   <xsl:value-of select="$anchor" />
@@ -180,12 +186,12 @@
     </ul>
     <ul class="inline pull-right">
       <xsl:if test="$commandLinks[@name = 'reply']">
-        <li><a class="btn btn-mini" href="{$commandLinks[@name = 'reply']/text()}#{$anchor}">
+        <li><a class="btn btn-mini" href="{$commandLinks[@name = 'reply']}#{$anchor}">
           <i class="icon-pencil"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
           <xsl:value-of select="$commandLinks[@name = 'reply']/@caption" /></a></li>
       </xsl:if>
       <xsl:if test="$commandLinks[@name = 'delete']">
-        <li><a class="btn btn-mini" href="{$commandLinks[@name = 'delete']/text()}#{$previousAnchor}">
+        <li><a class="btn btn-mini" href="{$commandLinks[@name = 'delete']}#{$previousAnchor}">
           <i class="icon-remove"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
           <xsl:value-of select="$commandLinks[@name = 'delete']/@caption" /></a></li>
       </xsl:if>
