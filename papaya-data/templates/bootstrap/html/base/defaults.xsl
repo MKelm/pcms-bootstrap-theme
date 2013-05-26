@@ -555,8 +555,8 @@
           </xsl:choose>
           <xsl:call-template name="footer" />
         </div>
-        <xsl:call-template name="page-scripts-lazy" />
         <xsl:call-template name="papaya-scripts-lazy" />
+        <xsl:call-template name="page-scripts-lazy" />
       </body>
     </html>
   </xsl:template>
