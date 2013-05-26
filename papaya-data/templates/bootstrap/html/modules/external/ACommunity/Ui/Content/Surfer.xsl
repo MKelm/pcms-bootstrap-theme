@@ -109,47 +109,38 @@
 
   <xsl:template name="module-content-acommunity-surfer-page-detail-groups">
     <xsl:param name="groups" />
+    <xsl:param name="row" select="'1'" />
     <xsl:param name="rows" />
     <xsl:param name="fieldsPerRow" />
     <xsl:param name="position" select="'1'" />
 
-    <xsl:choose>
-      <xsl:when test="$position = 1 or ($position - 1 mod $fieldsPerRow = 0)">
-        <div class="row-fluid">
-          <xsl:call-template name="module-content-acommunity-surfer-page-details">
-            <xsl:with-param name="details" select="$groups[position() = $position]" />
-            <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
-          </xsl:call-template>
-          <xsl:if test="$position &lt; $rows * $fieldsPerRow">
-            <xsl:call-template name="module-content-acommunity-surfer-page-detail-groups">
-              <xsl:with-param name="groups" select="$groups" />
-              <xsl:with-param name="rows" select="$rows" />
-              <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
-              <xsl:with-param name="position" select="$position + 1" />
-            </xsl:call-template>
-          </xsl:if>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <xsl:call-template name="module-content-acommunity-surfer-page-details">
-          <xsl:with-param name="details" select="$groups[position() = $position]" />
+    <xsl:if test="$position = 1 or ($position mod $fieldsPerRow = 1)">
+      <div class="row-fluid">
+        <xsl:call-template name="module-content-acommunity-surfer-page-details-group">
+          <xsl:with-param name="groups" select="$groups" />
           <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+          <xsl:with-param name="position" select="$position" />
+          <xsl:with-param name="row" select="$row" />
         </xsl:call-template>
-        <xsl:if test="$position &lt; $rows * $fieldsPerRow">
-          <xsl:call-template name="module-content-acommunity-surfer-page-detail-groups">
-            <xsl:with-param name="groups" select="$groups" />
-            <xsl:with-param name="rows" select="$rows" />
-            <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
-            <xsl:with-param name="position" select="$position + 1" />
-          </xsl:call-template>
-        </xsl:if>
-      </xsl:otherwise>
-    </xsl:choose>
+      </div>
+    </xsl:if>
+
+    <xsl:if test="$row &lt; $rows">
+      <xsl:call-template name="module-content-acommunity-surfer-page-detail-groups">
+        <xsl:with-param name="groups" select="$groups" />
+        <xsl:with-param name="rows" select="$rows" />
+        <xsl:with-param name="row" select="$row + 1" />
+        <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+        <xsl:with-param name="position" select="$position + $fieldsPerRow" />
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
-  <xsl:template name="module-content-acommunity-surfer-page-details">
-    <xsl:param name="details" />
+  <xsl:template name="module-content-acommunity-surfer-page-details-group">
+    <xsl:param name="groups" />
     <xsl:param name="fieldsPerRow" />
+    <xsl:param name="position" />
+    <xsl:param name="row" />
 
     <div>
       <xsl:attribute name="class">
@@ -159,13 +150,22 @@
           <xsl:when test="$fieldsPerRow = 3">span4</xsl:when>
         </xsl:choose>
       </xsl:attribute>
-      <h2><xsl:value-of select="$details/@caption" /></h2>
+      <h2><xsl:value-of select="$groups[position() = $position]/@caption" /></h2>
       <ul class="unstyled">
-        <xsl:for-each select="$details/detail">
+        <xsl:for-each select="$groups[position() = $position]/detail">
           <li><xsl:value-of select="@caption" />: <xsl:value-of select="." /></li>
         </xsl:for-each>
       </ul>
     </div>
+
+    <xsl:if test="$position div $fieldsPerRow &lt; $row">
+      <xsl:call-template name="module-content-acommunity-surfer-page-details-group">
+        <xsl:with-param name="groups" select="$groups" />
+        <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+        <xsl:with-param name="position" select="$position + 1" />
+        <xsl:with-param name="row" select="$row" />
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
