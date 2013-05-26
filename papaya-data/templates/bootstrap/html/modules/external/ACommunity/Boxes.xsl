@@ -89,4 +89,21 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="acommunity-surfer-gallery-teaser">
+    <xsl:if test="add-new-images-link/@href or count(images/image) &gt; 0">
+      <ul class="inline gallery-teaser">
+        <xsl:variable name="moreImagesLink" select="more-images-link/@href" />
+        <xsl:for-each select="images/image">
+          <li><a href="{$moreImagesLink}"><img class="thumbnail" src="{@src}" alt="" /></a></li>
+        </xsl:for-each>
+        <xsl:if test="more-images-link/@href">
+          <li class="text-center"><a class="more-link" href="{more-images-link/@href}"><xsl:value-of select="more-images-link" /></a></li>
+        </xsl:if>
+      </ul>
+    </xsl:if>
+    <xsl:if test="add-new-images-link/@href">
+      <a class="new-images-link" href="{add-new-images-link/@href}"><xsl:value-of select="add-new-images-link" /></a>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>

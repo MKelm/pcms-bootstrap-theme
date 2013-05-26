@@ -68,8 +68,17 @@ div.surfer-details ul.unstyled li {
   line-height: 1.2em;
 }
 div.surfer-details-dynamic {
-  margin-bottom: 30px;
+  margin-bottom: 17px;
 }
 div.hero-unit.surfer {
+  margin-bottom: 10px;
+}
+.sidebar-box .gallery-teaser img.thumbnail,
+.additional-box .gallery-teaser img.thumbnail {
+  margin-bottom: 10px;
+}
+.content .gallery-teaser {
+  text-align: center;
+  width: 100%;
   margin-bottom: 10px;
 }
