@@ -29,6 +29,7 @@
     <xsl:param name="parentAnchor" select="''" />
     <xsl:param name="message" select="''" />
     <xsl:param name="search" select="false()" />
+    <xsl:param name="termsText" select="false()" />
 
     <xsl:if test="$message and $message != ''">
       <xsl:call-template name="alert">
@@ -102,6 +103,7 @@
           <xsl:with-param name="submitButton" select="$submitButton" />
           <xsl:with-param name="captions" select="$captions" />
           <xsl:with-param name="inputSize" select="$inputSize" />
+          <xsl:with-param name="termsText" select="$termsText" />
         </xsl:call-template>
       </form>
     </xsl:if>
@@ -120,6 +122,7 @@
     <xsl:param name="submitButton" select="false()" />
     <xsl:param name="captions" select="false()" />
     <xsl:param name="inputSize" select="false()" />
+    <xsl:param name="termsText" select="false()" />
 
     <xsl:if test="$title and $title != ''">
       <h2><xsl:value-of select="$title" /></h2>
@@ -159,9 +162,9 @@
               <legend><xsl:value-of select="@caption" /></legend>
             </xsl:if>
             <xsl:if test="line">
-              <xsl:for-each select="line">
+              <xsl:for-each select="line[@fid != 'terms']">
                 <xsl:choose>
-                  <xsl:when test="$horizontal = true() and search = false()">
+                  <xsl:when test="$horizontal = true() and $search = false()">
                     <xsl:call-template name="dialog-control-group">
                       <xsl:with-param name="line" select="." />
                       <xsl:with-param name="showMandatory" select="$showMandatory" />
@@ -179,9 +182,25 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
+              <xsl:if test="$horizontal = true() and $search = false()">
+                <xsl:for-each select="line[@fid = 'terms']">
+
+                </xsl:for-each>
+              </xsl:if>
             </xsl:if>
           </linegroup>
         </xsl:for-each>
+        <xsl:if test="$termsText and $dialog/lines//line[@fid = 'terms']">
+          <linegroup>
+            <legend><xsl:value-of select="$dialog/lines//line[@fid = 'terms']/@caption" /></legend>
+            <xsl:call-template name="dialog-control-group">
+              <xsl:with-param name="line" select="$dialog/lines//line[@fid = 'terms']" />
+              <xsl:with-param name="showMandatory" select="$showMandatory" />
+              <xsl:with-param name="inputSize" select="$inputSize" />
+              <xsl:with-param name="termsText" select="$termsText" />
+            </xsl:call-template>
+          </linegroup>
+        </xsl:if>
       </xsl:when>
       <xsl:when test="$dialog/element">
         <linegroup>
@@ -333,6 +352,7 @@
     <xsl:param name="captions" select="false()" />
     <xsl:param name="controlNamePrefix" select="''" />
     <xsl:param name="inputSize" select="false()" />
+    <xsl:param name="termsText" select="false()" />
 
     <xsl:variable name="controlId">
       <xsl:call-template name="dialog-control-id">
@@ -356,6 +376,9 @@
 
           <xsl:variable name="label">
             <xsl:choose>
+              <xsl:when test="$termsText">
+                <xsl:copy-of select="$termsText/node()" />
+              </xsl:when>
               <xsl:when test="$line/@caption and $line/@caption != ''">
                 <xsl:value-of select="$line/@caption" />
               </xsl:when>
@@ -745,7 +768,7 @@
           <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
         </xsl:if>
       </input>
-      <xsl:text> </xsl:text><xsl:value-of select="$label" />
+      <xsl:text> </xsl:text><xsl:copy-of select="$label" />
     </label>
   </xsl:template>
 
