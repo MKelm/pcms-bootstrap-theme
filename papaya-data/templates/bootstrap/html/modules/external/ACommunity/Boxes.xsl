@@ -115,12 +115,8 @@
       <xsl:with-param name="dialog" select="dialog-box" />
       <xsl:with-param name="inline" select="true()" />
       <xsl:with-param name="class" select="'gallery-upload-dialog'" />
+      <xsl:with-param name="message" select="dialog-message" />
     </xsl:call-template>
-    <xsl:if test="dialog-message">
-      <xsl:call-template name="alert">
-        <xsl:with-param name="message" select="dialog-message" />
-      </xsl:call-template>
-    </xsl:if>
   </xsl:template>
 
   <xsl:template match="acommunity-surfer-gallery-folders">
@@ -155,17 +151,55 @@
         </xsl:if>
       </ul>
     </xsl:if>
-    <xsl:if test="dialog-message">
-      <xsl:call-template name="alert">
-        <xsl:with-param name="message" select="dialog-message" />
-      </xsl:call-template>
-    </xsl:if>
     <xsl:call-template name="dialog">
       <xsl:with-param name="dialog" select="dialog-box" />
       <xsl:with-param name="inline" select="true()" />
       <xsl:with-param name="className" select="'add-folder-dialog'" />
       <xsl:with-param name="inputSize" select="'xxlarge'" />
+      <xsl:with-param name="message" select="dialog-message" />
     </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="acommunity-message-conversations">
+    <xsl:if test="message">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="message" />
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:if test="count(conversations/conversation) &gt; 0">
+      <xsl:for-each select="conversations/conversation">
+        <div class="media conversation">
+          <a class="pull-left" href="{messages-page-link}"><img class="media-object" alt="" src="{surfer-contact/@avatar}" /></a>
+          <div class="media-body">
+            <h4 class="media-heading"><a href="{messages-page-link}"><xsl:value-of select="surfer-contact/@name" /></a></h4>
+            <p><xsl:call-template name="acommunity-message-conversations-get-last-message-text">
+              <xsl:with-param name="text" select="last-message/text-raw" />
+              <xsl:with-param name="maxLength" select="last-message/@max-length" />
+            </xsl:call-template><br />
+            <small><xsl:call-template name="format-date-time">
+              <xsl:with-param name="dateTime" select="last-message/@time" />
+            </xsl:call-template></small></p>
+          </div>
+        </div>
+      </xsl:for-each>
+      <xsl:call-template name="acommunity-content-paging">
+        <xsl:with-param name="paging" select="conversations/paging" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="acommunity-message-conversations-get-last-message-text">
+    <xsl:param name="text" />
+    <xsl:param name="maxLength" />
+    <xsl:choose>
+      <xsl:when test="string-length($text) &gt; $maxLength">
+        <xsl:value-of select="substring($text, 1, $maxLength - 1)" /><xsl:text>...</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$text" />
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
 </xsl:stylesheet>
