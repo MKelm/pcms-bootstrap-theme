@@ -5,20 +5,18 @@
 
   <xsl:template name="acommunity-surfers">
     <xsl:param name="content" />
-    <xsl:param name="surferSingleLine" select="false()" />
+
     <xsl:choose>
       <xsl:when test="count($content/group) &gt; 0">
         <xsl:for-each select="$content/group">
           <a name="{@name}"><xsl:text> </xsl:text></a>
-          <div class="surfersGroup">
+          <div class="surfers-group">
             <h2><xsl:value-of select="@caption" /></h2>
             <xsl:call-template name="acommunity-surfers-surfer">
               <xsl:with-param name="content" select="." />
-              <xsl:with-param name="surferSingleLine" select="$surferSingleLine" />
             </xsl:call-template>
             <xsl:call-template name="acommunity-content-paging">
               <xsl:with-param name="paging" select="paging" />
-              <xsl:with-param name="additionalClass" select="'surfersPaging'" />
             </xsl:call-template>
           </div>
         </xsl:for-each>
@@ -32,11 +30,9 @@
         </xsl:call-template>
         <xsl:call-template name="acommunity-surfers-surfer">
           <xsl:with-param name="content" select="$content" />
-          <xsl:with-param name="surferSingleLine" select="$surferSingleLine" />
         </xsl:call-template>
         <xsl:call-template name="acommunity-content-paging">
           <xsl:with-param name="paging" select="$content/paging" />
-          <xsl:with-param name="additionalClass" select="'surfersPaging'" />
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -55,7 +51,6 @@
 
   <xsl:template name="acommunity-surfers-surfer">
     <xsl:param name="content" />
-    <xsl:param name="surferSingleLine" select="false()" />
 
     <xsl:choose>
       <xsl:when test="count($content/surfer) &gt; 0">
