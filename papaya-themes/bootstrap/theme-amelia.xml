@@ -5,8 +5,8 @@
   <author>Martin Kelm / bootswatch.com</author>
   <description>This is the amelia bootstrap theme.</description>
   <thumbs>
-    <thumb size="medium" src="bootstrap48.jpg" />
-    <thumb size="large" src="bootstrap100.jpg" />
+    <thumb size="medium" src="bootstrap-amelia48.jpg" />
+    <thumb size="large" src="bootstrap-amelia100.jpg" />
   </thumbs>
   <sub-theme>amelia</sub-theme>
   <templates directory="bootstrap" />
