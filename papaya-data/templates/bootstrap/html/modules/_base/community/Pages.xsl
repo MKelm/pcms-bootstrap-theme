@@ -170,25 +170,28 @@
             </p>
           </xsl:for-each>
         </xsl:if>
-        <div class="userRegistration">
-          <xsl:call-template name="dialog">
-            <xsl:with-param name="dialog" select="$pageContent/registerpage/dialog" />
-            <xsl:with-param name="terms" select="$pageContent/registerpage/terms" />
-          </xsl:call-template>
-        </div>
+
+        <xsl:call-template name="dialog">
+          <xsl:with-param name="dialog" select="$pageContent/registerpage/dialog" />
+          <xsl:with-param name="horizontal" select="true()" />
+          <xsl:with-param name="termsText" select="$pageContent/registerpage/terms" />
+          <xsl:with-param name="class" select="'surfer-registration-dialog'" />
+        </xsl:call-template>
       </xsl:when>
       <xsl:when test="$pageContent/registerpage/success|$pageContent/registerpage/message[@type='success']">
-        <div class="message">
-          <xsl:apply-templates select="$pageContent/registerpage/success/node()|$pageContent/registerpage/message[@type='success']/node()" />
-        </div>
+        <xsl:call-template name="alert">
+          <xsl:with-param name="message" select="$pageContent/registerpage/success|$pageContent/registerpage/message[@type='success']" />
+          <xsl:with-param name="type" select="'success'" />
+        </xsl:call-template>
         <xsl:if test="$pageContent/registerpage/text">
           <xsl:copy-of select="$pageContent/registerpage/text/*|$pageContent/registerpage/text/text()"/>
         </xsl:if>
       </xsl:when>
       <xsl:when test="$pageContent/registered">
-        <div class="message">
-          <xsl:apply-templates select="$pageContent/registered/node()" />
-        </div>
+        <xsl:call-template name="alert">
+          <xsl:with-param name="message" select="$pageContent/registered/node()" />
+          <xsl:with-param name="type" select="'success'" />
+        </xsl:call-template>
         <xsl:if test="$pageContent/registerpage/text">
           <xsl:copy-of select="$pageContent/registerpage/text/*|$pageContent/registerpage/text/text()"/>
         </xsl:if>
@@ -203,6 +206,7 @@
 
   <xsl:template name="content-message">
     <xsl:param name="pageContent" select="/page/content/topic" />
+
     <xsl:choose>
       <xsl:when test="$pageContent/error|$pageContent/message[@type = 'error']">
         <xsl:call-template name="alert">
