@@ -19,6 +19,7 @@
     <xsl:param name="legend" select="''" />
     <xsl:param name="id" select="''" />
     <xsl:param name="class" select="''" />
+    <xsl:param name="showButtons" select="true()" />
     <xsl:param name="showMandatory" select="true()" />
     <xsl:param name="horizontal" select="false()" />
     <xsl:param name="inline" select="false()" />
@@ -27,6 +28,7 @@
     <xsl:param name="inputSize" select="false()" />
     <xsl:param name="parentAnchor" select="''" />
     <xsl:param name="message" select="''" />
+    <xsl:param name="search" select="false()" />
 
     <xsl:if test="$message and $message != ''">
       <xsl:call-template name="alert">
@@ -73,6 +75,9 @@
           </xsl:choose>
         </xsl:variable>
         <xsl:choose>
+          <xsl:when test="$search = true()">
+            <xsl:attribute name="class">navbar-form<xsl:value-of select="$additionalClass" /></xsl:attribute>
+          </xsl:when>
           <xsl:when test="$horizontal = true()">
             <xsl:attribute name="class">form-horizontal<xsl:value-of select="$additionalClass" /></xsl:attribute>
           </xsl:when>
@@ -90,7 +95,10 @@
           <xsl:with-param name="legend" select="$legend" />
           <xsl:with-param name="id" select="$idVal" />
           <xsl:with-param name="horizontal" select="$horizontal" />
+          <xsl:with-param name="inline" select="$inline" />
+          <xsl:with-param name="search" select="$search" />
           <xsl:with-param name="showMandatory" select="$showMandatory" />
+          <xsl:with-param name="showButtons" select="$showButtons" />
           <xsl:with-param name="submitButton" select="$submitButton" />
           <xsl:with-param name="captions" select="$captions" />
           <xsl:with-param name="inputSize" select="$inputSize" />
@@ -105,7 +113,10 @@
     <xsl:param name="legend" />
     <xsl:param name="id" />
     <xsl:param name="horizontal" />
+    <xsl:param name="inline" />
+    <xsl:param name="search" />
     <xsl:param name="showMandatory" select="true()" />
+    <xsl:param name="showButtons" select="true()" />
     <xsl:param name="submitButton" select="false()" />
     <xsl:param name="captions" select="false()" />
     <xsl:param name="inputSize" select="false()" />
@@ -121,7 +132,7 @@
         <linegroup>
           <xsl:for-each select="$dialog/field">
             <xsl:choose>
-              <xsl:when test="$horizontal = true()">
+              <xsl:when test="$horizontal = true() and $search = false()">
                 <xsl:call-template name="dialog-control-group">
                   <xsl:with-param name="line" select="." />
                   <xsl:with-param name="showMandatory" select="$showMandatory" />
@@ -133,6 +144,8 @@
                   <xsl:with-param name="line" select="." />
                   <xsl:with-param name="showMandatory" select="$showMandatory" />
                   <xsl:with-param name="inputSize" select="$inputSize" />
+                  <xsl:with-param name="search" select="$search" />
+                  <xsl:with-param name="placeholder" select="$search = true()" />
                 </xsl:call-template>
               </xsl:otherwise>
             </xsl:choose>
@@ -148,7 +161,7 @@
             <xsl:if test="line">
               <xsl:for-each select="line">
                 <xsl:choose>
-                  <xsl:when test="$horizontal = true()">
+                  <xsl:when test="$horizontal = true() and search = false()">
                     <xsl:call-template name="dialog-control-group">
                       <xsl:with-param name="line" select="." />
                       <xsl:with-param name="showMandatory" select="$showMandatory" />
@@ -160,6 +173,8 @@
                       <xsl:with-param name="line" select="." />
                       <xsl:with-param name="showMandatory" select="$showMandatory" />
                       <xsl:with-param name="inputSize" select="$inputSize" />
+                      <xsl:with-param name="search" select="$search" />
+                      <xsl:with-param name="placeholder" select="$search = true()" />
                     </xsl:call-template>
                   </xsl:otherwise>
                 </xsl:choose>
@@ -177,7 +192,7 @@
           </xsl:variable>
           <xsl:for-each select="$dialog/element">
             <xsl:choose>
-              <xsl:when test="$horizontal = true()">
+              <xsl:when test="$horizontal = true() and search = false()">
                 <xsl:call-template name="dialog-control-group">
                   <xsl:with-param name="line" select="." />
                   <xsl:with-param name="isElement" select="true()" />
@@ -195,6 +210,8 @@
                   <xsl:with-param name="captions" select="$captions" />
                   <xsl:with-param name="controlNamePrefix" select="$controlNamePrefix" />
                   <xsl:with-param name="inputSize" select="$inputSize" />
+                  <xsl:with-param name="search" select="$search" />
+                  <xsl:with-param name="placeholder" select="$search = true()" />
                 </xsl:call-template>
               </xsl:otherwise>
             </xsl:choose>
@@ -203,25 +220,27 @@
       </xsl:when>
     </xsl:choose>
 
-    <xsl:choose>
-      <xsl:when test="$horizontal = true()">
-        <div class="control-group">
-          <div class="controls">
-            <xsl:call-template name="dialog-buttons">
-              <xsl:with-param name="dialog" select="$dialog" />
-              <xsl:with-param name="submitButton" select="$submitButton" />
-            </xsl:call-template>
+    <xsl:if test="$showButtons">
+      <xsl:choose>
+        <xsl:when test="$horizontal = true()">
+          <div class="control-group">
+            <div class="controls">
+              <xsl:call-template name="dialog-buttons">
+                <xsl:with-param name="dialog" select="$dialog" />
+                <xsl:with-param name="submitButton" select="$submitButton" />
+              </xsl:call-template>
+            </div>
           </div>
-        </div>
-      </xsl:when>
-      <xsl:otherwise>
-        <br />
-        <xsl:call-template name="dialog-buttons">
-          <xsl:with-param name="dialog" select="$dialog" />
-          <xsl:with-param name="submitButton" select="$submitButton" />
-        </xsl:call-template>
-      </xsl:otherwise>
-    </xsl:choose>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:if test="$inline = false() and $search = false()"><br /></xsl:if>
+          <xsl:call-template name="dialog-buttons">
+            <xsl:with-param name="dialog" select="$dialog" />
+            <xsl:with-param name="submitButton" select="$submitButton" />
+          </xsl:call-template>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:if>
   </xsl:template>
 
   <xsl:template name="dialog-buttons">
@@ -415,6 +434,8 @@
     <xsl:param name="captions" select="false()" />
     <xsl:param name="controlNamePrefix" select="''" />
     <xsl:param name="inputSize" select="false()" />
+    <xsl:param name="search" select="false()" />
+    <xsl:param name="placeholder" select="false()" />
 
     <xsl:variable name="controlId">
       <xsl:call-template name="dialog-control-id">
@@ -442,24 +463,26 @@
           </xsl:choose>
         </xsl:variable>
 
-        <xsl:choose>
-          <xsl:when test="$line/input[@type = 'radio'] and count($line/input[@type = 'radio']) &gt; 1">
-            <label for="{$controlId}">
-              <xsl:if test="$showMandatory">
-                <xsl:attribute name="class">required</xsl:attribute>
-              </xsl:if>
-              <xsl:value-of select="$label" />
-            </label>
-          </xsl:when>
-          <xsl:when test="not($line/input[@type = 'checkbox' or @type = 'radio']) and not($line[@type = 'checkbox' or @type = 'radio'])">
-            <label for="{$controlId}">
-              <xsl:if test="$showMandatory">
-                <xsl:attribute name="class">required</xsl:attribute>
-              </xsl:if>
-              <xsl:value-of select="$label" />
-            </label>
-          </xsl:when>
-        </xsl:choose>
+        <xsl:if test="$placeholder = false()">
+          <xsl:choose>
+            <xsl:when test="$line/input[@type = 'radio'] and count($line/input[@type = 'radio']) &gt; 1">
+              <label for="{$controlId}">
+                <xsl:if test="$showMandatory">
+                  <xsl:attribute name="class">required</xsl:attribute>
+                </xsl:if>
+                <xsl:value-of select="$label" />
+              </label>
+            </xsl:when>
+            <xsl:when test="not($line/input[@type = 'checkbox' or @type = 'radio']) and not($line[@type = 'checkbox' or @type = 'radio'])">
+              <label for="{$controlId}">
+                <xsl:if test="$showMandatory">
+                  <xsl:attribute name="class">required</xsl:attribute>
+                </xsl:if>
+                <xsl:value-of select="$label" />
+              </label>
+            </xsl:when>
+          </xsl:choose>
+        </xsl:if>
 
         <xsl:choose>
           <xsl:when test="$isElement = false()">
@@ -469,6 +492,8 @@
               <xsl:with-param name="label" select="$label" />
               <xsl:with-param name="image" select="$line/img" />
               <xsl:with-param name="inputSize" select="$inputSize" />
+              <xsl:with-param name="search" select="$search" />
+              <xsl:with-param name="placeholder" select="$placeholder" />
             </xsl:call-template>
             <xsl:if test="$line/@hint != ''">
               <span class="help-block"><xsl:value-of select="$line/@hint" /></span>
@@ -481,6 +506,8 @@
               <xsl:with-param name="label" select="$label" />
               <xsl:with-param name="namePrefix" select="$controlNamePrefix" />
               <xsl:with-param name="inputSize" select="$inputSize" />
+              <xsl:with-param name="search" select="$search" />
+              <xsl:with-param name="placeholder" select="$placeholder" />
             </xsl:call-template>
           </xsl:otherwise>
         </xsl:choose>
@@ -512,6 +539,8 @@
     <xsl:param name="image" select="false()" />
     <xsl:param name="namePrefix" select="''" />
     <xsl:param name="inputSize" select="false()" />
+    <xsl:param name="search" select="false()" />
+    <xsl:param name="placeholder" select="false()" />
 
     <xsl:variable name="name">
       <xsl:call-template name="dialog-control-name">
@@ -535,6 +564,7 @@
           <xsl:with-param name="controlId" select="$controlId" />
           <xsl:with-param name="name" select="$name" />
           <xsl:with-param name="inputSize" select="$inputSize" />
+          <xsl:with-param name="label" select="$label" />
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$control[@type = 'file']">
@@ -566,6 +596,9 @@
           <xsl:with-param name="controlId" select="$controlId" />
           <xsl:with-param name="name" select="$name" />
           <xsl:with-param name="inputSize" select="$inputSize" />
+          <xsl:with-param name="search" select="$search" />
+          <xsl:with-param name="placeholder" select="$placeholder" />
+          <xsl:with-param name="label" select="$label" />
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$control[@type = 'password']">
@@ -653,12 +686,29 @@
     <xsl:param name="controlId" select="generate-id($control)" />
     <xsl:param name="name" select="$control/@name" />
     <xsl:param name="inputSize" select="false()" />
+    <xsl:param name="placeholder" select="false()" />
+    <xsl:param name="search" select="false()" />
+    <xsl:param name="label" select="''" />
 
     <input type="text" name="{$name}">
       <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'maxlength' or name() = 'size' or name() = 'disabled']" />
       <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+      <xsl:choose>
+        <xsl:when test="$inputSize != false()">
+          <xsl:attribute name="class">
+            input-<xsl:value-of select="$inputSize" />
+            <xsl:if test="$search = true()"><xsl:text> </xsl:text>search-query</xsl:if>
+          </xsl:attribute>
+        </xsl:when>
+        <xsl:when test="$search = true()">
+          <xsl:attribute name="class">search-query</xsl:attribute>
+        </xsl:when>
+      </xsl:choose>
       <xsl:if test="$inputSize != false()">
         <xsl:attribute name="class">input-<xsl:value-of select="$inputSize" /></xsl:attribute>
+      </xsl:if>
+      <xsl:if test="$placeholder = true()">
+        <xsl:attribute name="placeholder"><xsl:value-of select="$label" /></xsl:attribute>
       </xsl:if>
     </input>
   </xsl:template>
@@ -683,11 +733,17 @@
     <xsl:param name="controlId" select="generate-id($control)" />
     <xsl:param name="name" select="$control/@name" />
     <xsl:param name="label" />
+    <xsl:param name="checked" select="false()" />
 
     <label class="checkbox">
       <input type="checkbox" name="{$name}">
         <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'checked']" />
-        <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+        <xsl:if test="$checked">
+          <xsl:attribute name="checked">checked</xsl:attribute>
+        </xsl:if>
+        <xsl:if test="$controlId != ''">
+          <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+        </xsl:if>
       </input>
       <xsl:text> </xsl:text><xsl:value-of select="$label" />
     </label>
@@ -728,20 +784,38 @@
     <xsl:param name="controlId" select="generate-id($control)" />
     <xsl:param name="name" select="$control/@name" />
     <xsl:param name="inputSize" select="false()" />
+    <xsl:param name="label" select="''" />
 
-    <select name="{$name}">
-      <xsl:copy-of select="$control/@*[name() = 'size' or name() = 'class']" />
-      <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
-      <xsl:if test="$inputSize != false()">
-        <xsl:attribute name="class">input-<xsl:value-of select="$inputSize" /></xsl:attribute>
-      </xsl:if>
-      <xsl:for-each select="$control/option">
-        <option>
-          <xsl:copy-of select="@*" />
-          <xsl:apply-templates select="./node()"/>
-        </option>
-      </xsl:for-each>
-    </select>
+    <xsl:choose>
+      <!-- support for new checkbox groups -->
+      <xsl:when test="$control/@type = 'checkboxes'">
+        <xsl:variable name="name" select="$control/@name" />
+        <xsl:for-each select="$control/option">
+          <xsl:call-template name="dialog-control-checkbox">
+            <xsl:with-param name="control" select="." />
+            <xsl:with-param name="controlId" select="''" />
+            <xsl:with-param name="name"><xsl:value-of select="$name" />[]</xsl:with-param>
+            <xsl:with-param name="label" select="./text()" />
+            <xsl:with-param name="checked" select="@selected = 'selected'" />
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <select name="{$name}">
+          <xsl:copy-of select="$control/@*[name() = 'size' or name() = 'class']" />
+          <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+          <xsl:if test="$inputSize != false()">
+            <xsl:attribute name="class">input-<xsl:value-of select="$inputSize" /></xsl:attribute>
+          </xsl:if>
+          <xsl:for-each select="$control/option">
+            <option>
+              <xsl:copy-of select="@*" />
+              <xsl:apply-templates select="./node()"/>
+            </option>
+          </xsl:for-each>
+        </select>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="dialog-control-textarea">
