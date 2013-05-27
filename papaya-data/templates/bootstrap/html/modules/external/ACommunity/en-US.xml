@@ -11,4 +11,5 @@
   <text ident="GALLERY_INDEX">Index</text>
   <text ident="GALLERY_ORIGINAL_IMAGE">Show original image</text>
   <text ident="GALLERY_IMAGE_DOWNLOAD">Download original image</text>
+  <text ident="GALLERY_DELETE_IMAGE">Delete</text>
 </texts>
