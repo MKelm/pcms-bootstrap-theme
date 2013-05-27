@@ -8,18 +8,20 @@
 
     <xsl:choose>
       <xsl:when test="count($content/group) &gt; 0">
-        <xsl:for-each select="$content/group">
-          <a name="{@name}"><xsl:text> </xsl:text></a>
-          <div class="surfers-group">
-            <h2><xsl:value-of select="@caption" /></h2>
-            <xsl:call-template name="acommunity-surfers-surfer">
-              <xsl:with-param name="content" select="." />
-            </xsl:call-template>
-            <xsl:call-template name="acommunity-content-paging">
-              <xsl:with-param name="paging" select="paging" />
-            </xsl:call-template>
-          </div>
-        </xsl:for-each>
+        <div class="row-fluid">
+          <xsl:for-each select="$content/group">
+            <div class="span4">
+              <a name="{@name}"><xsl:text> </xsl:text></a>
+              <h2><xsl:value-of select="@caption" /></h2>
+              <xsl:call-template name="acommunity-surfers-surfer">
+                <xsl:with-param name="content" select="." />
+              </xsl:call-template>
+              <xsl:call-template name="acommunity-content-paging">
+                <xsl:with-param name="paging" select="paging" />
+              </xsl:call-template>
+            </div>
+          </xsl:for-each>
+        </div>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="acommunity-surfers-filter-navigation">

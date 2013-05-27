@@ -3,6 +3,7 @@
 
   <xsl:import href="./Ui/Content/Paging.xsl"/>
   <xsl:import href="./Ui/Content/Surfer.xsl"/>
+  <xsl:import href="./Ui/Content/Surfers.xsl"/>
   <xsl:import href="./Ui/Content/Surfer/Editor.xsl"/>
   <xsl:import href="./Ui/Content/Surfer/Gallery.xsl"/>
 
@@ -48,6 +49,11 @@
       <xsl:when test="$pageContent/@module = 'ACommunityMessagesPage'">
         <xsl:call-template name="module-content-acommunity-messages-page">
           <xsl:with-param name="pageContent" select="$pageContent/acommunity-messages"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunitySurferContactsPage' or $pageContent/@module = 'ACommunitySurfersPage'">
+        <xsl:call-template name="acommunity-surfers">
+          <xsl:with-param name="content" select="$pageContent/acommunity-surfers"/>
         </xsl:call-template>
       </xsl:when>
     </xsl:choose>
