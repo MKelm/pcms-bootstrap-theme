@@ -19,10 +19,11 @@
       <xsl:with-param name="withText" select="not($pageContent/image)" />
     </xsl:call-template>
     <div class="gallery">
-
+      <a name="gallery-images-area"><xsl:text> </xsl:text></a>
       <xsl:if test="count($pageContent/images/image) &gt; 0 or count($pageContent/image) &gt; 0">
         <xsl:call-template name="module-content-gallery-navigation">
           <xsl:with-param name="navigation" select="$pageContent/navigation" />
+          <xsl:with-param name="anchor" select="'gallery-images-area'" />
         </xsl:call-template>
       </xsl:if>
 
@@ -48,11 +49,12 @@
           </xsl:call-template>
         </xsl:when>
       </xsl:choose>
-      <xsl:call-template name="float-fix"/>
+
       <xsl:choose>
         <xsl:when test="count($pageContent/images/image) &gt; 0 or count($pageContent/image) &gt; 0">
           <xsl:call-template name="module-content-gallery-navigation">
             <xsl:with-param name="navigation" select="$pageContent/navigation" />
+            <xsl:with-param name="anchor" select="'gallery-images-area'" />
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
@@ -136,12 +138,12 @@
 
           <xsl:choose>
             <xsl:when test="$navigation != false() and $navigation/navlink[@direction = 'index']">
-              <a href="{$navigation/navlink[@direction = 'index']/@href}">
+              <a href="{$navigation/navlink[@direction = 'index']/@href}#gallery-images-area">
                 <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}"/>
               </a>
             </xsl:when>
             <xsl:when test="$currentImage/destination and $currentImage/destination/@href">
-              <a href="{$currentImage/destination/@href}" title="{$currentImage/title}">
+              <a href="{$currentImage/destination/@href}#gallery-images-area" title="{$currentImage/title}">
                 <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}"/>
               </a>
             </xsl:when>
@@ -211,20 +213,21 @@
 
   <xsl:template name="module-content-gallery-navigation">
     <xsl:param name="navigation" />
+    <xsl:param name="anchor" />
     <xsl:if test="$navigation/navlink[(@direction = 'previous') or (@direction = 'next')]">
       <div class="pagination">
         <ul>
           <xsl:if test="$navigation/navlink[@direction = 'previous']">
-            <li><a href="{$navigation/navlink[@direction = 'previous']/@href}">&#171;</a></li>
+            <li><a href="{$navigation/navlink[@direction = 'previous']/@href}#{$anchor}">&#171;</a></li>
           </xsl:if>
           <xsl:if test="$navigation/navlink[@direction = 'index']">
-            <li><a href="{$navigation/navlink[@direction = 'index']/@href}">
+            <li><a href="{$navigation/navlink[@direction = 'index']/@href}#{$anchor}">
               <xsl:call-template name="language-text">
                 <xsl:with-param name="text" select="'GALLERY_INDEX'"/>
               </xsl:call-template></a></li>
           </xsl:if>
           <xsl:if test="$navigation/navlink[@direction = 'next']">
-            <li><a href="{$navigation/navlink[@direction = 'next']/@href}">&#187;</a></li>
+            <li><a href="{$navigation/navlink[@direction = 'next']/@href}#{$anchor}">&#187;</a></li>
           </xsl:if>
         </ul>
       </div>
