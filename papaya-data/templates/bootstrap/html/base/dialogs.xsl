@@ -26,6 +26,13 @@
     <xsl:param name="captions" select="false()" />
     <xsl:param name="inputSize" select="false()" />
     <xsl:param name="parentAnchor" select="''" />
+    <xsl:param name="message" select="''" />
+
+    <xsl:if test="$message and $message != ''">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="$message" />
+      </xsl:call-template>
+    </xsl:if>
 
     <xsl:if test="$dialog">
       <xsl:variable name="idVal">
@@ -72,7 +79,9 @@
           <xsl:when test="$inline = true()">
             <xsl:attribute name="class">form-inline<xsl:value-of select="$additionalClass" /></xsl:attribute>
           </xsl:when>
-          <xsl:otherwise><xsl:value-of select="$class" /></xsl:otherwise>
+          <xsl:when test="$class != ''">
+            <xsl:attribute name="class"><xsl:value-of select="$class" /></xsl:attribute>
+          </xsl:when>
         </xsl:choose>
         <xsl:copy-of select="$dialog/input[@type='hidden']"/>
         <xsl:call-template name="dialog-content">
@@ -206,6 +215,7 @@
         </div>
       </xsl:when>
       <xsl:otherwise>
+        <br />
         <xsl:call-template name="dialog-buttons">
           <xsl:with-param name="dialog" select="$dialog" />
           <xsl:with-param name="submitButton" select="$submitButton" />
