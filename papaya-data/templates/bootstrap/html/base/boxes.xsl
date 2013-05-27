@@ -104,6 +104,8 @@
       <xsl:choose>
         <xsl:when test="$type = 'error'">alert alert-error</xsl:when>
         <xsl:when test="$type = 'success'">alert alert-success</xsl:when>
+        <xsl:when test="$message/@type = 'error'">alert alert-error</xsl:when>
+        <xsl:when test="$message/@type = 'success'">alert alert-success</xsl:when>
         <xsl:otherwise>alert alert-info</xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
