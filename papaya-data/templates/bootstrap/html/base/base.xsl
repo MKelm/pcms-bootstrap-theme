@@ -229,9 +229,14 @@
 </func:function>
 
 <xsl:template name="papaya-styles">
+  <xsl:variable name="subThemeFolder">
+    <xsl:if test="$PAGE_SUB_THEME and $PAGE_SUB_THEME != ''">
+      <xsl:value-of select="$PAGE_SUB_THEME" /><xsl:text>/</xsl:text>
+    </xsl:if>
+  </xsl:variable>
   <xsl:call-template name="link-style">
     <xsl:with-param name="files">
-      <file>css/bootstrap.min.css</file>
+      <file>css/<xsl:value-of select="$subThemeFolder" />bootstrap.min.css</file>
       <file>css/custom.css</file>
     </xsl:with-param>
   </xsl:call-template>

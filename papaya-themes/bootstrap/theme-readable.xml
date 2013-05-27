@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<papaya-theme>
+  <name>Bootstrap Readable</name>
+  <version number="1.0" date="2013-05-27" />
+  <author>Martin Kelm / bootswatch.com</author>
+  <description>This is the readable bootstrap theme.</description>
+  <thumbs>
+    <thumb size="medium" src="bootstrap-readable48.jpg" />
+    <thumb size="large" src="bootstrap-readable100.jpg" />
+  </thumbs>
+  <sub-theme>readable</sub-theme>
+  <templates directory="bootstrap" />
+  <dynamic-values>
+  </dynamic-values>
+</papaya-theme>

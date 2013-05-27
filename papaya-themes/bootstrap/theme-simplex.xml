@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<papaya-theme>
+  <name>Bootstrap Simplex</name>
+  <version number="1.0" date="2013-05-27" />
+  <author>Martin Kelm / bootswatch.com</author>
+  <description>This is the simplex bootstrap theme.</description>
+  <thumbs>
+    <thumb size="medium" src="bootstrap-simplex48.jpg" />
+    <thumb size="large" src="bootstrap-simplex100.jpg" />
+  </thumbs>
+  <sub-theme>simplex</sub-theme>
+  <templates directory="bootstrap" />
+  <dynamic-values>
+  </dynamic-values>
+</papaya-theme>

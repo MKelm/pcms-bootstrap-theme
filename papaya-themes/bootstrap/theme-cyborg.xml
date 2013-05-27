@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<papaya-theme>
+  <name>Bootstrap Cyborg</name>
+  <version number="1.0" date="2013-05-27" />
+  <author>Martin Kelm / bootswatch.com</author>
+  <description>This is the cyborg bootstrap theme.</description>
+  <thumbs>
+    <thumb size="medium" src="bootstrap-cyborg48.jpg" />
+    <thumb size="large" src="bootstrap-cyborg100.jpg" />
+  </thumbs>
+  <sub-theme>cyborg</sub-theme>
+  <templates directory="bootstrap" />
+  <dynamic-values>
+  </dynamic-values>
+</papaya-theme>

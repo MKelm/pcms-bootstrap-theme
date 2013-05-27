@@ -26,6 +26,8 @@
 <xsl:param name="PAGE_URL" />
 <!-- theme name -->
 <xsl:param name="PAGE_THEME" />
+<!-- sub theme name -->
+<xsl:param name="PAGE_SUB_THEME" />
 <!-- theme path in browser -->
 <xsl:param name="PAGE_THEME_PATH" />
 <!-- theme path in server file system -->

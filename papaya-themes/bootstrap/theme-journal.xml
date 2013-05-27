@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<papaya-theme>
+  <name>Bootstrap Journal</name>
+  <version number="1.0" date="2013-05-27" />
+  <author>Martin Kelm / bootswatch.com</author>
+  <description>This is the journal bootstrap theme.</description>
+  <thumbs>
+    <thumb size="medium" src="bootstrap-journal48.jpg" />
+    <thumb size="large" src="bootstrap-journal100.jpg" />
+  </thumbs>
+  <sub-theme>journal</sub-theme>
+  <templates directory="bootstrap" />
+  <dynamic-values>
+  </dynamic-values>
+</papaya-theme>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<papaya-theme>
+  <name>Bootstrap Cerulean</name>
+  <version number="1.0" date="2013-05-27" />
+  <author>Martin Kelm / bootswatch.com</author>
+  <description>This is the cerulean bootstrap theme.</description>
+  <thumbs>
+    <thumb size="medium" src="bootstrap-cerulean48.jpg" />
+    <thumb size="large" src="bootstrap-cerulean100.jpg" />
+  </thumbs>
+  <sub-theme>cerulean</sub-theme>
+  <templates directory="bootstrap" />
+  <dynamic-values>
+  </dynamic-values>
+</papaya-theme>
