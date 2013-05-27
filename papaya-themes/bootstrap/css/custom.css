@@ -106,6 +106,14 @@ div.hero-unit.surfer {
   margin: 0 auto;
 }
 .content .gallery .image-download,
-.content .gallery .original-image {
+.content .gallery .original-image,
+.content .gallery .moderator-controls {
   margin-top: 10px;
+}
+.content .gallery .row-fluid:not(.last) {
+  margin-bottom: 20px;
+}
+/* use gallery upload in inner content box group */
+.inner-content .gallery-upload {
+  margin-top: 20px;
 }

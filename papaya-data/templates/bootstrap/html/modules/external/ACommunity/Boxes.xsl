@@ -110,4 +110,17 @@
     </xsl:if>
   </xsl:template>
 
+  <xsl:template match="acommunity-surfer-gallery-upload">
+    <xsl:call-template name="dialog">
+      <xsl:with-param name="dialog" select="dialog-box" />
+      <xsl:with-param name="inline" select="true()" />
+      <xsl:with-param name="class" select="'gallery-upload'" />
+    </xsl:call-template>
+    <xsl:if test="dialog-message">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="dialog-message" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
 </xsl:stylesheet>
