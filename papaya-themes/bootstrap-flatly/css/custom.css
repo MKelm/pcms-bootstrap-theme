@@ -1,0 +1,134 @@
+body {
+  padding-top: 65px;
+  padding-bottom: 40px;
+}
+div.sidebar-nav {
+  padding: 9px 0px;
+}
+div.additional-box:not(:last-child) {
+  margin-bottom: 30px;
+}
+.hero-unit {
+  padding: 30px;
+}
+img.hero-image.pull-left {
+  margin-right: 20px;
+  margin-top: 10px;
+}
+img.hero-image.pull-right {
+  margin-left: 20px;
+  margin-top: 10px;
+}
+div.login-form-additional-hint {
+  margin-left: 180px;
+}
+form img.uploaded-image-file {
+  margin-top: 10px;
+}
+form .controls button:first-child + button {
+  margin-left: 10px;
+}
+div.comment .voting {
+  position: relative;
+  top: -4px;
+  left: -4px;
+}
+div.comment small.votes-score {
+  position: relative;
+  top: 4px;
+}
+div.comment .btn-toolbar {
+  margin: 0px;
+}
+div.comment .thumbnails .thumbnail {
+  margin-right: 8px;
+}
+/* surfer-status-image needs a cropped thumbail of 20x20 pixels */
+img.surfer-status-image {
+  margin-right: 5px;
+  position: relative;
+  top: -1px;
+}
+.surfers form.surfers-search-dialog {
+  margin-bottom: 30px;
+}
+.surfers ul.surfers-filter {
+  margin-bottom: 5px;
+}
+.surfers .row-fluid:not(.last) {
+  margin-bottom: 20px;
+}
+/* style for required fields */
+form .control-group.required label.control-label:after {
+  color: #e32;
+  content: ' *';
+  display:inline;
+}
+/* styles for surfer details
+ * note use a surfer avatar thumbnail with 180x180 pixels
+ * */
+div.surfer-details {
+  font-size: 0.8em;
+}
+div.surfer-details ul.inline li {
+  padding-left: 0px;
+}
+div.surfer-details ul.unstyled li {
+  line-height: 1.2em;
+}
+div.surfer-details-dynamic {
+  margin-bottom: 17px;
+}
+div.hero-unit.surfer {
+  margin-bottom: 10px;
+}
+/**
+ * gallery teaser in different areas
+ * use 240x240 thums in sidebar
+ * use 100x100 thumbs in content and inner-content
+ */
+.sidebar-box .gallery-teaser img.thumbnail,
+.additional-box .gallery-teaser img.thumbnail {
+  margin-bottom: 10px;
+}
+.content .gallery-teaser {
+  text-align: center;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.inner-content .gallery-teaser {
+  margin-top: 10px;
+  margin-bottom: 0px;
+  width: auto;
+}
+.inner-content .gallery-teaser li.more-link {
+  /* display: none; */
+  position: relative;
+  top: -50px;
+}
+/* gallery */
+.content .gallery {
+  text-align: center;
+}
+.content .gallery .row-fluid .thumbnail,
+.content .gallery .single-image .thumbnail {
+  margin: 0 auto;
+}
+.content .gallery .image-download,
+.content .gallery .original-image,
+.content .gallery .moderator-controls {
+  margin-top: 10px;
+}
+.content .gallery .row-fluid:not(.last) {
+  margin-bottom: 20px;
+}
+.gallery-folders .gallery-folder-with-command-delete a {
+  padding-right: 2px;
+}
+.gallery-folders .gallery-folder-command-delete a {
+  padding-left: 0px;
+}
+/* use gallery upload in inner content box group */
+.inner-content .gallery-upload-dialog {
+  margin-top: 20px;
+}

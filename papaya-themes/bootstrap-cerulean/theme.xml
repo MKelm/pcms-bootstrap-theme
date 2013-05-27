@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <papaya-theme>
-  <name>Bootstrap</name>
+  <name>Bootstrap Cerulean</name>
   <version number="1.0" date="2013-05-27" />
-  <author>Martin Kelm / bootstrap</author>
-  <description>This is the default bootstrap theme.</description>
+  <author>Martin Kelm / bootswatch.com</author>
+  <description>This is the cerulean bootstrap theme.</description>
   <thumbs>
     <thumb size="medium" src="bootstrap48.jpg" />
     <thumb size="large" src="bootstrap100.jpg" />
