@@ -34,6 +34,7 @@
               <h2><xsl:value-of select="@caption" /></h2>
               <xsl:call-template name="acommunity-surfers-list">
                 <xsl:with-param name="surfers" select="surfer" />
+                <xsl:with-param name="message" select="message" />
               </xsl:call-template>
               <xsl:call-template name="acommunity-content-paging">
                 <xsl:with-param name="paging" select="paging" />
@@ -62,6 +63,7 @@
       <xsl:otherwise>
         <xsl:call-template name="acommunity-surfers-list">
           <xsl:with-param name="surfers" select="$content/surfer" />
+          <xsl:with-param name="message" select="$content/message" />
         </xsl:call-template>
         <xsl:call-template name="acommunity-content-paging">
           <xsl:with-param name="paging" select="$content/paging" />
@@ -116,6 +118,7 @@
 
   <xsl:template name="acommunity-surfers-list">
     <xsl:param name="surfers" />
+    <xsl:param name="message" select="''" />
     <xsl:param name="inRow" select="false()" />
     <xsl:param name="columns" select="false()" />
 
@@ -143,11 +146,11 @@
           </xsl:call-template>
         </xsl:for-each>
       </xsl:when>
-      <xsl:otherwise>
+      <xsl:when test="$message and $message != ''">
         <xsl:call-template name="alert">
-          <xsl:with-param name="message" select="$content/message" />
+          <xsl:with-param name="message" select="$message" />
         </xsl:call-template>
-      </xsl:otherwise>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
