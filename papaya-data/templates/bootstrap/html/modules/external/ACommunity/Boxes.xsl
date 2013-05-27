@@ -114,13 +114,58 @@
     <xsl:call-template name="dialog">
       <xsl:with-param name="dialog" select="dialog-box" />
       <xsl:with-param name="inline" select="true()" />
-      <xsl:with-param name="class" select="'gallery-upload'" />
+      <xsl:with-param name="class" select="'gallery-upload-dialog'" />
     </xsl:call-template>
     <xsl:if test="dialog-message">
       <xsl:call-template name="alert">
         <xsl:with-param name="message" select="dialog-message" />
       </xsl:call-template>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template match="acommunity-surfer-gallery-folders">
+    <xsl:if test="count(folders/folder) &gt; 0">
+      <xsl:variable name="commandLinks" select="command-links" />
+      <ul class="nav nav-tabs gallery-folders">
+        <xsl:for-each select="folders/folder">
+          <xsl:variable name="folderId" select="@id" />
+          <li>
+            <xsl:if test="$commandLinks and $commandLinks/command-link[@folder_id = $folderId and @name = 'delete_folder']">
+              <xsl:attribute name="class">gallery-folder-with-command-delete</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="@selected = '1'">
+              <xsl:attribute name="class">active</xsl:attribute>
+            </xsl:if>
+            <a href="{@href}"><xsl:value-of select="@name" /></a>
+          </li>
+          <xsl:if test="$commandLinks and $commandLinks/command-link[@folder_id = $folderId and @name = 'delete_folder']">
+            <li class="gallery-folder-command-delete">
+              <a href="{$commandLinks/command-link[@folder_id = $folderId and @name = 'delete_folder']}"
+                 title="{$commandLinks/command-link[@folder_id = $folderId and @name = 'delete_folder']/@caption} {@name}">
+                <i class="icon-remove"><xsl:text> </xsl:text></i>
+              </a>
+            </li>
+          </xsl:if>
+        </xsl:for-each>
+        <xsl:if test="command-links/command-link[@name = 'add_folder']">
+          <li>
+            <a href="{command-links/command-link[@name = 'add_folder']}">
+            <xsl:value-of select="command-links/command-link[@name = 'add_folder']/@caption" /></a>
+          </li>
+        </xsl:if>
+      </ul>
+    </xsl:if>
+    <xsl:if test="dialog-message">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="dialog-message" />
+      </xsl:call-template>
+    </xsl:if>
+    <xsl:call-template name="dialog">
+      <xsl:with-param name="dialog" select="dialog-box" />
+      <xsl:with-param name="inline" select="true()" />
+      <xsl:with-param name="className" select="'add-folder-dialog'" />
+      <xsl:with-param name="inputSize" select="'xxlarge'" />
+    </xsl:call-template>
   </xsl:template>
 
 </xsl:stylesheet>

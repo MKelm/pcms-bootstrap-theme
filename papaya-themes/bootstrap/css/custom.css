@@ -113,7 +113,13 @@ div.hero-unit.surfer {
 .content .gallery .row-fluid:not(.last) {
   margin-bottom: 20px;
 }
+.gallery-folders .gallery-folder-with-command-delete a {
+  padding-right: 2px;
+}
+.gallery-folders .gallery-folder-command-delete a {
+  padding-left: 0px;
+}
 /* use gallery upload in inner content box group */
-.inner-content .gallery-upload {
+.inner-content .gallery-upload-dialog {
   margin-top: 20px;
 }
