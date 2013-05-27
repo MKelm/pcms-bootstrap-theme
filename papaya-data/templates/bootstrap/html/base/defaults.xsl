@@ -447,13 +447,13 @@
   <xsl:template name="inner-content-hook">
     <xsl:param name="additionalCssClass" select="false()" />
     <xsl:if test="count(/page/boxes/box[@group = 'inner-content']) &gt; 0">
-      <div class="inner-content-boxes ">
+      <div>
         <xsl:attribute name="class">
           <xsl:choose>
             <xsl:when test="$additionalCssClass != false()">
-              <xsl:text>inner-content-boxes </xsl:text><xsl:value-of select="$additionalCssClass" />
+              <xsl:text>inner-content </xsl:text><xsl:value-of select="$additionalCssClass" />
             </xsl:when>
-            <xsl:otherwise>inner-content-boxes</xsl:otherwise>
+            <xsl:otherwise>inner-content</xsl:otherwise>
           </xsl:choose>
         </xsl:attribute>
         <xsl:for-each select="/page/boxes/box[@group = 'inner-content']">
@@ -468,7 +468,7 @@
       <xsl:with-param name="boxes" select="boxes" />
       <xsl:with-param name="pageContent" select="content/topic" />
     </xsl:call-template>
-    <div class="inner-content">
+    <div class="content-area">
       <xsl:call-template name="content-area">
         <xsl:with-param name="pageContent" select="content/topic" />
       </xsl:call-template>
