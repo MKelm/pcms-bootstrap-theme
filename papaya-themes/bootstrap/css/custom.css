@@ -49,6 +49,15 @@ img.surfer-status-image {
   position: relative;
   top: -1px;
 }
+.surfers form.surfers-search-dialog {
+  margin-bottom: 30px;
+}
+.surfers ul.surfers-filter {
+  margin-bottom: 5px;
+}
+.surfers .row-fluid:not(.last) {
+  margin-bottom: 20px;
+}
 /* style for required fields */
 form .control-group.required label.control-label:after {
   color: #e32;

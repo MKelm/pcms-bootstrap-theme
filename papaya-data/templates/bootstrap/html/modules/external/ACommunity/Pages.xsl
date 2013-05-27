@@ -24,6 +24,11 @@
           <xsl:with-param name="pageContent" select="$pageContent/acommunity-messages"/>
         </xsl:call-template>
       </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunityNotificationSettingsPage'">
+        <xsl:call-template name="module-content-acommunity-notification-settings-page-after-content-hook-before">
+          <xsl:with-param name="pageContent" select="$pageContent"/>
+        </xsl:call-template>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
@@ -51,9 +56,24 @@
           <xsl:with-param name="pageContent" select="$pageContent/acommunity-messages"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="$pageContent/@module = 'ACommunitySurferContactsPage' or $pageContent/@module = 'ACommunitySurfersPage'">
+      <xsl:when test="$pageContent/@module = 'ACommunitySurferContactsPage'">
         <xsl:call-template name="acommunity-surfers">
           <xsl:with-param name="content" select="$pageContent/acommunity-surfers"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunitySurfersPage'">
+        <div class="surfers">
+          <xsl:call-template name="acommunity-surfers">
+            <xsl:with-param name="content" select="$pageContent/acommunity-surfers"/>
+            <xsl:with-param name="withFilter" select="true()" />
+            <xsl:with-param name="withSearch" select="true()" />
+            <xsl:with-param name="withGrid" select="true()" />
+          </xsl:call-template>
+        </div>
+      </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunityNotificationSettingsPage'">
+        <xsl:call-template name="module-content-acommunity-notification-settings-page">
+          <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
       </xsl:when>
     </xsl:choose>
@@ -113,6 +133,31 @@
     </xsl:for-each>
     <xsl:call-template name="acommunity-content-paging">
       <xsl:with-param name="paging" select="$pageContent/messages/paging" />
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="module-content-acommunity-notification-settings-page">
+    <xsl:param name="pageContent" />
+
+    <xsl:call-template name="module-content-topic">
+      <xsl:with-param name="pageContent" select="$pageContent" />
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template name="module-content-acommunity-notification-settings-page-after-content-hook-before">
+    <xsl:param name="pageContent" />
+
+    <xsl:if test="$pageContent/message">
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="$pageContent/message" />
+      </xsl:call-template>
+    </xsl:if>
+
+    <xsl:call-template name="dialog">
+      <xsl:with-param name="dialog" select="$pageContent/notification-settings/dialog-box" />
+      <xsl:with-param name="dialogMessage" select="$pageContent/notification-settings/dialog-message" />
+      <xsl:with-param name="class" select="'notification-settings-dialog'" />
+      <xsl:with-param name="horizontal" select="true()" />
     </xsl:call-template>
   </xsl:template>
 
