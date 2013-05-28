@@ -162,12 +162,12 @@
       <div class="media-body">
         <h4 class="media-heading"><a href="{$surfer/@page-link}"><xsl:value-of select="$surfer/@name" /></a></h4>
         <p>
-          <xsl:if test="$surfer/last-time/text()">
-            <div class="$surfer/last-time">
+          <xsl:if test="$surfer/last-time">
+            <div class="last-time">
               <xsl:value-of select="$surfer/last-time/@caption" />:
               <xsl:text> </xsl:text>
               <xsl:call-template name="format-date-time">
-                <xsl:with-param name="dateTime" select="$surfer/last-time/text()" />
+                <xsl:with-param name="dateTime" select="$surfer/last-time" />
               </xsl:call-template>
             </div>
           </xsl:if>
