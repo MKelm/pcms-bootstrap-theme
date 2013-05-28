@@ -5,7 +5,7 @@
   <xsl:import href="./Ui/Content/Surfer.xsl"/>
   <xsl:import href="./Ui/Content/Surfers.xsl"/>
   <xsl:import href="./Ui/Content/Surfer/Editor.xsl"/>
-  <xsl:import href="./Ui/Content/Surfer/Gallery.xsl"/>
+  <xsl:import href="./Ui/Content/Image/Gallery.xsl"/>
 
   <xsl:template name="page-styles">
   </xsl:template>
@@ -46,7 +46,7 @@
           <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="$pageContent/@module = 'ACommunitySurferGalleryPage'">
+      <xsl:when test="$pageContent/@module = 'ACommunityImageGalleryPage'">
         <xsl:call-template name="module-content-image-gallery">
           <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
