@@ -716,6 +716,9 @@
     <input type="text" name="{$name}">
       <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'maxlength' or name() = 'size' or name() = 'disabled']" />
       <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+      <xsl:if test="$control/text() and $control/text() != ''">
+        <xsl:attribute name="value"><xsl:value-of select="$control/text()" /></xsl:attribute>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="$inputSize != false()">
           <xsl:attribute name="class">
@@ -777,6 +780,7 @@
     <xsl:param name="controlId" select="generate-id($control)" />
     <xsl:param name="name" select="$control/@name" />
     <xsl:param name="label" select="false()" />
+    <xsl:param name="checked" select="false()" />
 
     <xsl:choose>
       <xsl:when test="count($control) &gt; 1">
@@ -794,6 +798,9 @@
         <label class="radio">
           <input type="radio" name="{$name}">
             <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'checked']" />
+            <xsl:if test="$checked">
+              <xsl:attribute name="checked">checked</xsl:attribute>
+            </xsl:if>
             <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
           </input>
           <xsl:text> </xsl:text><xsl:value-of select="$label" />
@@ -818,6 +825,19 @@
             <xsl:with-param name="control" select="." />
             <xsl:with-param name="controlId" select="''" />
             <xsl:with-param name="name"><xsl:value-of select="$name" />[]</xsl:with-param>
+            <xsl:with-param name="label" select="./text()" />
+            <xsl:with-param name="checked" select="@selected = 'selected'" />
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:when>
+      <!-- support for new radio boxes -->
+      <xsl:when test="$control/@type = 'radio'">
+        <xsl:variable name="name" select="$control/@name" />
+        <xsl:for-each select="$control/option">
+          <xsl:call-template name="dialog-control-radio">
+            <xsl:with-param name="control" select="." />
+            <xsl:with-param name="controlId" select="''" />
+            <xsl:with-param name="name"><xsl:value-of select="$name" /></xsl:with-param>
             <xsl:with-param name="label" select="./text()" />
             <xsl:with-param name="checked" select="@selected = 'selected'" />
           </xsl:call-template>
