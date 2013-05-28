@@ -23,15 +23,18 @@
 
     <div class="hero-unit">
       <xsl:choose>
+        <xsl:when test="$pageContent/image[@align='right']//img">
+          <img class="hero-image thumbnail pull-right">
+            <xsl:copy-of select="$pageContent/image//img/@*[local-name() != 'class']" />
+          </img>
+        </xsl:when>
         <xsl:when test="$pageContent/image[@align='left']//img">
           <img class="hero-image thumbnail pull-left">
             <xsl:copy-of select="$pageContent/image//img/@*[local-name() != 'class']" />
           </img>
         </xsl:when>
-        <xsl:when test="$pageContent/image[@align='right']//img">
-          <img class="hero-image thumbnail pull-right">
-            <xsl:copy-of select="$pageContent/image//img/@*[local-name() != 'class']" />
-          </img>
+        <xsl:when test="$pageContent/image">
+          <img class="hero-image thumbnail pull-left" src="{$pageContent/image}" alt="" />
         </xsl:when>
       </xsl:choose>
 
@@ -54,8 +57,16 @@
       </xsl:if>
 
       <xsl:if test="$withText">
-        <xsl:apply-templates select="$pageContent/text/*|$pageContent/text/text()" />
+        <xsl:choose>
+        <xsl:when test="$pageContent/text-raw">
+          <xsl:copy-of select="$pageContent/text/node()" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="$pageContent/text/*|$pageContent/text/text()" />
+        </xsl:otherwise>
+        </xsl:choose>
       </xsl:if>
+      <xsl:call-template name="float-fix" />
     </div>
   </xsl:template>
 
