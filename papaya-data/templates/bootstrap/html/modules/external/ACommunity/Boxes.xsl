@@ -89,7 +89,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="acommunity-surfer-gallery-teaser">
+  <xsl:template match="acommunity-image-gallery-teaser">
     <xsl:if test="add-new-images-link/@href or count(images/image) &gt; 0">
       <ul class="inline gallery-teaser">
         <xsl:variable name="moreImagesLink" select="more-images-link/@href" />
@@ -110,7 +110,7 @@
     </xsl:if>
   </xsl:template>
 
-  <xsl:template match="acommunity-surfer-gallery-upload">
+  <xsl:template match="acommunity-image-gallery-upload">
     <xsl:call-template name="dialog">
       <xsl:with-param name="dialog" select="dialog-box" />
       <xsl:with-param name="inline" select="true()" />
@@ -119,7 +119,7 @@
     </xsl:call-template>
   </xsl:template>
 
-  <xsl:template match="acommunity-surfer-gallery-folders">
+  <xsl:template match="acommunity-image-gallery-folders">
     <xsl:if test="count(folders/folder) &gt; 0">
       <xsl:variable name="commandLinks" select="command-links" />
       <ul class="nav nav-tabs gallery-folders">

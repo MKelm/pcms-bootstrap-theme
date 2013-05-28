@@ -4,7 +4,8 @@
   @papaya:modules ACommunityPageCommentsBox, ACommunitySurferCommentsBox,
     ACommunityImageCommentsBox, ACommunityGroupCommentsBox, ACommunityCommentsRankingBox,
     ACommunityCommentersRankingBox, ACommunityImageGalleryUploadBox,
-    ACommunityImageGalleryFoldersBox, ACommunityImageGalleryTeaserBox,
+    ACommunityImageGalleryFoldersBox, ACommunitySurferImageGalleryTeaserBox,
+    ACommunityGroupImageGalleryTeaserBox,
     ACommunitySurferStatusBox, ACommunitySurferContactsBox,
     ACommunitySurfersLastActionBox, ACommunitySurfersRegistrationBox,
     ACommunityMessageConversationsBox
