@@ -2,7 +2,7 @@
 <xsl:stylesheet  version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 <!--
   @papaya:modules ACommunityPageCommentsBox, ACommunitySurferCommentsBox,
-    ACommunityImageCommentsBox, ACommunityCommentsRankingBox,
+    ACommunityImageCommentsBox, ACommunityGroupCommentsBox, ACommunityCommentsRankingBox,
     ACommunityCommentersRankingBox, ACommunityImageGalleryUploadBox,
     ACommunityImageGalleryFoldersBox, ACommunityImageGalleryTeaserBox,
     ACommunitySurferStatusBox, ACommunitySurferContactsBox,

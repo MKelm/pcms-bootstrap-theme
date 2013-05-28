@@ -17,6 +17,7 @@
 
   <xsl:template name="module-content-topic">
     <xsl:param name="pageContent"/>
+    <xsl:param name="subTitle" select="false()" />
     <xsl:param name="withText" select="true()"/>
     <xsl:param name="withHook" select="false()" />
 
@@ -38,10 +39,10 @@
         <xsl:if test="$withHook">
           <xsl:attribute name="class">pull-left</xsl:attribute>
         </xsl:if>
-        <xsl:value-of select="$pageContent/title/text()"/>
-        <xsl:if test="$pageContent/subtitle/text() != ''">
+        <xsl:value-of select="$pageContent/title"/>
+        <xsl:if test="$pageContent/subtitle != '' or $subTitle">
           <xsl:text> </xsl:text>
-          <small><xsl:value-of select="$pageContent/subtitle"/></small>
+          <small><xsl:value-of select="$pageContent/subtitle"/><xsl:value-of select="$subTitle"/></small>
         </xsl:if>
       </h1>
 

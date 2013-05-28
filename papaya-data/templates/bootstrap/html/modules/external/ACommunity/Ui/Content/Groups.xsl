@@ -77,15 +77,15 @@
     <xsl:param name="group" />
 
     <div class="media group">
-      <a class="pull-left" href="#"><img class="media-object" alt="" src="{@image}" /></a>
+      <a class="pull-left" href="{@page-link}"><img class="media-object" alt="" src="{@image}" /></a>
       <div class="media-body">
-        <h4 class="media-heading"><a href="#"><xsl:value-of select="@title" /></a></h4>
+        <h4 class="media-heading"><a href="{@page-link}"><xsl:value-of select="@title" /></a></h4>
         <p>
           <div class="time">
             Existiert seit:
             <xsl:text> </xsl:text>
-            <xsl:call-template name="format-date-time">
-              <xsl:with-param name="dateTime" select="@time" />
+            <xsl:call-template name="format-date">
+              <xsl:with-param name="date" select="@time" />
             </xsl:call-template>
           </div>
           <xsl:if test="count(commands/delete) &gt; 0">

@@ -77,12 +77,35 @@
           <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
       </xsl:when>
-      <xsl:when test="$pageContent/@module = 'ACommunityGroupsPage' or $pageContent/@module = 'ACommunityGroupsOwnerPage'">
+      <xsl:when test="$pageContent/@module = 'ACommunityGroupsPage' or $pageContent/@module = 'ACommunitySurferGroupsPage'">
         <xsl:call-template name="module-content-acommunity-groups-page">
           <xsl:with-param name="pageContent" select="$pageContent/acommunity-groups"/>
         </xsl:call-template>
       </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunityGroupPage'">
+        <xsl:call-template name="module-content-acommunity-group-page">
+          <xsl:with-param name="pageContent" select="$pageContent/group-page"/>
+        </xsl:call-template>
+      </xsl:when>
     </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="module-content-acommunity-group-page">
+    <xsl:param name="pageContent" />
+
+    <xsl:call-template name="module-content-topic">
+      <xsl:with-param name="pageContent" select="$pageContent" />
+      <xsl:with-param name="subTitle">
+        <xsl:value-of select="$pageContent/time/@caption" /><xsl:text>: </xsl:text>
+        <xsl:call-template name="format-date">
+          <xsl:with-param name="date" select="$pageContent/time" />
+        </xsl:call-template>
+      </xsl:with-param>
+    </xsl:call-template>
+
+    <xsl:call-template name="alert">
+      <xsl:with-param name="message" select="$pageContent/message" />
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template name="module-content-acommunity-messages-page">
