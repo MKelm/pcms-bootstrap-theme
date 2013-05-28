@@ -6,6 +6,7 @@
   <xsl:import href="./Ui/Content/Surfers.xsl"/>
   <xsl:import href="./Ui/Content/Surfer/Editor.xsl"/>
   <xsl:import href="./Ui/Content/Image/Gallery.xsl"/>
+  <xsl:import href="./Ui/Content/Groups.xsl"/>
 
   <xsl:template name="page-styles">
   </xsl:template>
@@ -74,6 +75,11 @@
       <xsl:when test="$pageContent/@module = 'ACommunityNotificationSettingsPage'">
         <xsl:call-template name="module-content-acommunity-notification-settings-page">
           <xsl:with-param name="pageContent" select="$pageContent"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:when test="$pageContent/@module = 'ACommunityGroupsPage' or $pageContent/@module = 'ACommunityGroupsOwnerPage'">
+        <xsl:call-template name="module-content-acommunity-groups-page">
+          <xsl:with-param name="pageContent" select="$pageContent/acommunity-groups"/>
         </xsl:call-template>
       </xsl:when>
     </xsl:choose>

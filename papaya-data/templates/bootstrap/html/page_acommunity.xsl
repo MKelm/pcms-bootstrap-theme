@@ -3,7 +3,8 @@
 <!--
   @papaya:modules ACommunitySurferPage, ACommunitySurferEditorPage, ACommunitySurfersPage,
     ACommunitySurferContactsPage, ACommunityImageGalleryPage,
-    ACommunityMessagesPage, ACommunityNotificationSettingsPage
+    ACommunityMessagesPage, ACommunityNotificationSettingsPage,
+    ACommunityGroupsPage, ACommunityGroupsOwnerPage
 -->
 
 <!-- import main layout rules, this will import the default rules, too -->
