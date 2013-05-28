@@ -10,6 +10,24 @@
       <xsl:with-param name="message" select="$pageContent/message" />
     </xsl:call-template>
 
+    <xsl:if test="$pageContent/commands/add">
+      <ul class="nav nav-tabs">
+        <li>
+          <a href="{$pageContent/commands/add}"><xsl:value-of select="$pageContent/commands/add/@caption" /></a>
+        </li>
+      </ul>
+    </xsl:if>
+
+    <xsl:if test="$pageContent/dialog-box">
+      <xsl:call-template name="dialog">
+        <xsl:with-param name="dialog" select="$pageContent/dialog-box" />
+        <xsl:with-param name="message" select="$pageContent/dialog-message" />
+        <xsl:with-param name="horizontal" select="true()" />
+        <xsl:with-param name="inputSize" select="'xxlarge'" />
+      </xsl:call-template>
+      <hr />
+    </xsl:if>
+
     <xsl:if test="count($pageContent/groups/group) &gt; 0">
       <xsl:call-template name="acommunity-groups-row">
         <xsl:with-param name="groups" select="$pageContent/groups/group" />
