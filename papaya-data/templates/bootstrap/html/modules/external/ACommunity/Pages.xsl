@@ -84,8 +84,24 @@
       </xsl:when>
       <xsl:when test="$pageContent/@module = 'ACommunityGroupPage'">
         <xsl:call-template name="module-content-acommunity-group-page">
-          <xsl:with-param name="pageContent" select="$pageContent/group-page"/>
+          <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
+      </xsl:when>
+    </xsl:choose>
+  </xsl:template>
+
+  <xsl:template name="module-content-topic-additional-content-area">
+    <xsl:param name="pageContent" />
+
+    <xsl:choose>
+      <xsl:when test="$pageContent/@module = 'ACommunityGroupPage'">
+        <xsl:if test="count($pageContent/commands/*) &gt; 0">
+          <ul class="inline commands">
+            <xsl:for-each select="$pageContent/commands/*">
+              <li><a href="{@href}"><xsl:value-of select="@caption" /></a></li>
+            </xsl:for-each>
+          </ul>
+        </xsl:if>
       </xsl:when>
     </xsl:choose>
   </xsl:template>
@@ -93,20 +109,22 @@
   <xsl:template name="module-content-acommunity-group-page">
     <xsl:param name="pageContent" />
 
-    <xsl:call-template name="module-content-topic">
-      <xsl:with-param name="pageContent" select="$pageContent" />
-      <xsl:with-param name="subTitle">
-        <xsl:value-of select="$pageContent/time/@caption" /><xsl:text>: </xsl:text>
-        <xsl:call-template name="format-date">
-          <xsl:with-param name="date" select="$pageContent/time" />
-        </xsl:call-template>
-      </xsl:with-param>
-      <xsl:with-param name="useImageWithoutAlign" select="true()" />
-    </xsl:call-template>
+    <div class="group">
+      <xsl:call-template name="module-content-topic">
+        <xsl:with-param name="pageContent" select="$pageContent" />
+        <xsl:with-param name="subTitle">
+          <xsl:value-of select="$pageContent/time/@caption" /><xsl:text>: </xsl:text>
+          <xsl:call-template name="format-date">
+            <xsl:with-param name="date" select="$pageContent/time" />
+          </xsl:call-template>
+        </xsl:with-param>
+        <xsl:with-param name="useImageWithoutAlign" select="true()" />
+      </xsl:call-template>
 
-    <xsl:call-template name="alert">
-      <xsl:with-param name="message" select="$pageContent/message" />
-    </xsl:call-template>
+      <xsl:call-template name="alert">
+        <xsl:with-param name="message" select="$pageContent/message" />
+      </xsl:call-template>
+    </div>
   </xsl:template>
 
   <xsl:template name="module-content-acommunity-messages-page">
