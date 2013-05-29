@@ -110,6 +110,12 @@
               <xsl:with-param name="date" select="@time" />
             </xsl:call-template>
           </div>
+          <xsl:if test="count(commands/edit) &gt; 0">
+            <a class="btn btn-mini" href="{commands/edit}">
+              <i class="icon-pencil"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
+              <xsl:value-of select="commands/edit/@caption" /></a>
+          </xsl:if>
+          <xsl:text> </xsl:text>
           <xsl:if test="count(commands/delete) &gt; 0">
             <a class="btn btn-mini" href="{commands/delete}">
               <i class="icon-remove"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
