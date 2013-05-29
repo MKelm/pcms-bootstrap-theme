@@ -365,7 +365,8 @@
         <div>
           <xsl:attribute name="class">
             <xsl:choose>
-              <xsl:when test="$showMandatory = true() and $line//@mandatory = 'true'">
+              <xsl:when test="$showMandatory = true() and
+                              ($line/@mandatory = 'yes' or $line//@mandatory = 'true')">
                 <xsl:text>control-group required</xsl:text>
               </xsl:when>
               <xsl:otherwise>
