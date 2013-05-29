@@ -132,3 +132,10 @@ div.hero-unit.surfer {
 .inner-content .gallery-upload-dialog {
   margin-top: 20px;
 }
+/* groups */
+.group ul.commands {
+  font-size: 0.8em;
+}
+.group ul.commands li:first-child {
+  padding-left: 0px;
+}
