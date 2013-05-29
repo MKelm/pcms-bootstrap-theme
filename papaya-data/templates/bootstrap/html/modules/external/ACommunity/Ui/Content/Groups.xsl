@@ -13,6 +13,9 @@
     <xsl:if test="$pageContent/commands/add">
       <ul class="nav nav-tabs">
         <li>
+          <xsl:if test="$pageContent/commands/add/@active = '1'">
+            <xsl:attribute name="class">active</xsl:attribute>
+          </xsl:if>
           <a href="{$pageContent/commands/add}"><xsl:value-of select="$pageContent/commands/add/@caption" /></a>
         </li>
       </ul>
@@ -24,6 +27,7 @@
         <xsl:with-param name="message" select="$pageContent/dialog-message" />
         <xsl:with-param name="horizontal" select="true()" />
         <xsl:with-param name="inputSize" select="'xxlarge'" />
+        <xsl:with-param name="showMandatory" select="true()" />
       </xsl:call-template>
       <hr />
     </xsl:if>
