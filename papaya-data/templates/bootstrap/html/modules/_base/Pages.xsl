@@ -20,6 +20,7 @@
     <xsl:param name="subTitle" select="false()" />
     <xsl:param name="withText" select="true()"/>
     <xsl:param name="withHook" select="false()" />
+    <xsl:param name="useImageWithoutAlign" select="false()" />
 
     <div class="hero-unit">
       <xsl:choose>
@@ -33,7 +34,7 @@
             <xsl:copy-of select="$pageContent/image//img/@*[local-name() != 'class']" />
           </img>
         </xsl:when>
-        <xsl:when test="$pageContent/image">
+        <xsl:when test="$useImageWithoutAlign and $pageContent/image">
           <img class="hero-image thumbnail pull-left" src="{$pageContent/image}" alt="" />
         </xsl:when>
       </xsl:choose>

@@ -101,6 +101,7 @@
           <xsl:with-param name="date" select="$pageContent/time" />
         </xsl:call-template>
       </xsl:with-param>
+      <xsl:with-param name="useImageWithoutAlign" select="true()" />
     </xsl:call-template>
 
     <xsl:call-template name="alert">
