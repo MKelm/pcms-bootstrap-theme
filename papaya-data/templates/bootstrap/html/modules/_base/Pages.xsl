@@ -67,8 +67,16 @@
         </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
+
+      <xsl:call-template name="module-content-topic-additional-content-area">
+        <xsl:with-param name="pageContent" select="$pageContent" />
+      </xsl:call-template>
       <xsl:call-template name="float-fix" />
     </div>
+  </xsl:template>
+
+  <xsl:template name="module-content-topic-additional-content-area">
+    <xsl:param name="pageContent" />
   </xsl:template>
 
 </xsl:stylesheet>
