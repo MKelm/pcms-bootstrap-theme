@@ -6,18 +6,24 @@
   <xsl:template name="module-content-acommunity-groups-page">
     <xsl:param name="pageContent" />
 
-    <xsl:call-template name="alert">
-      <xsl:with-param name="message" select="$pageContent/message" />
-    </xsl:call-template>
-
-    <xsl:if test="$pageContent/commands/add">
+    <xsl:if test="count($pageContent/commands/*) &gt; 0 or count($pageContent/modes/*) &gt; 0">
       <ul class="nav nav-tabs">
-        <li>
-          <xsl:if test="$pageContent/commands/add/@active = '1'">
-            <xsl:attribute name="class">active</xsl:attribute>
-          </xsl:if>
-          <a href="{$pageContent/commands/add}"><xsl:value-of select="$pageContent/commands/add/@caption" /></a>
-        </li>
+        <xsl:for-each select="$pageContent/modes/*">
+          <li>
+            <xsl:if test="@active = '1'">
+              <xsl:attribute name="class">active</xsl:attribute>
+            </xsl:if>
+            <a href="{.}"><xsl:value-of select="@caption" /></a>
+          </li>
+        </xsl:for-each>
+        <xsl:for-each select="$pageContent/commands/*">
+          <li>
+            <xsl:if test="@active = '1'">
+              <xsl:attribute name="class">active</xsl:attribute>
+            </xsl:if>
+            <a href="{.}"><xsl:value-of select="@caption" /></a>
+          </li>
+        </xsl:for-each>
       </ul>
     </xsl:if>
 
@@ -31,6 +37,10 @@
       </xsl:call-template>
       <hr />
     </xsl:if>
+
+    <xsl:call-template name="alert">
+      <xsl:with-param name="message" select="$pageContent/message" />
+    </xsl:call-template>
 
     <xsl:if test="count($pageContent/groups/group) &gt; 0">
       <xsl:call-template name="acommunity-groups-row">
@@ -101,7 +111,22 @@
     <div class="media group">
       <a class="pull-left" href="{@page-link}"><img class="media-object" alt="" src="{@image}" /></a>
       <div class="media-body">
-        <h4 class="media-heading"><a href="{@page-link}"><xsl:value-of select="@title" /></a></h4>
+        <h4 class="media-heading">
+          <xsl:choose>
+            <xsl:when test="@page-link">
+              <a href="{@page-link}"><xsl:value-of select="@title" /></a>
+            </xsl:when>
+            <xsl:otherwise><xsl:value-of select="@title" /></xsl:otherwise>
+          </xsl:choose>
+          <xsl:if test="@is-public">
+            <xsl:choose>
+              <xsl:when test="@is-public = '1'">
+                <xsl:text> </xsl:text><i class="icon-eye-open"><xsl:text> </xsl:text></i>
+              </xsl:when>
+              <xsl:otherwise><xsl:text> </xsl:text><i class="icon-eye-close"><xsl:text> </xsl:text></i></xsl:otherwise>
+            </xsl:choose>
+          </xsl:if>
+        </h4>
         <p>
           <div class="time">
             Existiert seit:
@@ -120,6 +145,18 @@
             <a class="btn btn-mini" href="{commands/delete}">
               <i class="icon-remove"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
               <xsl:value-of select="commands/delete/@caption" /></a>
+          </xsl:if>
+          <xsl:text> </xsl:text>
+          <xsl:if test="count(commands/accept-invitation) &gt; 0">
+            <a class="btn btn-mini" href="{commands/accept-invitation}">
+              <i class="icon-ok-circle"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
+              <xsl:value-of select="commands/accept-invitation/@caption" /></a>
+          </xsl:if>
+          <xsl:text> </xsl:text>
+          <xsl:if test="count(commands/decline-invitation) &gt; 0">
+            <a class="btn btn-mini" href="{commands/decline-invitation}">
+              <i class="icon-remove-circle"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
+              <xsl:value-of select="commands/decline-invitation/@caption" /></a>
           </xsl:if>
         </p>
       </div>
