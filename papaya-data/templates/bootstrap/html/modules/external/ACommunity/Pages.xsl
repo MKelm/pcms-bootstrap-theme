@@ -110,16 +110,18 @@
     <xsl:param name="pageContent" />
 
     <div class="group">
-      <xsl:call-template name="module-content-topic">
-        <xsl:with-param name="pageContent" select="$pageContent" />
-        <xsl:with-param name="subTitle">
-          <xsl:value-of select="$pageContent/time/@caption" /><xsl:text>: </xsl:text>
-          <xsl:call-template name="format-date">
-            <xsl:with-param name="date" select="$pageContent/time" />
-          </xsl:call-template>
-        </xsl:with-param>
-        <xsl:with-param name="useImageWithoutAlign" select="true()" />
-      </xsl:call-template>
+      <xsl:if test="$pageContent/title">
+        <xsl:call-template name="module-content-topic">
+          <xsl:with-param name="pageContent" select="$pageContent" />
+          <xsl:with-param name="subTitle">
+            <xsl:value-of select="$pageContent/time/@caption" /><xsl:text>: </xsl:text>
+            <xsl:call-template name="format-date">
+              <xsl:with-param name="date" select="$pageContent/time" />
+            </xsl:call-template>
+          </xsl:with-param>
+          <xsl:with-param name="useImageWithoutAlign" select="true()" />
+        </xsl:call-template>
+      </xsl:if>
 
       <xsl:call-template name="alert">
         <xsl:with-param name="message" select="$pageContent/message" />
