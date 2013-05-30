@@ -158,6 +158,12 @@
               <i class="icon-remove-circle"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
               <xsl:value-of select="commands/decline-invitation/@caption" /></a>
           </xsl:if>
+          <xsl:text> </xsl:text>
+          <xsl:if test="count(commands/remove-request) &gt; 0">
+            <a class="btn btn-mini" href="{commands/remove-request}">
+              <i class="icon-remove-circle"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
+              <xsl:value-of select="commands/remove-request/@caption" /></a>
+          </xsl:if>
         </p>
       </div>
     </div>
