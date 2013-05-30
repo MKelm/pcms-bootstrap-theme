@@ -30,6 +30,7 @@
                 <xsl:with-param name="text" select="'SURFER_NAV_PROFILE_LINK'"/>
               </xsl:call-template></a></li>
               <li><a href="{active-surfer/edit-link}"><xsl:value-of select="active-surfer/edit-link/@caption" /></a></li>
+              <li><a href="{active-surfer/groups-link}"><xsl:value-of select="active-surfer/groups-link/@caption" /></a></li>
               <li><a href="{active-surfer/messages-link}"><xsl:value-of select="active-surfer/messages-link/@caption" /></a></li>
               <xsl:if test="active-surfer/contacts-link or active-surfer/contact-requests-link or active-surfer/contact-own-requests-link">
                 <li class="nav-header"><xsl:call-template name="language-text">
