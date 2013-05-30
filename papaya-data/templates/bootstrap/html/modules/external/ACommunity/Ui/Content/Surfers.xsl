@@ -44,21 +44,17 @@
         </div>
       </xsl:when>
       <xsl:when test="$withGrid">
-        <xsl:choose>
-          <xsl:when test="count($content/surfer) &gt; 0">
-            <xsl:call-template name="acommunity-surfers-row">
-              <xsl:with-param name="surfers" select="$content/surfer" />
-            </xsl:call-template>
-            <xsl:call-template name="acommunity-content-paging">
-              <xsl:with-param name="paging" select="$content/paging" />
-            </xsl:call-template>
-          </xsl:when>
-          <xsl:otherwise>
-            <xsl:call-template name="alert">
-              <xsl:with-param name="message" select="$content/message" />
-            </xsl:call-template>
-          </xsl:otherwise>
-        </xsl:choose>
+        <xsl:call-template name="alert">
+          <xsl:with-param name="message" select="$content/message" />
+        </xsl:call-template>
+        <xsl:if test="count($content/surfer) &gt; 0">
+          <xsl:call-template name="acommunity-surfers-row">
+            <xsl:with-param name="surfers" select="$content/surfer" />
+          </xsl:call-template>
+          <xsl:call-template name="acommunity-content-paging">
+            <xsl:with-param name="paging" select="$content/paging" />
+          </xsl:call-template>
+        </xsl:if>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="acommunity-surfers-list">
