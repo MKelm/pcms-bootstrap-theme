@@ -372,6 +372,7 @@
   <xsl:param name="type" />
   <xsl:param name="message" />
   <xsl:param name="title" select="false()"/>
+  <xsl:param name="useLanguageText" select="false()" />
 
   <xsl:if test="$message and $message != ''">
     <div class="alert">
@@ -385,7 +386,14 @@
         </xsl:choose>
       </xsl:attribute>
       <button type="button" class="close" data-dismiss="alert">&#215;</button>
-      <xsl:value-of select="$message" />
+      <xsl:choose>
+        <xsl:when test="$useLanguageText or $message/@use-language-text = 'yes'">
+          <xsl:call-template name="language-text">
+            <xsl:with-param name="text" select="$message"/>
+          </xsl:call-template>
+        </xsl:when>
+        <xsl:otherwise><xsl:value-of select="$message" /></xsl:otherwise>
+      </xsl:choose>
     </div>
   </xsl:if>
 </xsl:template>
