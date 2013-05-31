@@ -12,4 +12,6 @@
   <text ident="GALLERY_ORIGINAL_IMAGE">Originalbild anzeigen</text>
   <text ident="GALLERY_IMAGE_DOWNLOAD">Originalbild herunterladen</text>
   <text ident="GALLERY_DELETE_IMAGE">Löschen</text>
+
+  <text ident="GROUP_GALLERY_ACCESS_DENIED">Du hast keine Berechtigung diese Gruppengalerie aufzurufen.</text>
 </texts>

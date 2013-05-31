@@ -12,63 +12,62 @@
 
   <xsl:template name="module-content-image-gallery">
     <xsl:param name="pageContent"/>
+    <xsl:if test="$pageContent/title">
+      <xsl:call-template name="module-content-topic">
+        <xsl:with-param name="pageContent" select="$pageContent" />
+        <xsl:with-param name="withHook" select="true()" />
+        <xsl:with-param name="withText" select="not($pageContent/image)" />
+      </xsl:call-template>
+    </xsl:if>
 
-    <xsl:call-template name="module-content-topic">
-      <xsl:with-param name="pageContent" select="$pageContent" />
-      <xsl:with-param name="withHook" select="true()" />
-      <xsl:with-param name="withText" select="not($pageContent/image)" />
+    <xsl:call-template name="alert">
+      <xsl:with-param name="message" select="$pageContent/message" />
     </xsl:call-template>
-    <div class="gallery">
-      <a name="gallery-images-area"><xsl:text> </xsl:text></a>
-      <xsl:if test="count($pageContent/images/image) &gt; 0 or count($pageContent/image) &gt; 0">
-        <xsl:call-template name="module-content-gallery-navigation">
-          <xsl:with-param name="navigation" select="$pageContent/navigation" />
-          <xsl:with-param name="anchor" select="'gallery-images-area'" />
-        </xsl:call-template>
-      </xsl:if>
 
-      <xsl:choose>
-        <xsl:when test="$pageContent/images/image">
-
-          <xsl:variable name="rows" select="ceiling(count($pageContent/images/image)
-            div $pageContent/options/max_per_line)" />
-          <xsl:call-template name="module-content-gallery-image-rows">
-            <xsl:with-param name="images" select="$pageContent/images/image" />
-            <xsl:with-param name="rows" select="$rows" />
-            <xsl:with-param name="fieldsPerRow" select="$pageContent/options/max_per_line" />
-          </xsl:call-template>
-
-        </xsl:when>
-        <xsl:when test="$pageContent/image">
-          <xsl:call-template name="module-content-gallery-images">
-            <xsl:with-param name="isSingleImage" select="true()" />
-            <xsl:with-param name="images" select="$pageContent/image" />
-            <xsl:with-param name="navigation" select="$pageContent/navigation" />
-            <xsl:with-param name="allowTitle" select="true()" />
-            <xsl:with-param name="allowDescription" select="true()" />
-          </xsl:call-template>
-        </xsl:when>
-      </xsl:choose>
-
-      <xsl:choose>
-        <xsl:when test="count($pageContent/images/image) &gt; 0 or count($pageContent/image) &gt; 0">
+    <xsl:choose>
+      <xsl:when test="count($pageContent/images/image) &gt; 0 or count($pageContent/image) &gt; 0">
+        <div class="gallery">
+          <a name="gallery-images-area"><xsl:text> </xsl:text></a>
           <xsl:call-template name="module-content-gallery-navigation">
             <xsl:with-param name="navigation" select="$pageContent/navigation" />
             <xsl:with-param name="anchor" select="'gallery-images-area'" />
           </xsl:call-template>
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:call-template name="alert">
-            <xsl:with-param name="type" select="'error'" />
-            <xsl:with-param name="message">
-              <xsl:call-template name="language-text">
-                <xsl:with-param name="text" select="'GALLERY_NO_IMAGES'"/>
+
+          <xsl:choose>
+            <xsl:when test="$pageContent/images/image">
+              <xsl:variable name="rows" select="ceiling(count($pageContent/images/image)
+                div $pageContent/options/max_per_line)" />
+              <xsl:call-template name="module-content-gallery-image-rows">
+                <xsl:with-param name="images" select="$pageContent/images/image" />
+                <xsl:with-param name="rows" select="$rows" />
+                <xsl:with-param name="fieldsPerRow" select="$pageContent/options/max_per_line" />
               </xsl:call-template>
-            </xsl:with-param>
+            </xsl:when>
+            <xsl:when test="$pageContent/image">
+              <xsl:call-template name="module-content-gallery-images">
+                <xsl:with-param name="isSingleImage" select="true()" />
+                <xsl:with-param name="images" select="$pageContent/image" />
+                <xsl:with-param name="navigation" select="$pageContent/navigation" />
+                <xsl:with-param name="allowTitle" select="true()" />
+                <xsl:with-param name="allowDescription" select="true()" />
+              </xsl:call-template>
+            </xsl:when>
+          </xsl:choose>
+
+          <xsl:call-template name="module-content-gallery-navigation">
+            <xsl:with-param name="navigation" select="$pageContent/navigation" />
+            <xsl:with-param name="anchor" select="'gallery-images-area'" />
           </xsl:call-template>
-        </xsl:otherwise>
-      </xsl:choose>
-    </div>
+        </div>
+      </xsl:when>
+      <xsl:when test="not($pageContent/message)">
+        <xsl:call-template name="alert">
+          <xsl:with-param name="type" select="'error'" />
+          <xsl:with-param name="message" select="'GALLERY_NO_IMAGES'" />
+          <xsl:with-param name="useLanguageText" select="true()" />
+        </xsl:call-template>
+      </xsl:when>
+    </xsl:choose>
   </xsl:template>
 
 
