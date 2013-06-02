@@ -147,6 +147,12 @@
               <xsl:value-of select="commands/delete/@caption" /></a>
           </xsl:if>
           <xsl:text> </xsl:text>
+          <xsl:if test="count(commands/remove-membership) &gt; 0">
+            <a class="btn btn-mini" href="{commands/remove-membership}">
+              <i class="icon-remove-circle"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
+              <xsl:value-of select="commands/remove-membership/@caption" /></a>
+          </xsl:if>
+          <xsl:text> </xsl:text>
           <xsl:if test="count(commands/accept-invitation) &gt; 0">
             <a class="btn btn-mini" href="{commands/accept-invitation}">
               <i class="icon-ok-circle"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
