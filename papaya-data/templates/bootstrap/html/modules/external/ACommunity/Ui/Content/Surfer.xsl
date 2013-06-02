@@ -5,11 +5,11 @@
     <xsl:param name="pageContent" />
 
     <xsl:choose>
-      <xsl:when test="count($pageContent/details/group) &gt; 0">
+      <xsl:when test="count($pageContent/surfer/details/group) &gt; 0">
         <div class="hero-unit surfer">
           <xsl:call-template name="module-content-acommunity-surfer-page-base-details">
-            <xsl:with-param name="baseDetails" select="$pageContent/details/group[@id = 0]" />
-            <xsl:with-param name="pageContent" select="$pageContent" />
+            <xsl:with-param name="baseDetails" select="$pageContent/surfer/details/group[@id = 0]" />
+            <xsl:with-param name="pageContent" select="$pageContent/surfer" />
           </xsl:call-template>
         </div>
       </xsl:when>
@@ -93,13 +93,13 @@
   <xsl:template name="module-content-acommunity-surfer-page-after-content-hook-before">
     <xsl:param name="pageContent" />
 
-    <xsl:if test="count($pageContent/details/group[@id != 0]) &gt; 0">
+    <xsl:if test="count($pageContent/surfer/details/group[@id != 0]) &gt; 0">
       <div class="surfer-details-dynamic">
-        <xsl:variable name="rows" select="ceiling(count($pageContent/details/group[@id != 0]) div 2)" />
+        <xsl:variable name="rows" select="ceiling(count($pageContent/surfer/details/group[@id != 0]) div 2)" />
         <xsl:variable name="fieldsPerRow" select="'2'" />
 
         <xsl:call-template name="module-content-acommunity-surfer-page-detail-groups">
-          <xsl:with-param name="groups" select="$pageContent/details/group[@id != 0]" />
+          <xsl:with-param name="groups" select="$pageContent/surfer/details/group[@id != 0]" />
           <xsl:with-param name="rows" select="$rows" />
           <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
         </xsl:call-template>

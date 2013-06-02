@@ -17,7 +17,7 @@
     <xsl:choose>
       <xsl:when test="$pageContent/@module = 'ACommunitySurferPage'">
         <xsl:call-template name="module-content-acommunity-surfer-page-after-content-hook-before">
-          <xsl:with-param name="pageContent" select="$pageContent/surfer-page"/>
+          <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$pageContent/@module = 'ACommunityMessagesPage'">
@@ -39,7 +39,7 @@
     <xsl:choose>
       <xsl:when test="$pageContent/@module = 'ACommunitySurferPage'">
         <xsl:call-template name="module-content-acommunity-surfer-page">
-          <xsl:with-param name="pageContent" select="$pageContent/surfer-page"/>
+          <xsl:with-param name="pageContent" select="$pageContent"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$pageContent/@module = 'ACommunitySurferEditorPage'">
