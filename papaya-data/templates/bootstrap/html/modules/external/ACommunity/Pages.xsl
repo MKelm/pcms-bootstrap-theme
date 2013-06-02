@@ -157,7 +157,13 @@
       <div class="media message">
         <a class="pull-left" href="{surfer/@page-link}"><img class="media-object" alt="" src="{surfer/@avatar}" /></a>
         <div class="media-body">
-          <h4 class="media-heading"><a href="{surfer/@page-link}"><xsl:value-of select="surfer/@name" /></a>
+          <h4 class="media-heading">
+            <xsl:choose>
+              <xsl:when test="surfer">
+                <a href="{surfer/@page-link}"><xsl:value-of select="surfer/@name" /></a>
+              </xsl:when>
+              <xsl:when test="notification-title"><xsl:value-of select="notification-title" /></xsl:when>
+            </xsl:choose>
             <xsl:text> </xsl:text>
             <small><xsl:call-template name="format-date">
                   <xsl:with-param name="date" select="@time" />
