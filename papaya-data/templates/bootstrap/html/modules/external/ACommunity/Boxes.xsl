@@ -89,6 +89,18 @@
         <a class="brand" href="{page-link}"><img src="{image}" alt="" class="pull-left" /></a>
         <div class="links">
           <a class="brand" href="{page-link}"><xsl:value-of select="title" /></a>
+          <xsl:if test="count(commands/*) &gt; 0">
+            <ul class="nav">
+              <xsl:for-each select="commands/*">
+                <li>
+                  <xsl:if test="@active = '1'">
+                    <xsl:attribute name="class">active</xsl:attribute>
+                  </xsl:if>
+                  <a href="{@href}"><xsl:value-of select="@caption" /></a>
+                </li>
+              </xsl:for-each>
+            </ul>
+          </xsl:if>
         </div>
       </div>
     </div>
