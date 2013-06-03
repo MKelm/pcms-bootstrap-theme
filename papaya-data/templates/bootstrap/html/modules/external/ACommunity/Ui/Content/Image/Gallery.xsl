@@ -7,9 +7,6 @@
   <xsl:param name="LANGUAGE_MODULE_CURRENT" select="document(concat('../../../', $PAGE_LANGUAGE, '.xml'))" />
   <xsl:param name="LANGUAGE_MODULE_FALLBACK" select="document('../../../en-US.xml')"/>
 
-  <xsl:template name="page-styles">
-  </xsl:template>
-
   <xsl:template name="module-content-image-gallery">
     <xsl:param name="pageContent"/>
     <xsl:if test="$pageContent/title">
@@ -41,6 +38,7 @@
                 <xsl:with-param name="images" select="$pageContent/images/image" />
                 <xsl:with-param name="rows" select="$rows" />
                 <xsl:with-param name="fieldsPerRow" select="$pageContent/options/max_per_line" />
+                <xsl:with-param name="lightbox" select="$pageContent/options/lightbox" />
               </xsl:call-template>
             </xsl:when>
             <xsl:when test="$pageContent/image">
@@ -76,6 +74,7 @@
     <xsl:param name="rows" />
     <xsl:param name="row" select="'1'" />
     <xsl:param name="fieldsPerRow" />
+    <xsl:param name="lightbox" />
     <xsl:param name="position" select="'1'" />
 
     <xsl:if test="$position = 1 or ($position mod $fieldsPerRow = 1)">
@@ -92,6 +91,7 @@
         <xsl:call-template name="module-content-gallery-images">
           <xsl:with-param name="images" select="$images" />
           <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+          <xsl:with-param name="lightbox" select="$lightbox" />
           <xsl:with-param name="position" select="$position" />
           <xsl:with-param name="row" select="$row" />
           <xsl:with-param name="anchor" select="$anchor" />
@@ -105,6 +105,7 @@
         <xsl:with-param name="rows" select="$rows" />
         <xsl:with-param name="row" select="$row + 1" />
         <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+        <xsl:with-param name="lightbox" select="$lightbox" />
         <xsl:with-param name="position" select="$position + $fieldsPerRow" />
       </xsl:call-template>
     </xsl:if>
@@ -115,6 +116,7 @@
     <xsl:param name="images" select="false()" />
     <xsl:param name="navigation" select="false()" />
     <xsl:param name="fieldsPerRow" select="'0'" />
+    <xsl:param name="lightbox" select="'0'" />
     <xsl:param name="position" select="'1'" />
     <xsl:param name="allowTitle" select="false()" />
     <xsl:param name="allowDescription" select="false()" />
@@ -142,8 +144,20 @@
               </a>
             </xsl:when>
             <xsl:when test="$currentImage/destination and $currentImage/destination/@href">
-              <a href="{$currentImage/destination/@href}#gallery-images-area" title="{$currentImage/title}">
-                <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}"/>
+              <xsl:variable name="linkHref">
+                <xsl:choose>
+                  <xsl:when test="$lightbox = '1'"><xsl:value-of select="$currentImage/destination/img/@src" /></xsl:when>
+                  <xsl:otherwise><xsl:value-of select="$currentImage/destination/@href" />#gallery-images-area</xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <xsl:variable name="description">
+                <xsl:choose>
+                  <xsl:when test="$lightbox = '1'"><xsl:value-of select="$currentImage/following::image-description" /></xsl:when>
+                  <xsl:otherwise></xsl:otherwise>
+                </xsl:choose>
+              </xsl:variable>
+              <a class="image-thumbnail-link" data-fancybox-group="gallery" data-fancybox-description="{$description}" href="{$linkHref}" title="{$currentImage/title}">
+                <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}" />
               </a>
             </xsl:when>
             <xsl:otherwise>
@@ -201,6 +215,7 @@
           <xsl:call-template name="module-content-gallery-images">
             <xsl:with-param name="images" select="$images" />
             <xsl:with-param name="fieldsPerRow" select="$fieldsPerRow" />
+            <xsl:with-param name="lightbox" select="$lightbox" />
             <xsl:with-param name="position" select="$position + 1" />
             <xsl:with-param name="row" select="$row" />
             <xsl:with-param name="anchor" select="$anchor" />
