@@ -78,6 +78,15 @@
         <div class="links">
           <a class="brand" href="{details/group/detail[@name = 'page-link']}">
             <xsl:value-of select="details/group/detail[@name = 'name']" /></a>
+          <ul class="nav">
+            <li>
+              <xsl:if test="details/group/detail[@name = 'gallery-link']/@active = '1'">
+                <xsl:attribute name="class">active</xsl:attribute>
+              </xsl:if>
+              <a href="{details/group/detail[@name = 'gallery-link']/@href}">
+                <xsl:value-of select="details/group/detail[@name = 'gallery-link']/@caption" /></a>
+            </li>
+          </ul>
         </div>
       </div>
     </div>
