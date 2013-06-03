@@ -8,7 +8,7 @@
     ACommunityGroupImageGalleryTeaserBox,
     ACommunitySurferStatusBox, ACommunitySurferContactsBox,
     ACommunitySurfersLastActionBox, ACommunitySurfersRegistrationBox,
-    ACommunityMessageConversationsBox
+    ACommunityMessageConversationsBox, ACommunityRessourceContextBox
 -->
 
 <!-- import main layout rules, this will import the default rules, too -->

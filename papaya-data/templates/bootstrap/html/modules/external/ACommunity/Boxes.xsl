@@ -70,6 +70,30 @@
     <a class="navbar-link" href="{@href}"><xsl:value-of select="." /></a>
   </xsl:template>
 
+  <xsl:template match="surfer[@mode = 'surfer-bar']">
+    <div class="navbar ressource-context">
+      <div class="navbar-inner">
+        <a class="brand" href="{details/group/detail[@name = 'page-link']}">
+          <img src="{details/group/detail[@name = 'avatar']}" alt="" class="pull-left" /></a>
+        <div class="links">
+          <a class="brand" href="{details/group/detail[@name = 'page-link']}">
+            <xsl:value-of select="details/group/detail[@name = 'name']" /></a>
+        </div>
+      </div>
+    </div>
+  </xsl:template>
+
+  <xsl:template match="group[@mode = 'group-bar']">
+    <div class="navbar ressource-context">
+      <div class="navbar-inner">
+        <a class="brand" href="{page-link}"><img src="{image}" alt="" class="pull-left" /></a>
+        <div class="links">
+          <a class="brand" href="{page-link}"><xsl:value-of select="title" /></a>
+        </div>
+      </div>
+    </div>
+  </xsl:template>
+
   <xsl:template match="acommunity-surfers">
     <xsl:call-template name="acommunity-surfers">
       <xsl:with-param name="content" select="." />
