@@ -16,16 +16,26 @@
  */
 (function ($) {
 	//Shortcut for fancyBox object
-	var F = $.fancybox;
+	var F = $.fancybox,
+    getScalar = function(orig, dim) {
+			var value = parseInt(orig, 10) || 0;
+
+			if (dim && isPercentage(orig)) {
+				value = F.getViewport()[ dim ] / 100 * value;
+			}
+
+			return Math.ceil(value);
+		};
 
 	//Add helper object
 	F.helpers.extras = {
 		defaults : {
-			type     : 'float', // 'float', 'inside', 'outside' or 'over',
-			position : 'bottom', // 'top' or 'bottom'
-      title    : 'Extra Content', // title of extra content link
-      urls     : [], // urls to load extras from
-      content  : '' // current extras content
+			type            : 'float', // 'float', 'inside', 'outside' or 'over',
+			position        : 'bottom', // 'top' or 'bottom'
+      linkTitle       : 'Show extras ', // title of extras link
+      linkTitleActive : 'Show image', // title of extras link
+      urls            : [], // urls to load extras from
+      content         : '' // current extras content
 		},
 
 		beforeShow: function (opts) {
@@ -33,8 +43,9 @@
         type = opts.type,
         urls = opts.urls;
       if (urls[current.index] !== undefined && urls[current.index].length > 0) {
-        openLink = $('<div class="fancybox-extra-content fancybox-extracontent-' + type +
-          '-wrap"><a href="#" id="fancyBoxExtraContentLink">' + opts.title + '</a></div>');
+        openLink = $('<div class="fancybox-extras-link fancybox-extras-link-' + type +
+          '-wrap fancybox-extras-link-' + opts.position + '"><a href="#">'
+          + opts.linkTitle + '</a></div>');
 
         switch (type) {
           case 'inside':
@@ -54,7 +65,7 @@
 
             openLink.appendTo('body');
 
-            if (IE) {
+            if (F.IE) {
               description.width( openLink.width() );
             }
 
@@ -69,40 +80,61 @@
       }
 		},
 
-    showExtraContent: function (opts) {
-      $('.fancybox-skin').children(':not(.fancybox-extra-content, .fancybox-item)').hide();
-
+    showExtrasContent: function (opts) {
+      // hide fancybox content with image and navigation links
+      $('.fancybox-skin').children(':not(.fancybox-extras-link, .fancybox-item)').hide();
+      // add extras content area to fancybox
       $('.fancybox-skin').prepend(
-        '<div class="fancybox-extra-content-area">' + opts.content + '</div>'
+        '<div class="fancybox-extras-content">' + opts.content + '</div>'
       );
-
-      $('a#fancyBoxExtraContentLink').unbind('click');
-      $('a#fancyBoxExtraContentLink').click(function () {
-        F.helpers.extras.hideExtraContent(opts);
+      // add click events on internal links
+      var currentUrl = opts.urls[F.current.index];
+      $('.fancybox-skin .fancybox-extras-content').find('a[href ^= "' + currentUrl + '"]').click(function () {
+        $.get($(this).attr('href'), function(data) {
+          opts.content = $(data).children('requested-content').html();
+          F.helpers.extras.showExtrasContent(opts);
+        });
+        return false;
       });
+      // add target blank on external links
+      $('.fancybox-skin .fancybox-extras-content').find('a[href *= "http"]').attr('target', '_blank');
+      // add form submit click event for first form in content
+      $('.fancybox-skin .fancybox-extras-content').find('button[type = "submit"]').click(function () {
+        var form = $(this).parents('form:first');
+        $.post($(form).attr('action'), $(form).serialize(), function(data) {
+          opts.content = $(data).children('requested-content').html();
+          F.helpers.extras.showExtrasContent(opts);
+        });
+        return false;
+      });
+      // reset content link click event to hide extras content
+      $('.fancybox-extras-link a').unbind('click').click(function () {
+        F.helpers.extras.hideExtrasContent(opts);
+      });
+      $('.fancybox-extras-link a').html(opts.linkTitleActive);
     },
 
-    hideExtraContent: function (opts) {
-      $('.fancybox-skin .fancybox-extra-content-area').hide();
-      $('.fancybox-skin').children(':not(.fancybox-extra-content-area)').show();
-      $('a#fancyBoxExtraContentLink').unbind('click');
-      $('a#fancyBoxExtraContentLink').click(function () {
-        F.helpers.extras.showExtraContent(opts);
+    hideExtrasContent: function (opts) {
+      $('.fancybox-skin .fancybox-extras-content').hide();
+      $('.fancybox-skin').children(':not(.fancybox-extras-content)').show();
+      $('.fancybox-extras-link a').unbind('click').click(function () {
+        F.helpers.extras.showExtrasContent(opts);
       });
+      $('.fancybox-extras-link a').html(opts.linkTitle);
     },
 
-    beforeShowExtraContent: function (opts) {
+    beforeShowExtrasContent: function (opts) {
       $.ajax({
         url : opts.urls[F.current.index],
-      }).done(function ( data ) {
-        opts.content= $(data).children('requested-content').html();
-        F.helpers.extras.showExtraContent(opts);
+      }).done(function (data) {
+        opts.content = $(data).children('requested-content').html();
+        F.helpers.extras.showExtrasContent(opts);
       });
     },
 
     afterShow: function (opts) {
-      $('a#fancyBoxExtraContentLink').click(function () {
-        F.helpers.extras.beforeShowExtraContent(opts);
+      $('.fancybox-extras-link a').click(function () {
+        F.helpers.extras.beforeShowExtrasContent(opts);
       });
     }
 	};
