@@ -29,7 +29,7 @@
               ['<xsl:value-of select="destination/img/@src" />',
               '<xsl:value-of select="img/@src" />',
               '<xsl:value-of select="title" />',
-              '<xsl:value-of select="following::*[position() &lt; 3 and name() = 'image-description']" />',
+              '<xsl:value-of select="following::*[position() &lt;= 3 and name() = 'image-description']" />',
               '<xsl:value-of select="img/@alt" />']
             </xsl:for-each>
           ];
@@ -74,7 +74,7 @@
                         <xsl:if test="position() &gt; 1"><xsl:text>, </xsl:text></xsl:if>
                         <xsl:call-template name="javascript-escape-string">
                           <xsl:with-param name="string"
-                            select="./following::*[position() &lt; 3 and name() = 'image-extras-link']" />
+                            select="./following::*[position() &lt;= 3 and name() = 'image-extras-link']" />
                         </xsl:call-template>
                       </xsl:for-each>
                     ]
@@ -241,8 +241,8 @@
               <xsl:variable name="options" select="/page/content/topic/options" />
               <script><xsl:comment>
                 document.write(
-                  '&lt;div style="width: <xsl:value-of select="$options/thumb_width" />px; ' +
-                  'height: <xsl:value-of select="$options/thumb_height" />px;"' +
+                  '&lt;div style="' +
+                  'height: <xsl:value-of select="$options/thumb_height + 10" />px;"' +
                   'data-image-position="<xsl:value-of select="$position" />"&gt; &lt;/div&gt;'
                 );
               </xsl:comment></script>
@@ -257,11 +257,12 @@
             </xsl:otherwise>
           </xsl:choose>
 
-          <xsl:if test="$currentImage/following::*[position() &lt; 3 and name() = 'delete-image']">
+          <xsl:if test="$currentImage/following::*[position() &lt;= 3 and name() = 'delete-image']">
             <div class="moderator-controls">
               <a class="btn btn-mini">
                 <xsl:attribute name="href">
-                  <xsl:value-of select="$currentImage/*[position() &lt; 3 and name() = 'delete-image']/@href" />
+                  <xsl:value-of
+                    select="$currentImage/following::*[position() &lt;= 3 and name() = 'delete-image']/@href" />
                   <xsl:if test="$anchor != ''">
                     <xsl:text>#</xsl:text><xsl:value-of select="$anchor" />
                   </xsl:if>
