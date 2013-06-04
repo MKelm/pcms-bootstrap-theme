@@ -7,6 +7,58 @@
   <xsl:param name="LANGUAGE_MODULE_CURRENT" select="document(concat('../../../', $PAGE_LANGUAGE, '.xml'))" />
   <xsl:param name="LANGUAGE_MODULE_FALLBACK" select="document('../../../en-US.xml')"/>
 
+  <xsl:template name="module-content-image-gallery-page-styles">
+    <xsl:if test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1' and
+        count(/page/content/topic/images/image) &gt; 1">
+      <xsl:call-template name="link-style">
+        <xsl:with-param name="files">
+          <file>fancybox/jquery.fancybox.css</file>
+        </xsl:with-param>
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="module-content-image-gallery-page-scripts-lazy">
+    <xsl:if test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1' and
+        count(/page/content/topic/images/image) &gt; 1">
+      <xsl:call-template name="link-script">
+        <xsl:with-param name="files">
+          <file>fancybox/jquery.fancybox.js</file>
+          <file>fancybox/helpers/jquery.fancybox-extras.js</file>
+        </xsl:with-param>
+      </xsl:call-template>
+      <script type="text/javascript"><xsl:comment>
+        jQuery(document).ready(
+          function() {
+            jQuery('.image-thumbnail-link').fancybox({
+              helpers:  {
+                title : {
+                  type : 'inside'
+                },
+                description : {
+                  type : 'inside'
+                },
+                extras : {
+                  type : 'inside',
+                  title : 'Comments',
+                  urls : [
+                    <xsl:for-each select="/page/content/topic/images/image">
+                      <xsl:if test="position() &gt; 1"><xsl:text>, </xsl:text></xsl:if>
+                      <xsl:call-template name="javascript-escape-string">
+                        <xsl:with-param name="string"
+                          select="./following::*[position() &lt; 3 and name() = 'image-extras-link']" />
+                      </xsl:call-template>
+                    </xsl:for-each>
+                  ]
+                }
+              }
+            });
+          }
+        );
+      </xsl:comment></script>
+    </xsl:if>
+  </xsl:template>
+
   <xsl:template name="module-content-image-gallery">
     <xsl:param name="pageContent"/>
     <xsl:if test="$pageContent/title">
@@ -152,7 +204,8 @@
               </xsl:variable>
               <xsl:variable name="description">
                 <xsl:choose>
-                  <xsl:when test="$lightbox = '1'"><xsl:value-of select="$currentImage/following::image-description" /></xsl:when>
+                  <xsl:when test="$lightbox = '1'"><xsl:value-of
+                    select="$currentImage/following::*[position() &lt; 3 and name() = 'image-description']" /></xsl:when>
                   <xsl:otherwise></xsl:otherwise>
                 </xsl:choose>
               </xsl:variable>
@@ -165,19 +218,14 @@
             </xsl:otherwise>
           </xsl:choose>
 
-          <xsl:if test="$currentImage/following::delete-image">
+          <xsl:if test="$currentImage/following::*[position() &lt; 3 and name() = 'delete-image']">
             <div class="moderator-controls">
               <a class="btn btn-mini">
                 <xsl:attribute name="href">
-                  <xsl:choose>
-                    <xsl:when test="$anchor != ''">
-                      <xsl:value-of select="$currentImage/following::delete-image/@href" />
-                      <xsl:text>#</xsl:text><xsl:value-of select="$anchor" />
-                    </xsl:when>
-                    <xsl:otherwise>
-                      <xsl:value-of select="$currentImage/following::delete-image/@href" />
-                    </xsl:otherwise>
-                  </xsl:choose>
+                  <xsl:value-of select="$currentImage/*[position() &lt; 3 and name() = 'delete-image']/@href" />
+                  <xsl:if test="$anchor != ''">
+                    <xsl:text>#</xsl:text><xsl:value-of select="$anchor" />
+                  </xsl:if>
                 </xsl:attribute>
                 <i class="icon-remove"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
                 <xsl:call-template name="language-text">

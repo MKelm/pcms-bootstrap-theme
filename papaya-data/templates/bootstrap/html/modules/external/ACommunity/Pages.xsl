@@ -10,42 +10,16 @@
 
   <xsl:template name="page-styles">
     <xsl:choose>
-      <xsl:when test="/page/content/topic/@module = 'ACommunityImageGalleryPage' and
-        /page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1'">
-        <xsl:call-template name="link-style">
-          <xsl:with-param name="files">
-            <file>fancybox/jquery.fancybox.css</file>
-          </xsl:with-param>
-        </xsl:call-template>
+      <xsl:when test="/page/content/topic/@module = 'ACommunityImageGalleryPage'">
+        <xsl:call-template name="module-content-image-gallery-page-styles" />
       </xsl:when>
     </xsl:choose>
   </xsl:template>
 
   <xsl:template name="page-scripts-lazy">
     <xsl:choose>
-      <xsl:when test="/page/content/topic/@module = 'ACommunityImageGalleryPage' and
-        /page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1'">
-        <xsl:call-template name="link-script">
-          <xsl:with-param name="files">
-            <file>fancybox/jquery.fancybox.js</file>
-          </xsl:with-param>
-        </xsl:call-template>
-        <script type="text/javascript"><xsl:comment>
-          jQuery(document).ready(
-            function() {
-              jQuery('.image-thumbnail-link').fancybox({
-                helpers:  {
-                  title : {
-                    type : 'inside'
-                  },
-                  description : {
-                    type : 'inside'
-                  }
-                }
-              });
-            }
-          );
-        </xsl:comment></script>
+      <xsl:when test="/page/content/topic/@module = 'ACommunityImageGalleryPage'">
+        <xsl:call-template name="module-content-image-gallery-page-scripts-lazy" />
       </xsl:when>
     </xsl:choose>
   </xsl:template>
