@@ -13,49 +13,91 @@
       <xsl:call-template name="link-style">
         <xsl:with-param name="files">
           <file>fancybox/jquery.fancybox.css</file>
+          <file>fancybox/helpers/jquery.fancybox-extras.css</file>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:if>
   </xsl:template>
 
   <xsl:template name="module-content-image-gallery-page-scripts-lazy">
-    <xsl:if test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1' and
-        count(/page/content/topic/images/image) &gt; 1">
-      <xsl:call-template name="link-script">
-        <xsl:with-param name="files">
-          <file>fancybox/jquery.fancybox.js</file>
-          <file>fancybox/helpers/jquery.fancybox-extras.js</file>
-        </xsl:with-param>
-      </xsl:call-template>
-      <script type="text/javascript"><xsl:comment>
-        jQuery(document).ready(
-          function() {
-            jQuery('.image-thumbnail-link').fancybox({
-              helpers:  {
-                title : {
-                  type : 'inside'
-                },
-                description : {
-                  type : 'inside'
-                },
-                extras : {
-                  type : 'inside',
-                  title : 'Comments',
-                  urls : [
-                    <xsl:for-each select="/page/content/topic/images/image">
-                      <xsl:if test="position() &gt; 1"><xsl:text>, </xsl:text></xsl:if>
-                      <xsl:call-template name="javascript-escape-string">
-                        <xsl:with-param name="string"
-                          select="./following::*[position() &lt; 3 and name() = 'image-extras-link']" />
-                      </xsl:call-template>
-                    </xsl:for-each>
-                  ]
-                }
-              }
-            });
-          }
-        );
+    <xsl:if test="count(/page/content/topic/images/image) &gt; 1">
+      <script><xsl:comment>
+        jQuery(document).ready( function() {
+          var images = [
+            <xsl:for-each select="/page/content/topic/images/image">
+              <xsl:if test="position() &gt; 1">,</xsl:if>
+              ['<xsl:value-of select="destination/img/@src" />',
+              '<xsl:value-of select="img/@src" />',
+              '<xsl:value-of select="title" />',
+              '<xsl:value-of select="following::*[position() &lt; 3 and name() = 'image-description']" />',
+              '<xsl:value-of select="img/@alt" />']
+            </xsl:for-each>
+          ];
+          $('div[data-image-position]').each(function (index) {
+            var image = images[index];
+            $(this).html(
+              '&lt;a class="image-thumbnail-link" data-fancybox-group="gallery" ' +
+              'data-fancybox-description="' + image[3] + '" ' +
+              'href="' + image[0] + '" title="' + image[2] + '"&gt;' +
+              '&lt;img class="thumbnail" src="<xsl:value-of select="$PAGE_THEME_PATH" />' +
+              'img/image_unveil_placeholder_<xsl:value-of select="$PAGE_LANGUAGE" />.png" ' +
+              'data-src="' + image[1] + '" alt="' + image[4] + '"/&gt;&lt;/a&gt;'
+            );
+          });
+        });
       </xsl:comment></script>
+      <xsl:choose>
+        <xsl:when test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1'">
+          <xsl:call-template name="link-script">
+            <xsl:with-param name="files">
+              <file>js/jquery.unveil.js</file>
+              <file>fancybox/jquery.fancybox.js</file>
+              <file>fancybox/helpers/jquery.fancybox-extras.js</file>
+            </xsl:with-param>
+          </xsl:call-template>
+          <script type="text/javascript"><xsl:comment>
+            jQuery(document).ready( function() {
+              jQuery('.image-thumbnail-link').fancybox({
+                helpers:  {
+                  title : {
+                    type : 'inside'
+                  },
+                  description : {
+                    type : 'inside'
+                  },
+                  extras : {
+                    type : 'float',
+                    position: 'top',
+                    linkTitle : 'Show comments',
+                    urls : [
+                      <xsl:for-each select="/page/content/topic/images/image">
+                        <xsl:if test="position() &gt; 1"><xsl:text>, </xsl:text></xsl:if>
+                        <xsl:call-template name="javascript-escape-string">
+                          <xsl:with-param name="string"
+                            select="./following::*[position() &lt; 3 and name() = 'image-extras-link']" />
+                        </xsl:call-template>
+                      </xsl:for-each>
+                    ]
+                  }
+                }
+              });
+              jQuery("img.thumbnail").unveil();
+            });
+          </xsl:comment></script>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="link-script">
+            <xsl:with-param name="files">
+              <file>js/jquery.unveil.js</file>
+            </xsl:with-param>
+          </xsl:call-template>
+          <script type="text/javascript"><xsl:comment>
+            jQuery(document).ready( function() {
+              jQuery("img.thumbnail").unveil();
+            });
+          </xsl:comment></script>
+        </xsl:otherwise>
+      </xsl:choose>
     </xsl:if>
   </xsl:template>
 
@@ -196,22 +238,19 @@
               </a>
             </xsl:when>
             <xsl:when test="$currentImage/destination and $currentImage/destination/@href">
-              <xsl:variable name="linkHref">
-                <xsl:choose>
-                  <xsl:when test="$lightbox = '1'"><xsl:value-of select="$currentImage/destination/img/@src" /></xsl:when>
-                  <xsl:otherwise><xsl:value-of select="$currentImage/destination/@href" />#gallery-images-area</xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-              <xsl:variable name="description">
-                <xsl:choose>
-                  <xsl:when test="$lightbox = '1'"><xsl:value-of
-                    select="$currentImage/following::*[position() &lt; 3 and name() = 'image-description']" /></xsl:when>
-                  <xsl:otherwise></xsl:otherwise>
-                </xsl:choose>
-              </xsl:variable>
-              <a class="image-thumbnail-link" data-fancybox-group="gallery" data-fancybox-description="{$description}" href="{$linkHref}" title="{$currentImage/title}">
-                <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}" />
-              </a>
+              <xsl:variable name="options" select="/page/content/topic/options" />
+              <script><xsl:comment>
+                document.write(
+                  '&lt;div style="width: <xsl:value-of select="$options/thumb_width" />px; ' +
+                  'height: <xsl:value-of select="$options/thumb_height" />px;"' +
+                  'data-image-position="<xsl:value-of select="$position" />"&gt; &lt;/div&gt;'
+                );
+              </xsl:comment></script>
+              <noscript>
+                <a href="{$currentImage/destination/@href}#gallery-images-area" title="{$currentImage/title}">
+                  <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}" />
+                </a>
+              </noscript>
             </xsl:when>
             <xsl:otherwise>
               <img class="thumbnail" src="{$currentImage/img/@src}" alt="{$currentImage/img/@alt}"/>
