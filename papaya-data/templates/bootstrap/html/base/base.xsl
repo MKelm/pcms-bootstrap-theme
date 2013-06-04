@@ -51,6 +51,8 @@
 <xsl:param name="PAGE_URL" />
 <!-- theme name -->
 <xsl:param name="PAGE_THEME" />
+<!-- sub theme name -->
+<xsl:param name="PAGE_SUB_THEME" />
 <!-- theme set id if defined -->
 <xsl:param name="PAGE_THEME_SET">0</xsl:param>
 <!-- theme path in browser -->
@@ -88,7 +90,7 @@
 <!-- IE only, disable the smart tag linking, default: true -->
 <xsl:param name="IE_DISABLE_SMARTTAGS" select="true()" />
 <!-- IE only, optional user agent compatibility definition, default: not used -->
-<xsl:param name="USER_AGENT_COMPATIBILITY"></xsl:param>
+<xsl:param name="USER_AGENT_COMPATIBILITY" />
 
 <!-- define indexing for robots -->
 <xsl:param name="PAGE_META_ROBOTS">index,follow</xsl:param>
@@ -106,6 +108,16 @@
 <xsl:param name="DISABLE_NAVIGATION_COLUMN" select="false()" />
 <!-- disable the additional content column, even if the xml contains boxes for it -->
 <xsl:param name="DISABLE_ADDITIONAL_COLUMN" select="false()" />
+
+<!-- maximum columns for multiple column outputs of items (like subtopics) -->
+<xsl:param name="MULTIPLE_COLUMNS_MAXIMUM" select="3" />
+
+<!-- use international date time formatting, ISO 8601 -->
+<xsl:param name="DATETIME_USE_ISO8601" select="false()" />
+<!-- char between date and time (ISO 8601 = T, default = &#160;) -->
+<xsl:param name="DATETIME_SEPARATOR">&#160;</xsl:param>
+<!-- default date time format: short, medium or large -->
+<xsl:param name="DATETIME_DEFAULT_FORMAT">short</xsl:param>
 
 <!--
   template definitions
