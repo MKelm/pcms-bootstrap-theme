@@ -1,6 +1,7 @@
  /*!
  * Extras helper for fancyBox
  * version: 1.0.0 (Mon, 3 Jun 2013)
+ * @copyright Martin Kelm, 2013, http://mkelm.github.io
  * @requires fancyBox v2.0 or later
  *
  * Usage:
@@ -15,31 +16,31 @@
  *
  */
 (function ($) {
-	//Shortcut for fancyBox object
-	var F = $.fancybox,
+  //Shortcut for fancyBox object
+  var F = $.fancybox,
     getScalar = function(orig, dim) {
-			var value = parseInt(orig, 10) || 0;
+      var value = parseInt(orig, 10) || 0;
 
-			if (dim && isPercentage(orig)) {
-				value = F.getViewport()[ dim ] / 100 * value;
-			}
+      if (dim && isPercentage(orig)) {
+        value = F.getViewport()[ dim ] / 100 * value;
+      }
 
-			return Math.ceil(value);
-		};
+      return Math.ceil(value);
+    };
 
-	//Add helper object
-	F.helpers.extras = {
-		defaults : {
-			type            : 'float', // 'float', 'inside', 'outside' or 'over',
-			position        : 'bottom', // 'top' or 'bottom'
+  //Add helper object
+  F.helpers.extras = {
+    defaults : {
+      type            : 'float', // 'float', 'inside', 'outside' or 'over',
+      position        : 'bottom', // 'top' or 'bottom'
       linkTitle       : 'Show extras ', // title of extras link
       linkTitleActive : 'Show image', // title of extras link
       urls            : [], // urls to load extras from
       content         : '' // current extras content
-		},
+    },
 
-		beforeShow: function (opts) {
-			var current = F.current,
+    beforeShow: function (opts) {
+      var current = F.current,
         type = opts.type,
         urls = opts.urls;
       if (urls[current.index] !== undefined && urls[current.index].length > 0) {
@@ -78,7 +79,7 @@
 
         openLink[ (opts.position === 'top' ? 'prependTo'  : 'appendTo') ](target);
       }
-		},
+    },
 
     showExtrasContent: function (opts) {
       // hide fancybox content with image and navigation links
@@ -137,6 +138,6 @@
         F.helpers.extras.beforeShowExtrasContent(opts);
       });
     }
-	};
+  };
 
 }(jQuery));
