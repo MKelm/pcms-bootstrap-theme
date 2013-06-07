@@ -69,6 +69,12 @@ var extendedText = {
         opts.pasteEvent = false;
       };
     });
+    // image handler request on unload to unset session values of the current session ident
+    $(window).on('beforeunload', function () {
+      if (self.urlCache.length > 0) {
+        $.ajax({ url : self.defaults.imgHandlerUrl, async : false });
+      }
+    });
   },
 
   detectUrlFromText : function(self, text) {
