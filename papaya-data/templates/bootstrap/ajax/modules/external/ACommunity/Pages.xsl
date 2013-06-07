@@ -14,4 +14,12 @@
     </xsl:call-template>
   </xsl:template>
 
+  <!-- get image thumbnail link output on request -->
+  <xsl:template match="a[img/@class = 'papayaImage']">
+    <a>
+      <xsl:copy-of select="@*" />
+      <img class="thumbnail pull-left" alt="{img/@alt}" src="{img/@src}" />
+    </a>
+  </xsl:template>
+
 </xsl:stylesheet>

@@ -14,15 +14,11 @@
 
     <xsl:call-template name="dialog">
       <xsl:with-param name="dialog" select="$dialog" />
+      <xsl:with-param name="dialogMessage" select="$dialogMessage" />
       <xsl:with-param name="inputSize" select="'xxlarge'" />
       <xsl:with-param name="parentAnchor" select="$parentAnchor" />
     </xsl:call-template>
-    <xsl:if test="$dialogMessage and $dialogMessage != ''">
-      <xsl:call-template name="alert">
-        <xsl:with-param name="type" select="'error'" />
-        <xsl:with-param name="message" select="$dialogMessage" />
-      </xsl:call-template>
-    </xsl:if>
+    <p class="thumbnails"><xsl:text> </xsl:text></p> <!-- container for thumbnail links by javascript -->
   </xsl:template>
 
   <xsl:template name="acommunity-comments">
