@@ -21,6 +21,7 @@
       Syntax: <file module="bar" file="bar.js"/>
     -->
     <file module="ACommunityCommentsBox" file="js/jquery.selection.min.js"/>
-    <file module="ACommunityCommentsBox" file="js/comments.js"/>
+    <file module="ACommunityCommentsBox" file="js/extended.text.js"/>
+    <file module="ACommunityCommentsBox" file="js/extended.text.comment.js"/>
   </scripts-lazy>
 </boxes>

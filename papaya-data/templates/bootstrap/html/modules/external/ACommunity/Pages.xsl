@@ -21,6 +21,15 @@
       <xsl:when test="/page/content/topic/@module = 'ACommunityImageGalleryPage'">
         <xsl:call-template name="module-content-image-gallery-page-scripts-lazy" />
       </xsl:when>
+      <xsl:when test="/page/content/topic/@module = 'ACommunityMessagesPage'">
+        <xsl:call-template name="link-script">
+          <xsl:with-param name="files">
+            <file>js/jquery.selection.min.js</file>
+            <file>js/extended.text.js</file>
+            <file>js/extended.text.message.js</file>
+          </xsl:with-param>
+        </xsl:call-template>
+      </xsl:when>
     </xsl:choose>
   </xsl:template>
 
@@ -159,6 +168,9 @@
       <xsl:with-param name="class" select="'message-dialog'" />
       <xsl:with-param name="inputSize" select="'xxlarge'" />
     </xsl:call-template>
+    <p class="message-form-thumbnails" data-preloader-image="{$PAGE_THEME_PATH}img/thumbnail_link_preloader.gif">
+      <xsl:text> </xsl:text></p> <!-- container for thumbnail links by javascript -->
+    <xsl:call-template name="float-fix" />
 
     <xsl:if test="$pageContent/message">
       <xsl:call-template name="alert">

@@ -14,11 +14,13 @@
 
     <xsl:call-template name="dialog">
       <xsl:with-param name="dialog" select="$dialog" />
-      <xsl:with-param name="dialogMessage" select="$dialogMessage" />
+      <xsl:with-param name="message" select="$dialogMessage" />
       <xsl:with-param name="inputSize" select="'xxlarge'" />
       <xsl:with-param name="parentAnchor" select="$parentAnchor" />
     </xsl:call-template>
-    <p class="thumbnails"><xsl:text> </xsl:text></p> <!-- container for thumbnail links by javascript -->
+    <p class="comment-form-thumbnails" data-preloader-image="{$PAGE_THEME_PATH}img/thumbnail_link_preloader.gif">
+      <xsl:text> </xsl:text></p> <!-- container for thumbnail links by javascript -->
+    <xsl:call-template name="float-fix" />
   </xsl:template>
 
   <xsl:template name="acommunity-comments">
@@ -181,15 +183,15 @@
       </li>
     </ul>
     <ul class="inline pull-right">
-      <xsl:if test="$commandLinks[@name = 'reply']">
-        <li><a class="btn btn-mini" href="{$commandLinks[@name = 'reply']}#{$anchor}">
-          <i class="icon-pencil"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
-          <xsl:value-of select="$commandLinks[@name = 'reply']/@caption" /></a></li>
-      </xsl:if>
       <xsl:if test="$commandLinks[@name = 'delete']">
         <li><a class="btn btn-mini" href="{$commandLinks[@name = 'delete']}#{$previousAnchor}">
           <i class="icon-remove"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
           <xsl:value-of select="$commandLinks[@name = 'delete']/@caption" /></a></li>
+      </xsl:if>
+      <xsl:if test="$commandLinks[@name = 'reply']">
+        <li><a class="btn btn-mini" href="{$commandLinks[@name = 'reply']}#{$anchor}">
+          <i class="icon-pencil"><xsl:text> </xsl:text></i><xsl:text> </xsl:text>
+          <xsl:value-of select="$commandLinks[@name = 'reply']/@caption" /></a></li>
       </xsl:if>
     </ul>
   </xsl:template>

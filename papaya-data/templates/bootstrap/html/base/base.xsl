@@ -209,7 +209,6 @@
     <xsl:if test="$files">
       <xsl:variable name="modules" select="/page/boxes/box[generate-id(.) = generate-id(key('box-modules', @module)[1])]/@module"/>
       <xsl:for-each select="$modules">
-        <xsl:sort select="." />
         <xsl:variable name="currentModule" select="."/>
         <xsl:for-each select="$files[@module = $currentModule]">
           <xsl:if test="@file and @file != ''">
@@ -219,25 +218,7 @@
       </xsl:for-each>
     </xsl:if>
   </xsl:variable>
-  <xsl:variable name="sorted">
-    <xsl:for-each select="exsl:node-set($xml)/*">
-      <xsl:sort select="."/>
-      <xsl:copy-of select="."/>
-    </xsl:for-each>
-  </xsl:variable>
-  <xsl:variable name="result">
-    <xsl:variable name="nodes" select="exsl:node-set($sorted)/*"/>
-    <xsl:for-each select="$nodes">
-      <xsl:variable name="currentPosition" select="position()"/>
-      <xsl:variable name="previousPosition" select="position() -1"/>
-      <xsl:choose>
-        <xsl:when test="string(.) != string($nodes[$previousPosition])">
-          <xsl:copy-of select="."/>
-        </xsl:when>
-      </xsl:choose>
-    </xsl:for-each>
-  </xsl:variable>
-  <func:result select="$result"/>
+  <func:result select="$xml"/>
 </func:function>
 
 <xsl:template name="papaya-styles">
