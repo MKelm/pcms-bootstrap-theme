@@ -12,8 +12,8 @@
         count(/page/content/topic/images/image) &gt; 1">
       <xsl:call-template name="link-style">
         <xsl:with-param name="files">
-          <file>fancybox/jquery.fancybox.css</file>
-          <file>fancybox/helpers/jquery.fancybox-extras.css</file>
+          <file>fancybox/jquery.fancybox.min.css</file>
+          <file>fancybox/helpers/jquery.fancybox-extras.min.css</file>
         </xsl:with-param>
       </xsl:call-template>
     </xsl:if>
@@ -50,9 +50,9 @@
         <xsl:when test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1'">
           <xsl:call-template name="link-script">
             <xsl:with-param name="files">
-              <file>js/jquery.unveil.js</file>
-              <file>fancybox/jquery.fancybox.js</file>
-              <file>fancybox/helpers/jquery.fancybox-extras.js</file>
+              <file>js/jquery.unveil.min.js</file>
+              <file>fancybox/jquery.fancybox.min.js</file>
+              <file>fancybox/helpers/jquery.fancybox-extras.min.js</file>
             </xsl:with-param>
           </xsl:call-template>
           <script type="text/javascript"><xsl:comment>

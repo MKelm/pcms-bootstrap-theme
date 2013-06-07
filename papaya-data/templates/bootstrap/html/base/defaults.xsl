@@ -681,7 +681,7 @@
     <xsl:call-template name="page-styles" />
     <xsl:text disable-output-escaping="yes">&lt;!--[if lt IE 9]&gt;</xsl:text>
     <xsl:call-template name="link-script">
-      <xsl:with-param name="file">js/html5shiv.js</xsl:with-param>
+      <xsl:with-param name="file">js/html5shiv.min.js</xsl:with-param>
     </xsl:call-template>
     <xsl:text disable-output-escaping="yes">&lt;![endif]--&gt;</xsl:text>
     <xsl:call-template name="papaya-scripts"/>
