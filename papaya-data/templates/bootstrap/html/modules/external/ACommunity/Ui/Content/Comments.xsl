@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="Paging.xsl"/>
+  <xsl:import href="Extended/Text.xsl"/>
 
   <xsl:param name="PAGE_LANGUAGE"></xsl:param>
   <xsl:param name="LANGUAGE_MODULE_CURRENT" select="document(concat('../../', $PAGE_LANGUAGE, '.xml'))" />
@@ -18,9 +19,12 @@
       <xsl:with-param name="inputSize" select="'xxlarge'" />
       <xsl:with-param name="parentAnchor" select="$parentAnchor" />
     </xsl:call-template>
-    <p class="comment-form-thumbnails" data-preloader-image="{$PAGE_THEME_PATH}img/thumbnail_link_preloader.gif">
-      <xsl:text> </xsl:text></p> <!-- container for thumbnail links by javascript -->
-    <xsl:call-template name="float-fix" />
+    <xsl:call-template name="extended-text-dialog-thumbnails-container">
+      <xsl:with-param name="type" select="'comment'" />
+    </xsl:call-template>
+    <xsl:call-template name="extended-text-dialog-videos-container">
+      <xsl:with-param name="type" select="'comment'" />
+    </xsl:call-template>
   </xsl:template>
 
   <xsl:template name="acommunity-comments">
@@ -82,17 +86,8 @@
                     <xsl:with-param name="time" select="substring(@time, 12, 8)" />
                   </xsl:call-template></small></h4>
             <p><xsl:copy-of select="text/node()" /></p>
-            <xsl:if test="text-thumbnail-links">
-              <p class="thumbnails">
-                <xsl:for-each select="text-thumbnail-links/a">
-                  <a>
-                    <xsl:copy-of select="@*" />
-                    <img class="thumbnail pull-left" src="{img/@src}" alt="" />
-                  </a>
-                </xsl:for-each>
-              </p>
-              <xsl:call-template name="float-fix" />
-            </xsl:if>
+            <xsl:call-template name="extended-text-thumbnails" />
+            <xsl:call-template name="extended-text-videos" />
             <xsl:call-template name="acommunity-comments-comment-extras">
               <xsl:with-param name="commandLinks" select="command-links/link" />
               <xsl:with-param name="anchor" select="$anchor" />
