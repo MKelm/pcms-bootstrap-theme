@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="./Ui/Content/Paging.xsl"/>
+  <xsl:import href="./Ui/Content/Extended/Text.xsl"/>
   <xsl:import href="./Ui/Content/Surfer.xsl"/>
   <xsl:import href="./Ui/Content/Surfers.xsl"/>
   <xsl:import href="./Ui/Content/Surfer/Editor.xsl"/>
@@ -168,9 +169,12 @@
       <xsl:with-param name="class" select="'message-dialog'" />
       <xsl:with-param name="inputSize" select="'xxlarge'" />
     </xsl:call-template>
-    <p class="message-form-thumbnails" data-preloader-image="{$PAGE_THEME_PATH}img/thumbnail_link_preloader.gif">
-      <xsl:text> </xsl:text></p> <!-- container for thumbnail links by javascript -->
-    <xsl:call-template name="float-fix" />
+    <xsl:call-template name="extended-text-dialog-thumbnails-container">
+      <xsl:with-param name="type" select="'message'" />
+    </xsl:call-template>
+    <xsl:call-template name="extended-text-dialog-videos-container">
+      <xsl:with-param name="type" select="'message'" />
+    </xsl:call-template>
 
     <xsl:if test="$pageContent/message">
       <xsl:call-template name="alert">
@@ -198,17 +202,8 @@
                 </xsl:call-template></small>
           </h4>
           <p><xsl:copy-of select="text/node()" /><xsl:text> </xsl:text></p>
-          <xsl:if test="text-thumbnail-links">
-            <p class="thumbnails">
-              <xsl:for-each select="text-thumbnail-links/a">
-                <a>
-                  <xsl:copy-of select="@*" />
-                  <img class="thumbnail pull-left" src="{img/@src}" alt="" />
-                </a>
-              </xsl:for-each>
-            </p>
-            <xsl:call-template name="float-fix" />
-          </xsl:if>
+          <xsl:call-template name="extended-text-thumbnails" />
+          <xsl:call-template name="extended-text-videos" />
         </div>
       </div>
     </xsl:for-each>
