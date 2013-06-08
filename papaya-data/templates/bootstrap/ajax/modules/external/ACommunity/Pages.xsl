@@ -21,7 +21,9 @@
 
   <!-- get video link output on request -->
   <xsl:template match="video-link">
-    <xsl:call-template name="extended-text-videos-video" />
+    <xsl:call-template name="extended-text-videos-video">
+      <xsl:with-param name="previewImageOnly" select="true()" />
+    </xsl:call-template>
   </xsl:template>
 
 </xsl:stylesheet>

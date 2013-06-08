@@ -40,8 +40,77 @@ div.comment small.votes-score {
 div.comment .btn-toolbar {
   margin: 0px;
 }
-div.comment .thumbnails .thumbnail {
+/* extended text thumbnails and videos */
+div.comment .thumbnails .thumbnail,
+div.message .thumbnails .thumbnail,
+p.comment-form-thumbnails .thumbnail,
+p.message-form-thumbnails .thumbnail {
   margin-right: 8px;
+}
+p.comment-form-thumbnails .thumbnail,
+p.message-form-thumbnails .thumbnail {
+  margin-bottom: 10px;
+}
+div.comment .videos,
+div.message .videos {
+  margin-bottom: 0px;
+}
+p.comment-form-videos .video-preview,
+p.message-form-videos .video-preview {
+  width: 640px;
+  height: 360px;
+}
+p.comment-form-videos .video-preview img,
+p.message-form-videos .video-preview img {
+  margin-left: 295px;
+  margin-top: 155px;
+}
+div.video-preview-image-overlay-title {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  -moz-opacity: 0.7;
+  position: relative;
+  top: -65px;
+  left: 5px;
+  width: 640px;
+}
+p.comment-form-videos div.video-preview-image-overlay-title,
+p.message-form-videos div.video-preview-image-overlay-title {
+  top: -75px;
+}
+div.video-preview-image-overlay-title a {
+  cursor: hand;
+  color: #000;
+}
+div.video-preview-image-overlay-title h2 {
+  padding-top: 10px;
+  padding-left: 8px;
+  height: 50px;
+  background-color: #ccc;
+  position: absolute;
+  width: 632px;
+}
+div.comment div.video-preview-image-overlay-title h2,
+div.message div.video-preview-image-overlay-title h2 {
+  margin-top: 0px;
+}
+div.video-preview-image-overlay-play {
+  opacity: 0.7;
+  filter: alpha(opacity=70);
+  -moz-opacity: 0.7;
+  position: relative;
+  left: 270px;
+  top: -250px
+}
+p.comment-form-videos div.video-preview-image-overlay-play,
+p.message-form-videos div.video-preview-image-overlay-play {
+  top: -260px;
+}
+div.video-preview-image-overlay-play i.video-play-button {
+  background: url(../img/video-preview-image-play-icon.png) 0px 0px no-repeat;
+  width: 100px;
+  height: 100px;
+  position: absolute;
 }
 /* surfer-status-image needs a cropped thumbail of 20x20 pixels */
 img.surfer-status-image {

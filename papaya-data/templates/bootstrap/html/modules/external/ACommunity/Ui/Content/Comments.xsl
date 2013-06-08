@@ -94,7 +94,6 @@
               <xsl:with-param name="previousAnchor" select="$previousAnchor" />
             </xsl:call-template>
             <xsl:call-template name="float-fix" />
-
             <xsl:call-template name="acommunity-comments">
               <xsl:with-param name="commandName" select="$commandName" />
               <xsl:with-param name="commandCommentId" select="$commandCommentId" />

@@ -9,6 +9,7 @@ var extendedText = {
     imgHandlerUrl : '', // load in onLoad by form hidden field
     imgPreloaderImage : '', // load in onLoad by element after form
     videoHandlerUrl : '', // load in onLoad by form hidden field
+    videoPreloaderImage : '', // load in onLoad by element after form
     ctrlDown : false,
     ctrlKey  : 17,
     vKey     : 86,
@@ -19,7 +20,7 @@ var extendedText = {
     pastePosEnd : 0,
     urlPattern : /(\b(((?:ht|f)tps?:\/\/)|www\.)[a-z0-9-._~!$\'()*+,;=:\/?#[\]@%]+(?:(?!&(?:gt|\#0*62|\#x0*3e);|&(?:amp|apos|quot|\#0*3[49]|\#x0*2[27]);[.!&\',:?;]?(?:[^a-z0-9\-._~!$&\'()*+,;=:\/?#[\]@%]|$))&[a-z0-9\-._~!$\'()*+,;=:\/?#[\]@%]*)*[a-z0-9\-_~$()*+=\/#[\]@%])/img,
     imgPattern : /(\.(jpg|jpeg|gif|png))/img,
-    videoPattern : /youtube\.com\/watch\?(.*)?v=([a-zA-Z0-9]+)|vimeo\.com\/([0-9]+)/img
+    videoPattern : /youtube\.com\/watch\?(.*)?v=([a-zA-Z0-9\-]+)|vimeo\.com\/([0-9]+)/img
   },
   /* urlPattern:
    *  (c) 2010 Jeff Roberson - http://jmrware.com, MIT License, github.com\/jmrware\/LinkifyURL
@@ -34,14 +35,17 @@ var extendedText = {
     // get image handler url by hidden field
     self.defaults.imgHandlerUrl = $(self.defaults.elementSelector)
       .parents('form:first').children('input[name *= "image_handler_url"]:first').val();
-    // get image preloader image from thumbnails container
-    self.defaults.imgPreloaderImage = $(self.defaults.elementSelector).parents('form:first')
-      .next().attr('data-preloader-image');
     // get video handler url by hidden field
     self.defaults.videoHandlerUrl = $(self.defaults.elementSelector)
       .parents('form:first').children('input[name *= "video_handler_url"]:first').val();
-    // further events with at least one handler url only
+    // further actions with at least one handler url only
     if (self.defaults.videoHandlerUrl != undefined || self.defaults.imgHandlerUrl != undefined) {
+      // get image preloader image from thumbnails container
+      self.defaults.imgPreloaderImage = $(self.defaults.elementSelector).parents('div:first')
+        .children('form ~ p.' + self.defaults.elementType + '-form-thumbnails').attr('data-preloader-image');
+      // get video preloader image from thumbnails container
+      self.defaults.videoPreloaderImage = $(self.defaults.elementSelector).parents('div:first')
+        .children('form ~ p.' + self.defaults.elementType + '-form-videos').attr('data-preloader-image');
       // set onclick event for submit button to disable unload session values event on submit
       $(self.defaults.elementSelector).parents('form:first').children('button[type = "submit"]:first')
         .click(function () {
@@ -105,6 +109,15 @@ var extendedText = {
     }
   },
 
+  replaceVideoPreviewImage : function(element) {
+    // get iframe from noscript node and set autoplay parameter into iframe src attribute
+    $(element).parents('div.video-preview-image:first').html(
+      $(element).parents('div.video-preview-image:first').next().html()
+        .replace('" frameborder', '&amp;autoplay=1" frameborder')
+    );
+    return false;
+  },
+
   detectUrlFromText : function(self, text) {
     text = $.trim(text);
     if (text.substring(0, 4) == 'www.') text = 'http://' + text;
@@ -117,9 +130,11 @@ var extendedText = {
           var requestUrl = self.defaults.imgHandlerUrl.replace(
             encodeURIComponent('{URL}'), encodeURIComponent(text)
           );
-          $(self.defaults.elementSelector).parents('form:first').next().append(
-            '<img class="thumbnail pull-left" alt="" src="' + self.defaults.imgPreloaderImage + '" />'
-          );
+          $(self.defaults.elementSelector).parents('div:first')
+            .children('form ~ p.' + self.defaults.elementType + '-form-thumbnails')
+            .append(
+              '<img class="thumbnail pull-left" alt="" src="' + self.defaults.imgPreloaderImage + '" />'
+            );
           $.ajax({ url : requestUrl }).done(function (data) {
             // the next element after the form must be preparated as container for image thumbnails
             $(self.defaults.elementSelector).parents('div:first')
@@ -134,11 +149,18 @@ var extendedText = {
           var requestUrl = self.defaults.videoHandlerUrl.replace(
             encodeURIComponent('{URL}'), encodeURIComponent(text)
           );
+          $(self.defaults.elementSelector).parents('div:first')
+            .children('form ~ p.' + self.defaults.elementType + '-form-videos')
+            .append(
+              '<div class="video-preview thumbnail">' +
+              '<img alt="" src="' + self.defaults.videoPreloaderImage + '" />' +
+              '</div>'
+            );
           $.ajax({ url : requestUrl }).done(function (data) {
             // the second element after the form must be preparated as container for image thumbnails
             $(self.defaults.elementSelector).parents('div:first')
               .children('form ~ p.' + self.defaults.elementType + '-form-videos')
-              .append(
+              .children('.thumbnail:last').replaceWith(
                 $(data).children('requested-content').html()
               );
           });
