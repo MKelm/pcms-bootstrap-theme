@@ -18,14 +18,18 @@
     <xsl:if test="text-thumbnail-links">
       <p class="thumbnails">
         <xsl:for-each select="text-thumbnail-links/a">
-          <a>
-            <xsl:copy-of select="@*" />
-            <img class="thumbnail pull-left" src="{img/@src}" alt="" />
-          </a>
+          <xsl:call-template name="extended-text-thumbnails-thumbnail" />
         </xsl:for-each>
       </p>
       <xsl:call-template name="float-fix" />
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="extended-text-thumbnails-thumbnail">
+    <a>
+      <xsl:copy-of select="@*" />
+      <img class="thumbnail pull-left" src="{img/@src}" alt="{img/@alt}" />
+    </a>
   </xsl:template>
 
   <xsl:template name="extended-text-videos">
@@ -33,22 +37,30 @@
       <p class="videos">
         <!-- embed first video only, remove the position selector to get all videos as iframe -->
         <xsl:for-each select="text-video-links/video-link[position() = 1]">
-          <xsl:variable name="embedUrl">
-            <xsl:choose>
-              <xsl:when test="@hoster = 'vimeo'">
-                http://player.vimeo.com/video/<xsl:value-of select="@id" />?title=0&amp;byline=0&amp;portrait=0&amp;badge=0
-              </xsl:when>
-              <xsl:otherwise>
-                http://www.youtube.com/embed/<xsl:value-of select="@id" />?feature=player_detailpage
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:variable>
-          <iframe width="{@width}" height="{@height}" src="{$embedUrl}" frameborder="0"
-            webkitAllowFullScreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen"
-            allowFullScreen="allowFullScreen"><xsl:text> </xsl:text></iframe>
+          <xsl:call-template name="extended-text-videos-video" />
         </xsl:for-each>
       </p>
     </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="extended-text-videos-video">
+    <xsl:variable name="embedUrl">
+      <xsl:choose>
+        <xsl:when test="@hoster = 'vimeo'">
+          <xsl:text>http://player.vimeo.com/video/</xsl:text>
+          <xsl:value-of select="@id" />
+          <xsl:text>?title=0&amp;byline=0&amp;portrait=0&amp;badge=0</xsl:text>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>http://www.youtube.com/embed/</xsl:text>
+          <xsl:value-of select="@id" />
+          <xsl:text>?feature=player_detailpage</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <iframe width="{@width}" height="{@height}" src="{$embedUrl}" frameborder="0"
+      webkitAllowFullScreen="webkitAllowFullScreen" mozallowfullscreen="mozallowfullscreen"
+      allowFullScreen="allowFullScreen"><xsl:text> </xsl:text></iframe>
   </xsl:template>
 
 </xsl:stylesheet>

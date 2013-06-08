@@ -14,12 +14,14 @@
     </xsl:call-template>
   </xsl:template>
 
-  <!-- get image thumbnail link output on request -->
+  <!-- get thumbnail link output on request -->
   <xsl:template match="a[img/@class = 'papayaImage']">
-    <a>
-      <xsl:copy-of select="@*" />
-      <img class="thumbnail pull-left" alt="{img/@alt}" src="{img/@src}" />
-    </a>
+    <xsl:call-template name="extended-text-thumbnails-thumbnail" />
+  </xsl:template>
+
+  <!-- get video link output on request -->
+  <xsl:template match="video-link">
+    <xsl:call-template name="extended-text-videos-video" />
   </xsl:template>
 
 </xsl:stylesheet>
