@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  extendedText.defaults.elementType = 'comment';
-  extendedText.defaults.elementSelector = '#dialogCommentText';
-  extendedText.onLoad(extendedText, extendedText.defaults);
+  extendedText.options.elementType = 'comment';
+  extendedText.options.elementSelector = '#dialogCommentText';
+  extendedText.onLoad(extendedText);
 });
