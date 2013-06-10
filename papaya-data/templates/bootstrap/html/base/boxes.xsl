@@ -38,7 +38,7 @@
 </xsl:template>
 
 <xsl:template name="navigation-item">
-	<xsl:param name="level" select="'1'"/>
+  <xsl:param name="level" select="'1'"/>
 
   <li>
     <xsl:choose>
@@ -61,7 +61,7 @@
         <xsl:attribute name="class">active</xsl:attribute>
       </xsl:when>
     </xsl:choose>
-	  <a href="{@href}">
+    <a href="{@href}">
       <!-- copy data attributes -->
       <xsl:copy-of select="@*[starts-with(name(), 'data-')]"/>
       <!-- copy target and onclick attributes -->
@@ -81,8 +81,19 @@
       </xsl:if>
     </a>
     <xsl:if test="count(mapitem) &gt; 0">
+      <xsl:variable name="parent" select="." />
       <ul class="dropdown-menu">
         <xsl:for-each select="mapitem">
+          <xsl:if test="position() = 1">
+            <li>
+              <xsl:if test="$parent/@focus">
+                <xsl:attribute name="class">active</xsl:attribute>
+              </xsl:if>
+              <a href="{$parent/@href}"><xsl:call-template name="language-text">
+              <xsl:with-param name="text" select="'NAVIGATION_OVERVIEW_PAGE'" />
+            </xsl:call-template></a></li>
+            <li class="divider"><xsl:text> </xsl:text></li>
+          </xsl:if>
           <xsl:call-template name="navigation-item">
             <xsl:with-param name="level" select="$level + 1" />
           </xsl:call-template>
