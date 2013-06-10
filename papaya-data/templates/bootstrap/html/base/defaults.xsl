@@ -575,7 +575,7 @@
     </xsl:if>
     <xsl:call-template name="language-text">
       <xsl:with-param name="text" select="'POWERED_BY'"/>
-    </xsl:call-template><xsl:text> </xsl:text><a href="http://www.papaya-cms.com/">papaya CMS</a>
+    </xsl:call-template><xsl:text> </xsl:text><a href="http://mkelm.github.io">papaya CMS</a>
   </xsl:template>
 
   <xsl:template name="page-views">
