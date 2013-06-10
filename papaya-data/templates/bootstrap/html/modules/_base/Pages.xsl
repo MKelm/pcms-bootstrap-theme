@@ -11,6 +11,11 @@
             <xsl:with-param name="pageContent" select="$pageContent"/>
           </xsl:call-template>
         </xsl:when>
+        <xsl:when test="$pageContent/@module = 'content_categimg'">
+          <xsl:call-template name="module-content-category">
+            <xsl:with-param name="pageContent" select="$pageContent"/>
+          </xsl:call-template>
+        </xsl:when>
       </xsl:choose>
     </xsl:if>
   </xsl:template>
@@ -80,6 +85,97 @@
 
   <xsl:template name="module-content-topic-additional-content-area">
     <xsl:param name="pageContent" />
+  </xsl:template>
+
+  <!-- category content module -->
+  <xsl:template name="module-content-category">
+    <xsl:param name="pageContent"/>
+    <xsl:call-template name="module-content-topic">
+      <xsl:with-param name="pageContent" select="$pageContent" />
+    </xsl:call-template>
+    <xsl:if test="count($pageContent/subtopics/subtopic) &gt; 0">
+      <div class="category">
+        <xsl:variable name="columnCount">
+          <xsl:choose>
+            <xsl:when test="$pageContent/columns/text() &gt; 3">3</xsl:when>
+            <xsl:when test="$pageContent/columns/text() &gt; 1"><xsl:value-of select="$pageContent/columns"/></xsl:when>
+            <xsl:otherwise>1</xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
+        <xsl:call-template name="module-content-category-rows">
+          <xsl:with-param name="elements" select="$pageContent/subtopics/subtopic" />
+          <xsl:with-param name="rows" select="ceiling(count($pageContent/subtopics/subtopic) div $columnCount)" />
+          <xsl:with-param name="columns" select="$columnCount" />
+        </xsl:call-template>
+      </div>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="module-content-category-rows">
+    <xsl:param name="elements" />
+    <xsl:param name="row" select="'1'" />
+    <xsl:param name="rows" />
+    <xsl:param name="columns" />
+    <xsl:param name="position" select="'1'" />
+
+    <xsl:if test="$position = 1 or ($position mod $columns = 1)">
+      <div class="row-fluid">
+        <xsl:call-template name="module-content-category-rows-column">
+          <xsl:with-param name="elements" select="$elements" />
+          <xsl:with-param name="columns" select="$columns" />
+          <xsl:with-param name="position" select="$position" />
+          <xsl:with-param name="row" select="$row" />
+        </xsl:call-template>
+      </div>
+    </xsl:if>
+
+    <xsl:if test="$row &lt; $rows">
+      <xsl:call-template name="module-content-category-rows">
+        <xsl:with-param name="elements" select="$elements" />
+        <xsl:with-param name="rows" select="$rows" />
+        <xsl:with-param name="row" select="$row + 1" />
+        <xsl:with-param name="columns" select="$columns" />
+        <xsl:with-param name="position" select="$position + $columns" />
+      </xsl:call-template>
+    </xsl:if>
+  </xsl:template>
+
+  <xsl:template name="module-content-category-rows-column">
+    <xsl:param name="elements" />
+    <xsl:param name="columns" />
+    <xsl:param name="position" />
+    <xsl:param name="row" />
+
+    <div>
+      <xsl:attribute name="class">
+        <xsl:choose>
+          <xsl:when test="$columns = 1">topic span12</xsl:when>
+          <xsl:when test="$columns = 2">topic span6</xsl:when>
+          <xsl:when test="$columns = 3">topic span4</xsl:when>
+        </xsl:choose>
+      </xsl:attribute>
+      <xsl:if test="$elements[position() = $position]/image">
+        <xsl:variable name="topicNo" select="$elements[position() = $position]/@no" />
+        <img src="{/page/content/topic/subtopicthumbs/thumb[@topic = $topicNo]/img/@src}"
+          alt="" class="thumbnail pull-left" />
+      </xsl:if>
+      <h2>
+        <a href="{$elements[position() = $position]/@href}"><xsl:value-of select="$elements[position() = $position]/title" /></a>
+        <xsl:if test="$elements[position() = $position]/subtitle">
+          <xsl:text> </xsl:text><small><xsl:value-of select="$elements[position() = $position]/subtitle" /></small>
+        </xsl:if>
+      </h2>
+      <xsl:apply-templates select="$elements[position() = $position]/text" />
+    </div>
+
+    <xsl:if test="$position div $columns &lt; $row">
+      <xsl:call-template name="module-content-category-rows-column">
+        <xsl:with-param name="elements" select="$elements" />
+        <xsl:with-param name="columns" select="$columns" />
+        <xsl:with-param name="position" select="$position + 1" />
+        <xsl:with-param name="row" select="$row" />
+      </xsl:call-template>
+    </xsl:if>
   </xsl:template>
 
 </xsl:stylesheet>
