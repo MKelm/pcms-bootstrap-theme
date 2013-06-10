@@ -44,9 +44,12 @@
           <xsl:attribute name="class">pull-left</xsl:attribute>
         </xsl:if>
         <xsl:value-of select="$pageContent/title"/>
-        <xsl:if test="$pageContent/subtitle != '' or $subTitle">
+        <xsl:if test="$pageContent/subtitle != '' or $subTitle != false()">
           <xsl:text> </xsl:text>
-          <small><xsl:value-of select="$pageContent/subtitle"/><xsl:value-of select="$subTitle"/></small>
+          <small><xsl:choose>
+            <xsl:when test="$subTitle != false()"><xsl:value-of select="$subtitle" /></xsl:when>
+            <xsl:otherwise><xsl:value-of select="$pageContent/subtitle"/></xsl:otherwise>
+          </xsl:choose></small>
         </xsl:if>
       </h1>
 
