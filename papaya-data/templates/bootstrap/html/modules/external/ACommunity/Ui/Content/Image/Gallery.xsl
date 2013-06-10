@@ -9,7 +9,7 @@
 
   <xsl:template name="module-content-image-gallery-page-styles">
     <xsl:if test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1' and
-        count(/page/content/topic/images/image) &gt; 1">
+        count(/page/content/topic/images/image) &gt; 0">
       <xsl:call-template name="link-style">
         <xsl:with-param name="files">
           <file>fancybox/jquery.fancybox.min.css</file>
@@ -20,7 +20,7 @@
   </xsl:template>
 
   <xsl:template name="module-content-image-gallery-page-scripts-lazy">
-    <xsl:if test="count(/page/content/topic/images/image) &gt; 1">
+    <xsl:if test="count(/page/content/topic/images/image) &gt; 0">
       <script><xsl:comment>
         jQuery(document).ready( function() {
           var images = [
@@ -123,7 +123,6 @@
             <xsl:with-param name="navigation" select="$pageContent/navigation" />
             <xsl:with-param name="anchor" select="'gallery-images-area'" />
           </xsl:call-template>
-
           <xsl:choose>
             <xsl:when test="$pageContent/images/image">
               <xsl:variable name="rows" select="ceiling(count($pageContent/images/image)
@@ -174,7 +173,6 @@
     <xsl:if test="$position = 1 or ($position mod $fieldsPerRow = 1)">
       <xsl:variable name="anchor">gallery-row<xsl:value-of select="$row" /></xsl:variable>
       <a name="{$anchor}"><xsl:text> </xsl:text></a>
-
       <div class="row-fluid">
         <xsl:attribute name="class">
           <xsl:choose>
