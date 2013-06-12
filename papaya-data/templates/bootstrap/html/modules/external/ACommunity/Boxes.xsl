@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
   <xsl:import href="./Ui/Content/Comments.xsl"/>
+  <xsl:import href="./Ui/Content/Paging.xsl"/>
   <xsl:import href="./Ui/Content/Surfers.xsl"/>
   <xsl:import href="../../../base/dialogs.xsl"/>
 
