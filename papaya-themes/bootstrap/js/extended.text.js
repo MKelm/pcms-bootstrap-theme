@@ -10,7 +10,7 @@ var extendedText = {
     pattern : {
       url   : /(\b(((?:ht|f)tps?:\/\/)|www\.)[a-z0-9-._~!$\'()*+,;=:\/?#[\]@%]+(?:(?!&(?:gt|\#0*62|\#x0*3e);|&(?:amp|apos|quot|\#0*3[49]|\#x0*2[27]);[.!&\',:?;]?(?:[^a-z0-9\-._~!$&\'()*+,;=:\/?#[\]@%]|$))&[a-z0-9\-._~!$\'()*+,;=:\/?#[\]@%]*)*[a-z0-9\-_~$()*+=\/#[\]@%])/img,
       image : /(\.(jpg|jpeg|gif|png))/img,
-      video : /youtube\.com\/watch\?(.*)?v=([a-zA-Z0-9\-]+)|vimeo\.com\/([0-9]+)/img
+      video : /youtube\.com\/watch\?(.*)?v=([a-zA-Z0-9\-_]+)|vimeo\.com\/([0-9]+)/img
     }
   },
   options : {
