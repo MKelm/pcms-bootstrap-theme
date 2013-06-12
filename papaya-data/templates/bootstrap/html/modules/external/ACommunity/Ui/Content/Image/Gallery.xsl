@@ -50,6 +50,9 @@
         <xsl:when test="/page/content/topic[@module = 'ACommunityImageGalleryPage']/options/lightbox = '1'">
           <xsl:call-template name="link-script">
             <xsl:with-param name="files">
+              <!-- activate the following lines to get extended text features for comments in fancybox
+              <file>js/jquery.selection.min.js</file>
+              <file>js/extended.text.min.js</file> -->
               <file>js/jquery.unveil.min.js</file>
               <file>fancybox/jquery.fancybox.min.js</file>
               <file>fancybox/helpers/jquery.fancybox-extras.min.js</file>
@@ -57,6 +60,9 @@
           </xsl:call-template>
           <script type="text/javascript"><xsl:comment>
             jQuery(document).ready( function() {
+              /* activate the following lines to get extended text features for comments in fancybox
+                 extendedText.options.elementType = 'comment';
+                 extendedText.options.elementSelector = '#dialogCommentText'; */
               jQuery('.image-thumbnail-link').fancybox({
                 helpers:  {
                   title : {
@@ -78,6 +84,10 @@
                         </xsl:call-template>
                       </xsl:for-each>
                     ]
+                    /* activate the following lines to get extended text features for comments in fancybox
+                     , executeOnLoad : [
+                         'extendedText.onLoad(extendedText)'
+                       ] */
                   }
                 }
               });
