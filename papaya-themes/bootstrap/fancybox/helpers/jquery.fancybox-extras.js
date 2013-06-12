@@ -1,6 +1,6 @@
  /*!
  * Extras helper for fancyBox
- * version: 1.0.0 (Mon, 3 Jun 2013)
+ * version: 1.0.3 (Wed, 12 Jun 2013)
  * @copyright Martin Kelm, 2013, http://mkelm.github.io
  * @requires fancyBox v2.0 or later
  *
@@ -36,7 +36,8 @@
       linkTitle       : 'Show extras ', // title of extras link
       linkTitleActive : 'Show image', // title of extras link
       urls            : [], // urls to load extras from
-      content         : '' // current extras content
+      content         : '', // current extras content
+      executeOnLoad   : [] // functions to execute on load with parameters
     },
 
     beforeShow: function (opts) {
@@ -113,6 +114,12 @@
         F.helpers.extras.hideExtrasContent(opts);
       });
       $('.fancybox-extras-link a').html(opts.linkTitleActive);
+      // execute additional onLoad functions
+      if (opts.executeOnLoad.length > 0) {
+        for (var i = 0; i < opts.executeOnLoad.length; i++) {
+          eval(opts.executeOnLoad[i]+';');
+        }
+      }
     },
 
     hideExtrasContent: function (opts) {
