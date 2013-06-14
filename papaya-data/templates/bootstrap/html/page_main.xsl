@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   <!--
-    @papaya:modules content_imgtopic
+    @papaya:modules content_imgtopic, content_categimg
   -->
 
   <!-- default templates to use and maybe overload -->
