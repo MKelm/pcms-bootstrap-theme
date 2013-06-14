@@ -26,7 +26,9 @@
           var images = [
             <xsl:for-each select="/page/content/topic/images/image">
               <xsl:if test="position() &gt; 1">,</xsl:if>
-              ['<xsl:value-of select="destination/img/@src" />',
+              ['<xsl:choose><xsl:when test="/page/content/topic/options/lightbox = 1">
+              <xsl:value-of select="destination/img/@src" /></xsl:when>
+              <xsl:otherwise><xsl:value-of select="destination/@href" /></xsl:otherwise></xsl:choose>',
               '<xsl:value-of select="img/@src" />',
               '<xsl:value-of select="title" />',
               '<xsl:value-of select="following::*[position() &lt;= 3 and name() = 'image-description']" />',
