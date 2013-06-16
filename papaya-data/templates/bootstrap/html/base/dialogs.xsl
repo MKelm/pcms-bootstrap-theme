@@ -155,6 +155,52 @@
           </xsl:for-each>
         </linegroup>
       </xsl:when>
+      <xsl:when test="$dialog/lines/line">
+        <linegroup>
+          <xsl:for-each select="$dialog/lines/line[@fid != 'terms']">
+            <xsl:choose>
+              <xsl:when test="$horizontal = true() and $search = false()">
+                <xsl:call-template name="dialog-control-group">
+                  <xsl:with-param name="line" select="." />
+                  <xsl:with-param name="showMandatory" select="$showMandatory" />
+                  <xsl:with-param name="inputSize" select="$inputSize" />
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:call-template name="dialog-control-unit">
+                  <xsl:with-param name="line" select="." />
+                  <xsl:with-param name="showMandatory" select="$showMandatory" />
+                  <xsl:with-param name="inputSize" select="$inputSize" />
+                  <xsl:with-param name="search" select="$search" />
+                  <xsl:with-param name="placeholder" select="$search = true()" />
+                </xsl:call-template>
+              </xsl:otherwise>
+            </xsl:choose>
+          </xsl:for-each>
+        </linegroup>
+        <xsl:if test="$termsText and $dialog/lines/line[@fid = 'terms']">
+          <linegroup>
+            <legend><xsl:value-of select="$dialog/lines/line[@fid = 'terms']/@caption" /></legend>
+            <xsl:choose>
+              <xsl:when test="$horizontal = true()">
+                <xsl:call-template name="dialog-control-group">
+                  <xsl:with-param name="line" select="$dialog/lines/line[@fid = 'terms']" />
+                  <xsl:with-param name="showMandatory" select="$showMandatory" />
+                  <xsl:with-param name="inputSize" select="$inputSize" />
+                  <xsl:with-param name="termsText" select="$termsText" />
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:call-template name="dialog-control-unit">
+                  <xsl:with-param name="line" select="$dialog/lines/line[@fid = 'terms']" />
+                  <xsl:with-param name="showMandatory" select="$showMandatory" />
+                  <xsl:with-param name="inputSize" select="$inputSize" />
+                </xsl:call-template>
+              </xsl:otherwise>
+            </xsl:choose>
+          </linegroup>
+        </xsl:if>
+      </xsl:when>
       <xsl:when test="$dialog/lines/linegroup">
         <xsl:for-each select="$dialog/lines/linegroup">
           <linegroup>
@@ -182,23 +228,29 @@
                   </xsl:otherwise>
                 </xsl:choose>
               </xsl:for-each>
-              <xsl:if test="$horizontal = true() and $search = false()">
-                <xsl:for-each select="line[@fid = 'terms']">
-
-                </xsl:for-each>
-              </xsl:if>
             </xsl:if>
           </linegroup>
         </xsl:for-each>
         <xsl:if test="$termsText and $dialog/lines//line[@fid = 'terms']">
           <linegroup>
             <legend><xsl:value-of select="$dialog/lines//line[@fid = 'terms']/@caption" /></legend>
-            <xsl:call-template name="dialog-control-group">
-              <xsl:with-param name="line" select="$dialog/lines//line[@fid = 'terms']" />
-              <xsl:with-param name="showMandatory" select="$showMandatory" />
-              <xsl:with-param name="inputSize" select="$inputSize" />
-              <xsl:with-param name="termsText" select="$termsText" />
-            </xsl:call-template>
+            <xsl:choose>
+              <xsl:when test="$horizontal = true()">
+                <xsl:call-template name="dialog-control-group">
+                  <xsl:with-param name="line" select="$dialog/lines//line[@fid = 'terms']" />
+                  <xsl:with-param name="showMandatory" select="$showMandatory" />
+                  <xsl:with-param name="inputSize" select="$inputSize" />
+                  <xsl:with-param name="termsText" select="$termsText" />
+                </xsl:call-template>
+              </xsl:when>
+              <xsl:otherwise>
+                <xsl:call-template name="dialog-control-unit">
+                  <xsl:with-param name="line" select="$dialog/lines//line[@fid = 'terms']" />
+                  <xsl:with-param name="showMandatory" select="$showMandatory" />
+                  <xsl:with-param name="inputSize" select="$inputSize" />
+                </xsl:call-template>
+              </xsl:otherwise>
+            </xsl:choose>
           </linegroup>
         </xsl:if>
       </xsl:when>
