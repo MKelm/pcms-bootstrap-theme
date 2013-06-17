@@ -449,9 +449,15 @@
 
           <xsl:choose>
             <xsl:when test="$line/input[@type = 'radio'] and count($line/input[@type = 'radio']) &gt; 1">
+              <!-- label for radiogroup -->
+              <label for="{$controlId}" class="control-label"><xsl:value-of select="$label" /></label>
+            </xsl:when>
+            <xsl:when test="count($line/input[@type = 'checkbox']) &gt; 1">
+              <!-- label for checkgroup -->
               <label for="{$controlId}" class="control-label"><xsl:value-of select="$label" /></label>
             </xsl:when>
             <xsl:when test="not($line/input[@type = 'checkbox' or @type = 'radio']) and not($line[@type = 'checkbox' or @type = 'radio'])">
+              <!-- label for all fields except single checkbox / single radio -->
               <label for="{$controlId}" class="control-label"><xsl:value-of select="$label" /></label>
             </xsl:when>
           </xsl:choose>
@@ -542,6 +548,16 @@
         <xsl:if test="$placeholder = false()">
           <xsl:choose>
             <xsl:when test="$line/input[@type = 'radio'] and count($line/input[@type = 'radio']) &gt; 1">
+              <!-- label for radiogroup -->
+              <label for="{$controlId}">
+                <xsl:if test="$showMandatory">
+                  <xsl:attribute name="class">required</xsl:attribute>
+                </xsl:if>
+                <xsl:value-of select="$label" />
+              </label>
+            </xsl:when>
+            <xsl:when test="count($line/input[@type = 'checkbox']) &gt; 1">
+              <!-- label for checkgroup -->
               <label for="{$controlId}">
                 <xsl:if test="$showMandatory">
                   <xsl:attribute name="class">required</xsl:attribute>
@@ -550,6 +566,7 @@
               </label>
             </xsl:when>
             <xsl:when test="not($line/input[@type = 'checkbox' or @type = 'radio']) and not($line[@type = 'checkbox' or @type = 'radio'])">
+              <!-- label for all fields except single checkbox / single radio -->
               <label for="{$controlId}">
                 <xsl:if test="$showMandatory">
                   <xsl:attribute name="class">required</xsl:attribute>
@@ -686,12 +703,23 @@
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$control[@type = 'checkbox']">
-        <xsl:call-template name="dialog-control-checkbox">
-          <xsl:with-param name="control" select="$control" />
-          <xsl:with-param name="controlId" select="$controlId" />
-          <xsl:with-param name="name" select="$name" />
-          <xsl:with-param name="label" select="$label" />
-        </xsl:call-template>
+        <xsl:choose>
+          <xsl:when test="count($control) &gt; 1">
+            <xsl:call-template name="dialog-control-checkbox">
+              <xsl:with-param name="control" select="$control" />
+              <xsl:with-param name="controlId" select="$controlId" />
+              <xsl:with-param name="name" select="$name" />
+            </xsl:call-template>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="dialog-control-checkbox">
+              <xsl:with-param name="control" select="$control" />
+              <xsl:with-param name="controlId" select="$controlId" />
+              <xsl:with-param name="name" select="$name" />
+              <xsl:with-param name="label" select="$label" />
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:when>
       <xsl:when test="$control[@type = 'radio']">
         <xsl:choose>
@@ -814,18 +842,35 @@
     <xsl:param name="label" />
     <xsl:param name="checked" select="false()" />
 
-    <label class="checkbox">
-      <input type="checkbox" name="{$name}">
-        <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'checked']" />
-        <xsl:if test="$checked">
-          <xsl:attribute name="checked">checked</xsl:attribute>
-        </xsl:if>
-        <xsl:if test="$controlId != ''">
-          <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
-        </xsl:if>
-      </input>
-      <xsl:text> </xsl:text><xsl:copy-of select="$label" />
-    </label>
+    <xsl:choose>
+      <xsl:when test="count($control) &gt; 1">
+        <xsl:for-each select="$control">
+          <label class="checkbox">
+            <input type="checkbox" name="{@name}">
+              <xsl:copy-of select="@*[name() = 'value' or name() = 'checked']" />
+              <xsl:if test="$controlId != ''">
+                <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+              </xsl:if>
+            </input>
+            <xsl:text> </xsl:text><xsl:copy-of select="./text()|following-sibling::text()[1]" />
+          </label>
+        </xsl:for-each>
+      </xsl:when>
+      <xsl:otherwise>
+        <label class="checkbox">
+          <input type="checkbox" name="{$name}">
+            <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'checked']" />
+            <xsl:if test="$checked">
+              <xsl:attribute name="checked">checked</xsl:attribute>
+            </xsl:if>
+            <xsl:if test="$controlId != ''">
+              <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
+            </xsl:if>
+          </input>
+          <xsl:text> </xsl:text><xsl:copy-of select="$label" />
+        </label>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template name="dialog-control-radio">
@@ -839,11 +884,11 @@
       <xsl:when test="count($control) &gt; 1">
         <xsl:for-each select="$control">
           <label class="radio">
-            <input type="radio" name="{$name}">
-              <xsl:copy-of select="$control/@*[name() = 'value' or name() = 'checked']" />
+            <input type="radio" name="{@name}">
+              <xsl:copy-of select="@*[name() = 'value' or name() = 'checked']" />
               <xsl:attribute name="id"><xsl:value-of select="$controlId"/></xsl:attribute>
             </input>
-            <xsl:text> </xsl:text><xsl:value-of select="." />
+            <xsl:text> </xsl:text><xsl:value-of select="./text()|following-sibling::text()[1]" />
           </label>
         </xsl:for-each>
       </xsl:when>
