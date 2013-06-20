@@ -127,21 +127,30 @@
     <xsl:param name="pageContent"/>
     <xsl:choose>
       <xsl:when test="$pageContent/dialog">
-        <h2><xsl:value-of select="$pageContent/title/text()"/></h2>
-        <p><xsl:value-of select="$pageContent/description/text()"/></p>
-        <xsl:if test="$pageContent/error|$pageContent/message[@type = 'error']">
-          <p class="error">
-            <xsl:value-of select="$pageContent/error/text()|$pageContent/message[@type = 'error']/text()"/>
-          </p>
-        </xsl:if>
+
+        <xsl:call-template name="module-content-topic">
+          <xsl:with-param name="pageContent" select="$pageContent" />
+          <xsl:with-param name="withText" select="$pageContent/description" />
+        </xsl:call-template>
+
+        <xsl:call-template name="alert">
+          <xsl:with-param name="message" select="$pageContent/error" />
+          <xsl:with-param name="type" select="'error'" />
+        </xsl:call-template>
+        <xsl:call-template name="alert">
+          <xsl:with-param name="message" select="$pageContent/message" />
+        </xsl:call-template>
+
         <xsl:call-template name="dialog">
           <xsl:with-param name="dialog" select="$pageContent/dialog"/>
+          <xsl:with-param name="horizontal" select="true()" />
+          <xsl:with-param name="inputSize" select="'xxlarge'" />
         </xsl:call-template>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:if test="$pageContent/message">
-          <xsl:copy-of select="$pageContent/message/*|$pageContent/message/text()" />
-        </xsl:if>
+        <xsl:call-template name="alert">
+          <xsl:with-param name="message" select="$pageContent/message" />
+        </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -179,10 +188,6 @@
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$pageContent/registerpage/success|$pageContent/registerpage/message[@type='success']">
-        <xsl:call-template name="alert">
-          <xsl:with-param name="message" select="$pageContent/registerpage/success|$pageContent/registerpage/message[@type='success']" />
-          <xsl:with-param name="type" select="'success'" />
-        </xsl:call-template>
         <xsl:if test="$pageContent/registerpage/text">
           <xsl:copy-of select="$pageContent/registerpage/text/*|$pageContent/registerpage/text/text()"/>
         </xsl:if>
