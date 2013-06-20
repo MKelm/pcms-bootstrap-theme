@@ -65,14 +65,20 @@
         <xsl:call-template name="float-fix" />
       </xsl:if>
 
-      <xsl:if test="$withText">
+      <xsl:if test="$withText != false()">
         <xsl:choose>
-        <xsl:when test="$pageContent/text-raw">
-          <xsl:copy-of select="$pageContent/text/node()" />
-        </xsl:when>
-        <xsl:otherwise>
-          <xsl:apply-templates select="$pageContent/text/*|$pageContent/text/text()" />
-        </xsl:otherwise>
+          <xsl:when test="$pageContent/text-raw">
+            <!-- use raw text node -->
+            <xsl:copy-of select="$pageContent/text/node()" />
+          </xsl:when>
+          <xsl:when test="$withText != true()">
+            <!-- with text has custom text node -->
+            <xsl:apply-templates select="$withText" />
+          </xsl:when>
+          <xsl:otherwise>
+            <!-- use default text node -->
+            <xsl:apply-templates select="$pageContent/text/*|$pageContent/text/text()" />
+          </xsl:otherwise>
         </xsl:choose>
       </xsl:if>
 
