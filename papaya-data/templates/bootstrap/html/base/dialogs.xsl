@@ -971,8 +971,14 @@
       <xsl:if test="$inputSize != false()">
         <xsl:attribute name="class">input-<xsl:value-of select="$inputSize" /></xsl:attribute>
       </xsl:if>
-      <xsl:copy-of select="$control/node()" />
-      <xsl:text>&#13;&#10;</xsl:text>
+      <xsl:choose>
+        <xsl:when test="$control/text() != ''">
+          <xsl:apply-templates select="$control/node()" />
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:text>&#13;&#10;</xsl:text>
+        </xsl:otherwise>
+      </xsl:choose>
     </textarea>
   </xsl:template>
 
