@@ -96,14 +96,7 @@ var extendedText = {
       $(opts.elementSelector).keydown(function(e) {
         if (self.temp.ctrlDown == true && e.keyCode == defs.key.v) {
           self.temp.pasteEvent = true;
-          var text = $(this).val(), selectionPos = $(this).selection('getPos');
-          if (selectionPos.end > selectionPos.start) {
-            self.temp.pastePosStart = selectionPos.start;
-          } else if (text == '') {
-            self.temp.pastePosStart = 0;
-          } else {
-            self.temp.pastePosStart = text.length;
-          }
+          self.temp.pastePosStart = $(this).selection('getPos').start;
         }
       }).keyup(function() {
         if (self.temp.pasteEvent == true) {
