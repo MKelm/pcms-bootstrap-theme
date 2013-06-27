@@ -11,6 +11,7 @@
       <xsl:with-param name="comments" select="comments" />
       <xsl:with-param name="dialog" select="dialog-box" />
       <xsl:with-param name="dialogMessage" select="dialog-message" />
+      <xsl:with-param name="mode" select="'ajax-list'" />
     </xsl:call-template>
   </xsl:template>
 

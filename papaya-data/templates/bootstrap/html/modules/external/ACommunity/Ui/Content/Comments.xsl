@@ -98,6 +98,8 @@
             <xsl:if test="$mode = 'list'">
               <xsl:call-template name="extended-text-thumbnails" />
               <xsl:call-template name="extended-text-videos" />
+            </xsl:if>
+            <xsl:if test="$mode = 'list' or $mode = 'ajax-list'">
               <xsl:call-template name="acommunity-comments-comment-extras">
                 <xsl:with-param name="commandLinks" select="command-links/link" />
                 <xsl:with-param name="anchor" select="$anchor" />
