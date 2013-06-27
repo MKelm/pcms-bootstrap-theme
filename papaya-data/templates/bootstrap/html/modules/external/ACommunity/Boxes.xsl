@@ -17,6 +17,17 @@
       <xsl:with-param name="comments" select="comments" />
       <xsl:with-param name="dialog" select="dialog-box" />
       <xsl:with-param name="dialogMessage" select="dialog-message" />
+      <xsl:with-param name="mode" select="'list'" />
+    </xsl:call-template>
+  </xsl:template>
+
+  <xsl:template match="acommunity-comments-ranking">
+    <xsl:call-template name="acommunity-comments">
+      <xsl:with-param name="commandName" select="command/@name" />
+      <xsl:with-param name="commandCommentId" select="command/@comment_id" />
+      <xsl:with-param name="comments" select="comments" />
+      <xsl:with-param name="dialog" select="dialog-box" />
+      <xsl:with-param name="dialogMessage" select="dialog-message" />
       <xsl:with-param name="mode" select="'ranking'" />
       <xsl:with-param name="maxTextLength" select="'0'" />
     </xsl:call-template>
