@@ -36,6 +36,8 @@
     <xsl:param name="dialogMessage" />
     <xsl:param name="indent" select="false()" />
     <xsl:param name="parentAnchor" select="''" />
+    <xsl:param name="mode" select="'list'" />
+    <xsl:param name="maxTextLength" select="'0'" />
 
     <xsl:choose>
       <xsl:when test="$commentId = 0 and $commandName = 'reply' and $commandCommentId = $commentId">
@@ -85,14 +87,23 @@
                   <xsl:call-template name="format-time">
                     <xsl:with-param name="time" select="substring(@time, 12, 8)" />
                   </xsl:call-template></small></h4>
-            <p><xsl:copy-of select="text/node()" /></p>
-            <xsl:call-template name="extended-text-thumbnails" />
-            <xsl:call-template name="extended-text-videos" />
-            <xsl:call-template name="acommunity-comments-comment-extras">
-              <xsl:with-param name="commandLinks" select="command-links/link" />
-              <xsl:with-param name="anchor" select="$anchor" />
-              <xsl:with-param name="previousAnchor" select="$previousAnchor" />
-            </xsl:call-template>
+            <p>
+              <xsl:choose>
+                <xsl:when test="$maxTextLength &gt; 0 and string-length(text-raw/text()) &gt; $maxTextLength">
+                  <xsl:value-of select="substring(text-raw/text(), 1, $maxTextLength - 3)" /><xsl:text>...</xsl:text>
+                </xsl:when>
+                <xsl:otherwise><xsl:copy-of select="text/node()" /></xsl:otherwise>
+              </xsl:choose>
+            </p>
+            <xsl:if test="$mode = 'list'">
+              <xsl:call-template name="extended-text-thumbnails" />
+              <xsl:call-template name="extended-text-videos" />
+              <xsl:call-template name="acommunity-comments-comment-extras">
+                <xsl:with-param name="commandLinks" select="command-links/link" />
+                <xsl:with-param name="anchor" select="$anchor" />
+                <xsl:with-param name="previousAnchor" select="$previousAnchor" />
+              </xsl:call-template>
+            </xsl:if>
             <xsl:call-template name="float-fix" />
             <xsl:call-template name="acommunity-comments">
               <xsl:with-param name="commandName" select="$commandName" />
@@ -103,6 +114,8 @@
               <xsl:with-param name="dialogMessage" select="$dialogMessage" />
               <xsl:with-param name="indent" select="true()" />
               <xsl:with-param name="parentAnchor" select="$anchor" />
+              <xsl:with-param name="mode" select="$mode" />
+              <xsl:with-param name="maxTextLength" select="$maxTextLength" />
             </xsl:call-template>
           </div>
         </div>
